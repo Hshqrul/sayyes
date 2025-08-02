@@ -41,12 +41,12 @@ if (auth.value.user) {
     mainNavItems.value = [
         {
             title: 'Dashboard',
-            href: '/dashboard',
+            href: '/',
             icon: LayoutGrid,
         },
         {
             title: 'RSVP',
-            href: '/rsvp',
+            href: '/home',
             icon: PencilLine,
         },
     ]

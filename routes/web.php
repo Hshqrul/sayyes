@@ -10,7 +10,7 @@ use App\Http\Controllers\RsvpController;
 //     // return Inertia::render('Welcome');
 // })->name('home');
 
-Route::get('dashboard', function () {
+Route::get('/', function () {
     // return Inertia::render('Dashboard');
     return Inertia::render('Dashboard');
 })->name('dashboard');
