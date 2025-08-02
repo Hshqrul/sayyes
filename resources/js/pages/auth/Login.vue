@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
+import PasswordInput from '@/components/PasswordInput.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -59,7 +60,7 @@ const submit = () => {
                             Forgot password?
                         </TextLink>
                     </div>
-                    <Input
+                    <!-- <Input
                         id="password"
                         type="password"
                         required
@@ -67,7 +68,8 @@ const submit = () => {
                         autocomplete="current-password"
                         v-model="form.password"
                         placeholder="Password"
-                    />
+                    /> -->
+                    <PasswordInput id="password" v-model="form.password" :tabindex="2" placeholder="Password"/>
                     <InputError :message="form.errors.password" />
                 </div>
 

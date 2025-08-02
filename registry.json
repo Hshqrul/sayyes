@@ -1,0 +1,19 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry.json",
+  "name": "shadcn",
+  "homepage": "https://shadcn-vue.com",
+  "items": [
+    {
+      "name": "name",
+      "type": "registry:block",
+      "title": "Hello World",
+      "description": "A simple hello world component.",
+      "files": [
+        {
+          "path": "registry/new-york/HelloWorld/HelloWorld.vue",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}

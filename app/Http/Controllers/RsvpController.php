@@ -29,7 +29,19 @@ class RsvpController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|unique:rsvps,name,max:255',
+            'attendence' => 'required|boolean',
+            'no_of_pax' => 'required|integer',
+            'notes' => 'required|string|max:500',
+        ]);
+
+        Rsvp::create($data);
+
+        session()->flash('message', 'Your response has been successfully created');
+        return redirect()->route('rsvp.success', [
+            'name' => $data['name'],
+        ]);
     }
 
     /**

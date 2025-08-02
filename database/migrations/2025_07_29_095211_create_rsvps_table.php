@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->unique()->nullable();
             $table->boolean('attendence')->nullable();
             $table->integer('no_of_pax')->nullable();
+            $table->string('notes', 255)->nullable();
             $table->timestamps();
         });
     }

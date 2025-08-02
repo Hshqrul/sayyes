@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
+import PasswordInput from '@/components/PasswordInput.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +11,7 @@ import { LoaderCircle } from 'lucide-vue-next';
 
 const form = useForm({
     name: '',
+    username: '',
     email: '',
     password: '',
     password_confirmation: '',
@@ -33,6 +35,12 @@ const submit = () => {
                     <Input id="name" type="text" required autofocus :tabindex="1" autocomplete="name" v-model="form.name" placeholder="Full name" />
                     <InputError :message="form.errors.name" />
                 </div>
+                
+                <div class="grid gap-2">
+                    <Label for="username">Username</Label>
+                    <Input id="username" type="text" required :tabindex="1" autocomplete="username" v-model="form.username" placeholder="Username" />
+                    <InputError :message="form.errors.username" />
+                </div>
 
                 <div class="grid gap-2">
                     <Label for="email">Email address</Label>
@@ -42,7 +50,7 @@ const submit = () => {
 
                 <div class="grid gap-2">
                     <Label for="password">Password</Label>
-                    <Input
+                    <!-- <Input
                         id="password"
                         type="password"
                         required
@@ -50,13 +58,14 @@ const submit = () => {
                         autocomplete="new-password"
                         v-model="form.password"
                         placeholder="Password"
-                    />
+                    /> -->
+                    <PasswordInput id="password" v-model="form.password" autocomplete="new-password" :tabindex="3" placeholder="Password"/>
                     <InputError :message="form.errors.password" />
                 </div>
 
                 <div class="grid gap-2">
                     <Label for="password_confirmation">Confirm password</Label>
-                    <Input
+                    <!-- <Input
                         id="password_confirmation"
                         type="password"
                         required
@@ -64,7 +73,8 @@ const submit = () => {
                         autocomplete="new-password"
                         v-model="form.password_confirmation"
                         placeholder="Confirm password"
-                    />
+                    /> -->
+                    <PasswordInput id="password_confirmation" :tabindex="4" v-model="form.password_confirmation" placeholder="Confirm password" autocomplete="new-password"/>
                     <InputError :message="form.errors.password_confirmation" />
                 </div>
 

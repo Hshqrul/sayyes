@@ -13,7 +13,7 @@ import { getInitials } from '@/composables/useInitials';
 import type { BreadcrumbItem, NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 import { BookOpen, Folder, LayoutGrid, Menu, PencilLine, Search } from 'lucide-vue-next';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import GuestMenuContent from './GuestMenuContent.vue';
 import SwitchTheme from './SwitchTheme.vue';
 import Separator from './ui/separator/Separator.vue';
@@ -35,18 +35,30 @@ const activeItemStyles = computed(
     () => (url: string) => (isCurrentRoute.value(url) ? 'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100' : ''),
 );
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutGrid,
-    }, 
-    {
-        title: 'RSVP',
-        href: '/rsvp',
-        icon: PencilLine,
-    },
-];
+const mainNavItems = ref<NavItem[]>([])
+
+if (auth.value.user) {
+    mainNavItems.value = [
+        {
+            title: 'Dashboard',
+            href: '/dashboard',
+            icon: LayoutGrid,
+        },
+        {
+            title: 'RSVP',
+            href: '/rsvp',
+            icon: PencilLine,
+        },
+    ]
+} else {
+    mainNavItems.value = [
+        // {
+        //     title: 'RSVP',
+        //     href: '/rsvp',
+        //     icon: PencilLine,
+        // },
+    ]
+}
 
 const rightNavItems: NavItem[] = [
     // {

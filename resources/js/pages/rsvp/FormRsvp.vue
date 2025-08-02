@@ -1,122 +1,107 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/auth/FormAuthCardLayout.vue';
-import { type BreadcrumbItem } from '@/types';
-import { Head, useForm } from '@inertiajs/vue3';
-import Button from '@/components/ui/button/Button.vue';
-import { ArrowRight, LoaderCircle } from 'lucide-vue-next';
-import Label from '@/components/ui/label/Label.vue';
-import Input from '@/components/ui/input/Input.vue';
-import InputError from '@/components/InputError.vue';
-import TextLink from '@/components/TextLink.vue';
+import AppLayout from '@/layouts/app/FormSimpleLayout.vue'
+import { Head, useForm, usePage } from '@inertiajs/vue3'
+import Button from '@/components/ui/button/Button.vue'
+import Label from '@/components/ui/label/Label.vue'
+import Input from '@/components/ui/input/Input.vue'
+import InputError from '@/components/InputError.vue'
+import TextLink from '@/components/TextLink.vue'
+import ToggleGroup from '@/components/ui/toggle-group/ToggleGroup.vue'
+import ToggleGroupItem from '@/components/ui/toggle-group/ToggleGroupItem.vue'
+import RadioGroup from '@/components/ui/radio-group/RadioGroup.vue'
+import RadioGroupItem from '@/components/ui/radio-group/RadioGroupItem.vue'
+import { BadgeCheck, CloudMoon, LoaderCircle } from 'lucide-vue-next'
+import Textarea from '@/components/ui/textarea/Textarea.vue'
+import { watch } from 'vue'
+
+const page = usePage()
+
+console.log(page.props.flash)
 
 const form = useForm({
     name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-});
+    attendence: 0,
+    no_of_pax: 0,
+    notes: 'I am sorry, but wishing you both....'
+})
 
-const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
-};
+const handleSubmit = () => {
+    form.post(route('rsvp.store'));
+}
+
+watch(() => form.attendence, (newValue) => {
+    if (newValue === 0) {
+        form.no_of_pax = 0
+        form.notes = 'I am sorry, but wishing you both....'
+    } else {
+        form.no_of_pax = 1
+        form.notes = ''
+    }
+})
 </script>
 
 <template>
-    <AppLayout title="Create an account" description="Enter your details below to create your account">
 
-        <Head title="RSVP" />
-        <form @submit.prevent="submit" class="flex flex-col gap-6">
+    <Head title="RSVP" />
+    <AppLayout title="Create an account" description="Enter your details below to create your account">
+        <form @submit.prevent="handleSubmit" class="flex flex-col gap-6">
             <div class="grid gap-6">
-                <div class="grid gap-2">
-                    <Label for="name">Name</Label>
-                    <Input id="name" type="text" required autofocus :tabindex="1" autocomplete="name"
-                        v-model="form.name" placeholder="Full name" />
+                <div class="space-y-2">
+                    <Label for="name">Full Name</Label>
+                    <Input id="name" type="text" v-model="form.name" placeholder="Na.." required autofocus
+                        autocomplete="name" tabindex="1" />
                     <InputError :message="form.errors.name" />
                 </div>
 
-                <div class="grid gap-2">
-                    <Label for="email">Email address</Label>
-                    <Input id="email" type="email" required :tabindex="2" autocomplete="email" v-model="form.email"
-                        placeholder="email@example.com" />
-                    <InputError :message="form.errors.email" />
+                <div class="space-y-2">
+                    <Label for="attendance">Will you attend?</Label>
+                    <ToggleGroup id="attendance" variant="outline" type="single" v-model="form.attendence"
+                        class="w-full">
+                        <ToggleGroupItem :value="1">
+                            <BadgeCheck class="mr-2 h-4 w-4 text-green-500" />
+                            Yes
+                        </ToggleGroupItem>
+                        <ToggleGroupItem :value="0">
+                            <CloudMoon class="mr-2 h-4 w-4 text-indigo-500" />
+                            No
+                        </ToggleGroupItem>
+                    </ToggleGroup>
+                    <InputError :message="form.errors.attendence" />
                 </div>
 
-                <div class="grid gap-2">
-                    <Label for="password">Password</Label>
-                    <Input id="password" type="password" required :tabindex="3" autocomplete="new-password"
-                        v-model="form.password" placeholder="Password" />
-                    <InputError :message="form.errors.password" />
+                <div class="space-y-2">
+                    <Label for="no_of_pax">Number of Guests</Label>
+                    <RadioGroup id="no_of_pax" direction="row" v-model="form.no_of_pax">
+                        <div class="flex items-center space-x-2">
+                            <RadioGroupItem id="pax1" value="1" :disabled="form.attendence === 0" />
+                            <Label for="pax1">1</Label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <RadioGroupItem id="pax2" value="2" :disabled="form.attendence === 0" />
+                            <Label for="pax2">2</Label>
+                        </div>
+                    </RadioGroup>
+                    <InputError :message="form.errors.no_of_pax" />
                 </div>
 
-                <div class="grid gap-2">
-                    <Label for="password_confirmation">Confirm password</Label>
-                    <Input id="password_confirmation" type="password" required :tabindex="4" autocomplete="new-password"
-                        v-model="form.password_confirmation" placeholder="Confirm password" />
-                    <InputError :message="form.errors.password_confirmation" />
+                <div class="space-y-2">
+                    <Label for="notes">Wishes</Label>
+                    <Textarea id="notes" type="text" v-model="form.notes" placeholder="I wish to..." tabindex="4" />
+                    <InputError :message="form.errors.notes" />
                 </div>
 
                 <Button type="submit" class="mt-2 w-full" tabindex="5" :disabled="form.processing">
                     <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
-                    Create account
+                    Submit
                 </Button>
             </div>
 
-            <div class="text-center text-sm text-muted-foreground">
+            <!-- <div class="text-center text-sm text-muted-foreground dark:text-zinc-300">
                 Already have an account?
-                <TextLink :href="route('login')" class="underline underline-offset-4" :tabindex="6">Log in</TextLink>
-            </div>
+                <TextLink :href="route('login')" class="underline underline-offset-4" :tabindex="6">
+                    Log in
+                </TextLink>
+            </div> -->
         </form>
-        <!-- <div class="flex min-h-full items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-            <div class="w-full max-w-md space-y-8">
-                <div>
-                    <h2 class="mt-6 text-center text-3xl font-extrabold tracking-tight text-gray-900">
-                        RSVP for the Event
-                    </h2>
-                    <p class="mt-2 text-center text-sm text-gray-600">
-                        Please fill out the form below to confirm your attendance.
-                    </p>
-                </div>
-                <form class="mt-8 space-y-6" action="#" method="POST">
-                    <input type="hidden" name="remember" value="true" />
-                    <div class="-space-y-px rounded-md shadow-sm">
-                        <div>
-                            <label for="name" class="sr-only">Name</label>
-                            <input id="name" name="name" type="text" autocomplete="name" required
-                                class="relative block w-full appearance-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                placeholder="Your Name">
-                        </div>
-                        <div>
-                            <label for="email-address" class="sr-only">Email address</label>
-                            <input id="email-address" name="email" type="email" autocomplete="email" required
-                                class="relative block w-full appearance-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                placeholder="Email address">
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="flex h-5 items-center">
-                            <input id="attendence" name="attendence" type="checkbox" value="1"
-                                class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                        </div>
-                        <div class="ml-3 text-sm">
-                            <label for="attendence" class="font-medium text-gray-700">Will you attend?</label>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="no_of_pax" class="sr-only">Number of Guests</label>
-                        <input id="no_of_pax" name="no_of_pax" type="number" min="1" required
-                            class="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                            placeholder="Number of Guests">
-                    </div>
-                    <div>
-                        <Button type="submit" class="w-full justify-center">
-                            Submit RSVP
-                            <ArrowRight class="size-4 ml-2" />
-                        </Button>
-                    </div>
-                </form>
-            </div>
-        </div>  -->
     </AppLayout>
 </template>
