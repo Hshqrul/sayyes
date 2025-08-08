@@ -93,7 +93,7 @@ function revealItems() {
                     'bg-yellow-200/20 border-amber-200 text-yellow-600 dark:bg-yellow-700/20 dark:border-yellow-600 dark:text-yellow-400': item.attendence == false,
                   }">
                     <AlertDescription class="pt-2 pb-2 relative overflow-hidden text-ellipsis">
-                      <p class="italic text-md whitespace-nowrap overflow-hidden text-ellipsis" :class="{
+                      <p class="italic text-md break-words" :class="{
                         'text-indigo-600 dark:text-indigo-400': item.attendence == true,
                         'text-yellow-600 dark:text-yellow-400': item.attendence == false,
                       }">

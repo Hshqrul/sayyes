@@ -178,7 +178,7 @@ const countdown = computed(() => {
                             clip-rule="evenodd" />
                     </svg>
                     by
-                    <TextLink href="https://buymeacoffee.com/hashaqirul">Hashaqirul.</TextLink>
+                    <a class="underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500 underline-offset-4" target="_blank" href="https://buymeacoffee.com/hashaqirul">Hashaqirul.</a>
                 </span>
             </div>
         </div>

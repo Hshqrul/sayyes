@@ -84,8 +84,8 @@ watch(() => form.attendence, (newValue) => {
                 </div>
 
                 <div class="space-y-2">
-                    <Label for="notes">Wishes</Label>
-                    <Textarea id="notes" type="text" v-model="form.notes" placeholder="I wish to..." tabindex="4" />
+                    <Label for="notes">Wish for bride & groom</Label>
+                    <Textarea id="notes" type="text" v-model="form.notes" placeholder="Your wish for bride & groom" tabindex="4" />
                     <InputError :message="form.errors.notes" />
                 </div>
 
