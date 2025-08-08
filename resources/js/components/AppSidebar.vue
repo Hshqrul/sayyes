@@ -1,57 +1,68 @@
 <script setup lang="ts">
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
-import NavUser from '@/components/NavUser.vue';
+import NavUser from '@/components/NavUserNew.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import { LayoutDashboard, PenLine } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
+import Toggle from './ui/toggle/Toggle.vue';
+import Switch from './ui/switch/Switch.vue';
+import { useColorMode, useDark } from '@vueuse/core';
+import Label from './ui/label/Label.vue';
+import ToggleTeme from './ToggleTheme.vue';
 
 const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/',
-        icon: LayoutGrid,
-    },
+  {
+    title: 'Dashboard',
+    href: '/dashboard',
+    icon: LayoutDashboard,
+  },
+  {
+    title: 'Setup RSVP',
+    href: '/events',
+    icon: PenLine,
+  }
 ];
 
 const footerNavItems: NavItem[] = [
-    {
-        title: 'Github Repo',
-        href: 'https://github.com/laravel/vue-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#vue',
-        icon: BookOpen,
-    },
+  // {
+  //     title: 'Github Repo',
+  //     href: 'https://github.com/laravel/vue-starter-kit',
+  //     icon: Folder,
+  // },
+  // {
+  //   title: 'Documentation',
+  //   href: 'https://laravel.com/docs/starter-kits#vue',
+  //   icon: BookOpen,
+  // },
 ];
 </script>
 
 <template>
-    <Sidebar collapsible="icon" variant="inset">
-        <SidebarHeader>
-            <SidebarMenu>
-                <SidebarMenuItem>
-                    <SidebarMenuButton size="lg" as-child>
-                        <Link :href="route('dashboard')">
-                            <AppLogo />
-                        </Link>
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
-            </SidebarMenu>
-        </SidebarHeader>
+  <Sidebar collapsible="icon" variant="inset">
+    <SidebarHeader>
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton size="lg" as-child>
+            <Link :href="route('dashboard')">
+            <AppLogo />
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    </SidebarHeader>
 
-        <SidebarContent>
-            <NavMain :items="mainNavItems" />
-        </SidebarContent>
+    <SidebarContent>
+      <NavMain :items="mainNavItems" />
+    </SidebarContent>
 
-        <SidebarFooter>
-            <NavFooter :items="footerNavItems" />
-            <NavUser />
-        </SidebarFooter>
-    </Sidebar>
-    <slot />
+    <SidebarFooter>
+      <NavFooter :items="footerNavItems" />
+      <ToggleTeme as-child />
+      <NavUser />
+    </SidebarFooter>
+  </Sidebar>
+  <slot />
 </template>

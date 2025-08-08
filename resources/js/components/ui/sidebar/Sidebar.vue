@@ -84,10 +84,10 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
         props.class,
       )"
       v-bind="$attrs"
-    >
+    > <!-- old bg-sidebar - bg-background on line 90  -->
       <div
         data-sidebar="sidebar"
-        class="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
+        class="bg-background group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
       >
         <slot />
       </div>

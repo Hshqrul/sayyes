@@ -1,0 +1,131 @@
+<script setup lang="ts">
+import { defineProps, computed } from 'vue'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuPortal,
+    DropdownMenuSeparator,
+    DropdownMenuShortcut,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import AppSidebarLayout from '@/layouts/app/AppSidebarLayout.vue';
+import { EllipsisIcon, PencilIcon, Plus, ShareIcon, TimerIcon, Trash2Icon } from 'lucide-vue-next';
+import CardAction from '@/components/ui/card/CardAction.vue';
+import moment from 'moment';
+import CardFooter from '@/components/ui/card/CardFooter.vue';
+import { Link, usePage } from '@inertiajs/vue3';
+
+
+const props = defineProps<{
+    events: {
+        id: number
+        event_name: string
+        slug: string
+        description: string
+        event_date: string
+        created_at: string
+        updated_at: string
+    }[]
+}>()
+
+const hasEvents = computed(() => props.events.length > 0)
+
+const page = usePage();
+console.log(page.props.flash);
+</script>
+
+<template>
+    <AppSidebarLayout :breadcrumbs="[{ title: 'Event List', href: '/event' }]">
+        <div class="flex h-full flex-1 flex-col gap-4 p-4 overflow-x-auto md:p-6">
+            <div class="flex flex-row items-center justify-between p-2">
+                <h1 class="text-2xl font-bold leading-tight tracking-tight">Event List</h1>
+                <Button as-child>
+                    <a :href="route('events.create')">
+                        <Plus class="size-4" />
+                        <p class="hidden md:block">
+                            Create Event
+                        </p>
+                    </a>
+                </Button>
+            </div>
+            <div class="w-full">
+                <div class="grid gap-4 md:grid-cols-1 lg:grid-cols-2" v-if="hasEvents">
+                    <Card v-for="event in props.events" :key="event.event_name" class="md:w-full shadow-xs">
+                        <CardHeader class="flex flex-row items-center justify-between space-y-0">
+                            <CardTitle>
+                                <h1 class="text-2xl font-bold leading-none tracking-tight">
+                                    {{ event.event_name }}
+                                </h1>
+                            </CardTitle>
+                            <CardAction>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger :as-child="true">
+                                        <Button variant="ghost">
+                                            <EllipsisIcon class="size-4" />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent class="w-50" align="start">
+                                        <DropdownMenuGroup>
+                                            <DropdownMenuItem :as-child="true">
+                                                <Link :href="route('events.edit', { event: event.id })"
+                                                    class="block w-full" prefetch as="button">
+                                                <PencilIcon class="size-4" />
+                                                <span>Edit</span>
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem :as-child="true">
+                                                <Link :href="route('home', { event: event.slug })" class="block w-full"
+                                                    prefetch as="button">
+                                                <ShareIcon class="size-4" />
+                                                <span>Open Rsvp</span>
+                                                </Link>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuGroup>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuGroup>
+                                            <DropdownMenuItem :as-child="true">
+                                                <Link :href="route('events.destroy', { event: event.id })"
+                                                    class="block w-full hover:text-red-500" method="delete" as="button">
+                                                <Trash2Icon class="size-4" />
+                                                <span>Delete</span>
+                                                </Link>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuGroup>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </CardAction>
+                        </CardHeader>
+                        <CardContent>
+                            <p class="text-md text-base">{{ event.description }}</p>
+                        </CardContent>
+                        <CardFooter class="flex flex-row items-center justify-end space-x-2 space-y-0">
+                            <TimerIcon class="size-4" />
+                            <p class="text-sm text-muted-foreground">
+                                {{ moment(event.event_date).format('MMMM D, YYYY') }}
+                            </p>
+                        </CardFooter>
+                    </Card>
+                </div>
+                <div v-else class="flex justify-center items-center h-full">
+                    <div class="flex flex-col gap-2">
+                        <p class="text-center text-xl text-muted-foreground">No events available</p>
+                        <Button as-child class="w-full">
+                            <a :href="route('events.create')">
+                                Create Event
+                                <Plus class="size-4" />
+                            </a>
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </AppSidebarLayout>
+</template>

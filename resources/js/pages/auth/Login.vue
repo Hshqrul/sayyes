@@ -17,9 +17,13 @@ defineProps<{
 
 const form = useForm({
     email: '',
+    username: '',
     password: '',
     remember: false,
 });
+
+form.username = 'usermycloud';
+form.password = 'user@example.com';
 
 const submit = () => {
     form.post(route('login'), {
@@ -39,7 +43,7 @@ const submit = () => {
         <form @submit.prevent="submit" class="flex flex-col gap-6">
             <div class="grid gap-6">
                 <div class="grid gap-2">
-                    <Label for="email">Email address</Label>
+                    <!-- <Label for="email">Email address</Label>
                     <Input
                         id="email"
                         type="email"
@@ -50,7 +54,19 @@ const submit = () => {
                         v-model="form.email"
                         placeholder="email@example.com"
                     />
-                    <InputError :message="form.errors.email" />
+                    <InputError :message="form.errors.email" /> -->
+                    <Label for="email">Username</Label>
+                    <Input
+                        id="username"
+                        type="username"
+                        required
+                        autofocus
+                        :tabindex="1"
+                        autocomplete="username"
+                        v-model="form.username"
+                        placeholder="joegoldberg"
+                    />
+                    <InputError :message="form.errors.username" />
                 </div>
 
                 <div class="grid gap-2">

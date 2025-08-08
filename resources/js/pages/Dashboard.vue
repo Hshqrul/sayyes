@@ -5,11 +5,6 @@ import { Head } from '@inertiajs/vue3';
 import PlaceholderPattern from '../components/PlaceholderPattern.vue';
 import Button from '@/components/ui/button/Button.vue';
 import { ArrowRight } from 'lucide-vue-next';
-import FormRsvp from './rsvp/FormRsvp.vue';
-import CalendarWidget from './dashboard-items/CalendarWidget.vue';
-import { ref } from 'vue';
-import { DateValue } from 'reka-ui';
-import { parseDate } from '@internationalized/date';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -18,12 +13,9 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const selectedDate = ref<DateValue>(parseDate('2025-12-27'));
-
 </script>
 
 <template>
-
     <Head title="Dashboard" />
 
     <AppLayout>

@@ -32,16 +32,17 @@ class RsvpController extends Controller
         $data = $request->validate([
             'name' => 'required|string|unique:rsvps,name,max:255',
             'attendence' => 'required|boolean',
-            'no_of_pax' => 'required|integer',
+            'no_of_pax' => 'nullable|integer',
             'notes' => 'required|string|max:500',
+            'event_id' => 'required|exists:events,id',
         ]);
 
         Rsvp::create($data);
 
-        session()->flash('message', 'Your response has been successfully created');
         return redirect()->route('rsvp.success', [
             'name' => $data['name'],
-        ]);
+            'event' => $data['event_id'],
+        ])->with('message', 'Your response has been successfully created');
     }
 
     /**

@@ -11,6 +11,7 @@ class Rsvp extends Model
         'attendence',
         'no_of_pax',
         'notes',
+        'event_id',
     ];
 
     protected $casts = [
@@ -31,5 +32,10 @@ class Rsvp extends Model
     public function scopeAttending($query)
     {
         return $query->where('attendence', true);
+    }
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
     }
 }

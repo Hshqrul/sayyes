@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
+import AppLayout from '@/layouts/app/AppSidebarLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -71,7 +71,7 @@ const updatePassword = () => {
                             autocomplete="current-password"
                             placeholder="Current password"
                         /> -->
-                        <PasswordInput id="current_password" ref="currentPasswordInput" v-model="form.current_password" placeholder="Current password" autocomplete="current-password"/>
+                        <PasswordInput class="mt-1 block w-full" id="current_password" ref="currentPasswordInput" v-model="form.current_password" placeholder="Current password" autocomplete="current-password"/>
                         <InputError :message="form.errors.current_password" />
                     </div>
 
@@ -86,7 +86,7 @@ const updatePassword = () => {
                             autocomplete="new-password"
                             placeholder="New password"
                         /> -->
-                        <PasswordInput id="password" ref="passwordInput" v-model="form.password" placeholder="New password" autocomplete="new-password"/>
+                        <PasswordInput class="mt-1 block w-full" id="password" ref="passwordInput" v-model="form.password" placeholder="New password" autocomplete="new-password"/>
                         <InputError :message="form.errors.password" />
                     </div>
 
@@ -100,7 +100,7 @@ const updatePassword = () => {
                             autocomplete="new-password"
                             placeholder="Confirm password"
                         /> -->
-                        <PasswordInput id="password_confirmation" ref="passwordInput" v-model="form.password_confirmation" placeholder="Confirm password" autocomplete="new-password"/>
+                        <PasswordInput class="mt-1 block w-full" id="password_confirmation" ref="passwordInput" v-model="form.password_confirmation" placeholder="Confirm password" autocomplete="new-password"/>
                         <InputError :message="form.errors.password_confirmation" />
                     </div>
 

@@ -12,7 +12,7 @@ import UserMenuContent from '@/components/UserMenuContent.vue';
 import { getInitials } from '@/composables/useInitials';
 import type { BreadcrumbItem, NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, Menu, PencilLine, Search } from 'lucide-vue-next';
+import { BookOpen, Folder, LayoutDashboard, LayoutGrid, Menu, PencilLine, Search, UserCircleIcon } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
 import GuestMenuContent from './GuestMenuContent.vue';
 import SwitchTheme from './SwitchTheme.vue';
@@ -45,9 +45,9 @@ if (auth.value.user) {
             icon: LayoutGrid,
         },
         {
-            title: 'RSVP',
-            href: '/home',
-            icon: PencilLine,
+            title: 'My Dashboard',
+            href: '/dashboard',
+            icon: UserCircleIcon,
         },
     ]
 } else {

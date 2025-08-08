@@ -3,20 +3,57 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { parseDate, type DateValue } from '@internationalized/date'
 import CalendarWidget from './dashboard-items/CalendarWidget.vue'
 import FormRsvp from './rsvp/FormRsvp.vue'
-import AppLayout from '@/layouts/AppLayout.vue'
+import AppLayout from '@/layouts/GuestLayout.vue'
 import { MoveRight } from 'lucide-vue-next'
 import Button from '@/components/ui/button/Button.vue'
 import Card from '@/components/ui/card/Card.vue'
-import CardHeader from '@/components/ui/card/CardHeader.vue'
 import CardContent from '@/components/ui/card/CardContent.vue'
-import CardFooter from '@/components/ui/card/CardFooter.vue'
+import GuestBook from './rsvp/GuestBook.vue'
+import { Head, Link, usePage } from '@inertiajs/vue3'
+import TextLink from '@/components/TextLink.vue'
+interface Rsvp {
+    name: string
+    attendance: boolean
+    no_of_pax: number
+    notes: string
+}
 
-// Convert DateValue to JS Date manually
+interface Event {
+    id: number
+    event_name: string
+    description: string
+    event_date: string
+    user_id: string
+}
+
+interface User {
+    id: string
+    name: string
+    email: string
+}
+
+interface Props {
+    rsvps: Rsvp[]
+    events: Event
+    user: User
+}
+
+const page = usePage<Props>()
+const rsvps = page.props.rsvps
+const event = page.props.event
+const user = page.props.user
+console.log(page.props)
 function dateValueToDate(dateValue: DateValue): Date {
     return new Date(dateValue.year, dateValue.month - 1, dateValue.day)
 }
 
-const selectedDate = ref<DateValue>(parseDate('2025-12-27'))
+const selectedDate = ref<DateValue>(
+    parseDate(
+        new Date(event.event_date)
+            .toLocaleDateString("en-CA", { timeZone: "Asia/Kuala_Lumpur" })
+    )
+)
+
 const now = ref(new Date())
 
 let interval: number
@@ -39,22 +76,21 @@ const countdown = computed(() => {
     const seconds = Math.floor((diffMs % (1000 * 60)) / 1000)
     return { months, days, hours, minutes, seconds }
 })
-</script>
 
+</script>
 
 <template>
 
-    <Head title="Dashboard" />
+    <Head title="Répondez S'il Vous Plaît" />
     <AppLayout>
         <div class="grid gap-4 p-4 md:grid-cols-2">
-            <!-- Welcome Card -->
             <div
                 class="relative min-h-[200px] col-span-1 aspect-video rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
                 <div class="flex h-full flex-col justify-center px-6 py-6">
                     <h1 class="text-4xl font-extrabold tracking-tight lg:text-5xl">
                         Hi There!
                     </h1>
-                    <p class="mt-2 text-muted-foreground">
+                    <p class="mt-2 text-muted-foreground font-semibold tracking-tight">
                         Welcome to the rsvp page!
                     </p>
                     <div class="mt-4">
@@ -67,7 +103,6 @@ const countdown = computed(() => {
                     </div>
                 </div>
             </div>
-            <!-- Date Card -->
             <div>
                 <Card
                     class="min-h-[200px] rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border shadow-none">
@@ -75,12 +110,10 @@ const countdown = computed(() => {
                         <div
                             class="grid gap-4 sm:grid-cols-1 md:grid-cols-3 justify-items-center items-center text-center">
 
-                            <!-- Calendar -->
                             <div class="flex flex-grow lg:col-span-2">
                                 <CalendarWidget v-model="selectedDate" readonly />
                             </div>
 
-                            <!-- Title -->
                             <div class="flex flex-col flex-none lg:text-left">
                                 <h1 class="text-xl font-extrabold tracking-tight lg:text-3xl">
                                     Save the Date!
@@ -100,10 +133,8 @@ const countdown = computed(() => {
                     <div class="flex flex-col items-center justify-center px-4 py-4">
                         <CardContent
                             class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5 justify-items items-center text-center">
-                            <div
-                                class="flex flex-col items-center lg:col-span-1 flex-none"
-                                v-for="(value, label) in countdown"
-                                :key="label">
+                            <div class="flex flex-col items-center lg:col-span-1 flex-none"
+                                v-for="(value, label) in countdown" :key="label">
                                 <h1 class="text-6xl font-extrabold tracking-tight lg:text-8xl">
                                     {{ value }}
                                 </h1>
@@ -113,45 +144,43 @@ const countdown = computed(() => {
                                 <p class="text-md text-muted-foreground tracking-tight lg:text-lg">until our event</p>
                             </div>
                         </CardContent>
-                        <CardFooter></CardFooter>
                     </div>
                 </Card>
             </div>
 
-            <!-- RSVP Form Section -->
             <div id="rsvp-form"
                 class="relative min-h-[200px] col-span-full rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
                 <FormRsvp />
             </div>
+
+            <div id="guestbook"
+                class="relative min-h-[200px] col-span-full rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
+                <GuestBook :rsvps="rsvps" :event="event" />
+            </div>
         </div>
     </AppLayout>
+    <footer
+        class="bottom-0 w-full text-sm mx-auto flex items-center justify-between sm:px-16 py-6 md:flex-row flex flex-col gap-2 md:gap-0">
+        <div class="flex items-center gap-2 ">
+            <div class="flex items-center gap-1">
+                <span>
+                    &copy; {{ new Date().getFullYear() }} <span class="font-semibold">{{ page.props.name }}</span>
+                </span>
+            </div>
+            <span> · </span>
+            <div class="flex items-center gap-1">
+                <span class="rounded-sm italic">
+                    Built with
+                    <svg class="inline-block h-4 w-4 text-red-500" fill="currentColor" viewBox="0 0 24 24"
+                        aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    by
+                    <TextLink href="https://buymeacoffee.com/hashaqirul">Hashaqirul.</TextLink>
+                </span>
+            </div>
+        </div>
+    </footer>
 </template>
-
-<!-- <div>
-                <Card class="min-h-[200px] rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border shadow-none">
-                    <CardContent class="flex h-full flex-col justify-center px-6 py-6">
-                        <h1 class="text-4xl font-extrabold tracking-tight lg:text-5xl">
-                            Hi There!
-                        </h1>
-                        <p class="mt-2 text-muted-foreground">
-                            Manage your profile and account settings from here.
-                        </p>
-                        <div class="mt-4">
-                            <Button variant="default" as-child class="w-full sm:w-auto">
-                                <a :href="route('login')">
-                                    Sign up now!
-                                    <ArrowRight class="size-4" />
-                                </a>
-                            </Button>
-                        </div>
-                    </CardContent>
-                </Card>
-            </div> -->
-
-<!-- Spacer for column 3 or any other widget -->
-<!-- <div class="relative min-h-[200px] col-span-1 aspect-video rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
-                <div class="flex h-full flex-col justify-center px-6 py-6">
-                    <h2 class="text-2xl font-semibold">Upcoming Features</h2>
-                    <p class="text-muted-foreground">More to come soon!</p>
-                </div>
-            </div> -->

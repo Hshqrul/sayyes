@@ -30,15 +30,15 @@ defineProps<Props>();
 
             <div class="grid flex-1 text-left text-sm leading-tight">
                 <span class="truncate font-medium">{{ 'Guest' }}</span>
-                <span class="truncate text-xs text-muted-foreground">{{ 'Hello there!' }}</span>
+                <span class="truncate text-xs text-muted-foreground">{{ 'Hi there!' }}</span>
             </div>
         </div>
     </DropdownMenuLabel>
-    <DropdownMenuSeparator />
+    <!-- <DropdownMenuSeparator />
     <DropdownMenuItem :as-child="true">
         <Link class="block w-full" method="get" :href="route('login')" as="button">
         <LogIn class="mr-2 h-4 w-4" />
         Login
         </Link>
-    </DropdownMenuItem>
+    </DropdownMenuItem> -->
 </template>

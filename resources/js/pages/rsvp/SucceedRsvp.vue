@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { Head, useForm, usePage } from '@inertiajs/vue3'
-import AppLayout from '@/layouts/app/FormCardLayout.vue'
+import AppLayout from '@/layouts/widget/FormCardLayout.vue'
 import { Toaster, toast } from 'vue-sonner'
 import 'vue-sonner/style.css'
 import Alert from '@/components/ui/alert/Alert.vue'
@@ -9,6 +9,7 @@ import AlertTitle from '@/components/ui/alert/AlertTitle.vue'
 import AlertDescription from '@/components/ui/alert/AlertDescription.vue'
 import { BadgeCheck, Moon, Sparkles } from 'lucide-vue-next'
 import moment from 'moment';
+import TextLink from '@/components/TextLink.vue'
 
 const page = usePage()
 
@@ -18,19 +19,22 @@ onMounted(() => {
     }
 })
 
-console.log(page.props.flash)
-
 interface Rsvp {
     name: string;
     attendence: boolean;
     no_of_pax: number;
     notes: string;
     created_at: string;
+    event_id: number;
 }
 
 interface Props {
     rsvp: Rsvp,
-    rsvps: Rsvp[]
+    rsvps: Rsvp[],
+    event: {
+        id: number;
+        slug: string;
+    };
 }
 
 const props = defineProps<Props>();
@@ -40,16 +44,16 @@ const currentForm = useForm({
     attendence: props.rsvp.attendence,
     no_of_pax: props.rsvp.no_of_pax,
     notes: props.rsvp.notes,
-    created_at: props.rsvp.created_at
+    created_at: props.rsvp.created_at,
+    event_id: props.rsvp.event_id
 });
-
 </script>
 
 <template>
     <Toaster />
 
-    <Head title="RSVP" />
-    <AppLayout title="Thank you" description="Your response has been successfully created">
+    <Head title="Success Response" />
+    <AppLayout>
         <Alert :class="{
             'bg-indigo-300/20 border-indigo-700 text-indigo-600 dark:bg-indigo-700/20 dark:border-indigo-600 dark:text-indigo-400':
                 currentForm.attendence == true,
@@ -59,10 +63,11 @@ const currentForm = useForm({
             <Sparkles />
             <AlertTitle>Thank you for your response {{ currentForm.name }}!</AlertTitle>
             <AlertDescription class="space-y-2">
-                {{ currentForm.attendence ? `We are so excited to see you${currentForm.no_of_pax > 1 ? ', both of you!' : (', ' + currentForm.name)} 👋` : 'We really hope that you are coming. ☹️' }}
+                {{ currentForm.attendence ? `We are so excited to see you${currentForm.no_of_pax > 1 ? ', both of you!'
+                    : (', ' + currentForm.name)} 👋` : 'We really hope that you are coming. ☹️' }}
             </AlertDescription>
         </Alert>
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-4 mb-4">
             <div class="border-b border-sidebar-border/70"></div>
             <h1 class="text-xl font-extrabold tracking-tight lg:text-2xl">Guests Book</h1>
             <div class="border-b border-sidebar-border/70"></div>
@@ -75,7 +80,7 @@ const currentForm = useForm({
                             rsvps.attendence == false,
                     }">
                         <AlertDescription class="pt-2 pb-2">
-                            <p class="italic font-semibold text-md" :class="{
+                            <p class="italic text-lg" :class="{
                                 'text-indigo-600 dark:text-indigo-400':
                                     rsvps.attendence == true,
                                 'text-yellow-600 dark:text-yellow-400':
@@ -98,6 +103,12 @@ const currentForm = useForm({
                     </Alert>
                 </template>
             </div>
+        </div>
+        <div class="text-center text-sm text-muted-foreground">
+            See more guest book
+            <TextLink :href="route('home', { event: props.event.slug }) + '#guestbook'" :tabindex="5">
+                here
+            </TextLink>
         </div>
     </AppLayout>
 </template>

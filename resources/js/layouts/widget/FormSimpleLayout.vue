@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
+import CustomLogoIcon from '@/components/CustomLogoIcon.vue';
 import { Link } from '@inertiajs/vue3';
 
 defineProps<{
@@ -10,12 +11,13 @@ defineProps<{
 
 <template>
     <div class="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
-        <div class="w-full max-w-sm">
+        <div class="w-full max-w-md">
             <div class="flex flex-col gap-8">
                 <div class="flex flex-col items-center gap-4">
                     <Link :href="route('dashboard')" class="flex flex-col items-center gap-2 font-medium">
-                        <div class="mb-1 flex h-9 w-9 items-center justify-center rounded-md">
-                            <AppLogoIcon class="size-9 fill-current text-[var(--foreground)] dark:text-white" />
+                        <div class="mb-8 flex h-9 w-9 items-center justify-center rounded-md">
+                            <!-- <AppLogoIcon class="size-9 fill-current text-[var(--foreground)] dark:text-white" /> -->
+                            <CustomLogoIcon class="size-30 fill-current text-[var(--foreground)] dark:text-white" />
                         </div>
                         <span class="sr-only">{{ title }}</span>
                     </Link>
