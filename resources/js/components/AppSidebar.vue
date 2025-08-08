@@ -7,11 +7,7 @@ import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { LayoutDashboard, PenLine } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
-import Toggle from './ui/toggle/Toggle.vue';
-import Switch from './ui/switch/Switch.vue';
-import { useColorMode, useDark } from '@vueuse/core';
-import Label from './ui/label/Label.vue';
-import ToggleTeme from './ToggleTheme.vue';
+import ToggleTheme from './ToggleTheme.vue';
 
 const mainNavItems: NavItem[] = [
   {
@@ -60,7 +56,7 @@ const footerNavItems: NavItem[] = [
 
     <SidebarFooter>
       <NavFooter :items="footerNavItems" />
-      <ToggleTeme as-child />
+      <ToggleTheme />
       <NavUser />
     </SidebarFooter>
   </Sidebar>

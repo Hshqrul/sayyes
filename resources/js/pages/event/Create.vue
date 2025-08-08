@@ -52,20 +52,7 @@ const { handleSubmit, setFieldValue, values } = useVeeForm({
 
 
 function onSubmit(values: any) {
-    router.post(route('events.store'), values, {
-        onSuccess: () => {
-            toast({
-                title: "Event successfully created!",
-                description: ""
-            })
-        },
-        onError: (errors) => {
-            toast({
-                title: "Please fix the errors in the form.",
-                description: ""
-            })
-        }
-    })
+    router.post(route('events.store'), values)
 }
 </script>
 

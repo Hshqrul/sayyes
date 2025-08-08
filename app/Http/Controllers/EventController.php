@@ -12,7 +12,7 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::where('user_id', Auth::id())->latest()->get();
+        $events = Event::with('rsvps')->where('user_id', Auth::id())->latest()->get();
 
         return Inertia::render('event/Index', [
             'events' => $events
@@ -33,12 +33,23 @@ class EventController extends Controller
             'allowed_pax' => 'nullable|integer|min:1',
         ]);
 
-        $validated['slug'] = Str::slug($validated['event_name'], '-');
-        $validated['user_id'] = Auth::id();
+        try {
+            \DB::beginTransaction();
+            $validated['slug'] = Str::slug($validated['event_name'], '-');
+            $validated['user_id'] = Auth::id();
 
-        Event::create($validated);
+            Event::create($validated);
 
-        return redirect()->route('events.index')->with('message', 'Event created.');
+            \DB::commit();
+
+            session()->flash('message', 'Event created successfully.');
+            return redirect()->route('events.index');
+        } catch (\Exception $e) {
+            \DB::rollBack();
+
+            session()->flash('error', 'Failed to create event.');
+            return redirect()->back();
+        }
     }
 
     public function edit(Event $event)
@@ -48,27 +59,39 @@ class EventController extends Controller
 
     public function update(Request $request, Event $event)
     {
-        $request->validate([
-            'event_name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'event_date' => 'required|date',
-            'allowed_pax' => 'required|integer|min:1',
-        ]);
+        try {
+            \DB::beginTransaction();
 
-        $update = [
-            'event_name' => $request->input('event_name'),
-            'description' => $request->input('description'),
-            'event_date' => $request->input('event_date'),
-            'allowed_pax' => $request->input('allowed_pax'),
-        ];
+            $request->validate([
+                'event_name' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'event_date' => 'required|date',
+                'allowed_pax' => 'required|integer|min:1',
+            ]);
 
-        if ($request->input('event_name') !== $event->event_name) {
-            $update['slug'] = Str::slug($request->input('event_name'), '-');
+            $update = [
+                'event_name' => $request->input('event_name'),
+                'description' => $request->input('description'),
+                'event_date' => $request->input('event_date'),
+                'allowed_pax' => $request->input('allowed_pax'),
+            ];
+
+            if ($request->input('event_name') !== $event->event_name) {
+                $update['slug'] = Str::slug($request->input('event_name'), '-');
+            }
+
+            $event->update($update);
+
+            \DB::commit();
+
+            session()->flash('message', 'Event updated successfully.');
+            return redirect()->route('events.index');
+        } catch (\Exception $e) {
+            \DB::rollBack();
+
+            session()->flash('error', 'Update failed. Please try again.');
+            return back();
         }
-
-        $event->update($update);
-
-        return redirect()->route('events.index')->with('message', 'Event updated.');
     }
 
     public function show(Event $event)
@@ -78,8 +101,28 @@ class EventController extends Controller
 
     public function destroy(Event $event)
     {
-        $event->delete();
+        try {
+            \DB::beginTransaction();
 
-        return redirect()->route('events.index')->with('message', 'Event deleted.');
+            if ($event->rsvps()->exists()) {
+                return redirect()->route('events.index');
+            }
+
+            $event->delete();
+
+            \DB::commit();
+
+            session()->flash('message', 'Event deleted.');
+            return redirect()->route('events.index');
+        } catch (\Exception $e) {
+            \DB::rollBack();
+
+            if ($event->rsvps()->exists()) {
+                session()->flash('message', 'Cannot delete event with RSVPs.');
+            } else {
+                session()->flash('message', $e->getMessage());
+            }
+            return redirect()->back();
+        }
     }
 }

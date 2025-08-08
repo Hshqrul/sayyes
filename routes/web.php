@@ -5,7 +5,7 @@ use App\Models\Rsvp;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RsvpController;
-use App\Http\Controllers\UserDashboard;
+use App\Http\Controllers\UserDashboardController;
 use App\Models\Event;
 
 Route::get('/', function () {
@@ -13,7 +13,7 @@ Route::get('/', function () {
 })->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/dashboard', [UserDashboard::class, 'index'])->name('user_dashboard');
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('user_dashboard');
     Route::get('/events', [EventController::class, 'index'])->name('events.index');
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
     Route::post('/events/store', [EventController::class, 'store'])->name('events.store');
