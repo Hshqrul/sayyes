@@ -18,6 +18,7 @@ const user = page.props.auth.user as User;
 
 interface EventStat {
   event_name: string
+  event_slug: string
   attend: number
   absent: number
   total: number

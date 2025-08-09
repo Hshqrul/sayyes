@@ -20,6 +20,7 @@ class UserDashboardController extends Controller
         $stats = $events->map(function ($event) {
             return [
                 'event_name' => $event->event_name,
+                'event_slug' => $event->slug,
                 'attend' => $event->rsvps->where('attendence', true)->count(),
                 'absent' => $event->rsvps->where('attendence', false)->count(),
                 'total' => $event->rsvps->sum('no_of_pax'),

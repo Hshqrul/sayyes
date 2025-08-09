@@ -20,6 +20,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/events/{event}/edit/', [EventController::class, 'edit'])->name('events.edit');
     Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+    Route::get('/events/{event}/rsvps', [RsvpController::class, 'index'])->name('rsvps.index');
+    Route::delete('/rsvp/{rsvp}', [RsvpController::class, 'destroy'])->name('rsvps.destroy');
 });
 
 Route::get('/event/{event}', function (Event $event) {
@@ -27,7 +29,7 @@ Route::get('/event/{event}', function (Event $event) {
         'event' => $event,
         'rsvps' => $event->rsvps()->orderBy('created_at', 'desc')->get(),
     ]);
-})->name('home');
+})->name('event_rsvp');
 
 Route::get('/rsvp', [RsvpController::class, 'create'])->name('rsvp.create');
 Route::post('/rsvp', [RsvpController::class, 'store'])->name('rsvp.store');

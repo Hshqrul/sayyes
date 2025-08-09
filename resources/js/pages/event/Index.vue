@@ -17,7 +17,8 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import AppSidebarLayout from '@/layouts/app/AppSidebarLayout.vue';
-import { EllipsisIcon, PencilIcon, Plus, ShareIcon, TimerIcon, Trash2Icon } from 'lucide-vue-next';
+import { EllipsisIcon, PencilIcon, Plus, SquareArrowOutUpRightIcon, TimerIcon, Trash2Icon } from 'lucide-vue-next';
+import { UserGroupIcon } from '@heroicons/vue/24/outline';
 import CardAction from '@/components/ui/card/CardAction.vue';
 import moment from 'moment';
 import CardFooter from '@/components/ui/card/CardFooter.vue';
@@ -105,6 +106,13 @@ console.log(page.props);
                                     <DropdownMenuContent class="w-50" align="start">
                                         <DropdownMenuGroup>
                                             <DropdownMenuItem :as-child="true">
+                                                <Link :href="route('event_rsvp', { event: event.slug })"
+                                                    class="block w-full" prefetch as="button">
+                                                <SquareArrowOutUpRightIcon class="size-4" />
+                                                <span>Open Rsvp</span>
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem :as-child="true">
                                                 <Link :href="route('events.edit', { event: event.slug })"
                                                     class="block w-full" prefetch as="button">
                                                 <PencilIcon class="size-4" />
@@ -112,19 +120,19 @@ console.log(page.props);
                                                 </Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem :as-child="true">
-                                                <Link :href="route('home', { event: event.slug })" class="block w-full"
-                                                    prefetch as="button">
-                                                <ShareIcon class="size-4" />
-                                                <span>Open Rsvp</span>
+                                                <Link :href="route('rsvps.index', { event: event.slug })"
+                                                    class="block w-full" prefetch as="button">
+                                                <UserGroupIcon class="size-4" />
+                                                <span>Guest List</span>
                                                 </Link>
                                             </DropdownMenuItem>
                                         </DropdownMenuGroup>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuGroup>
                                             <DropdownMenuItem :as-child="true">
-                                                <Link :href="route('events.destroy', { event: event.slug })" 
-                                                    @click="confirmDelete()"
-                                                    class="block w-full hover:text-red-500" method="delete" as="button">
+                                                <Link :href="route('events.destroy', { event: event.slug })"
+                                                    @click="confirmDelete()" class="block w-full hover:text-red-500"
+                                                    method="delete" as="button">
                                                 <Trash2Icon class="size-4" />
                                                 <span>Delete</span>
                                                 </Link>

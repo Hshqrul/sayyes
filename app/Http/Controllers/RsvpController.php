@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\Rsvp;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -11,9 +12,17 @@ class RsvpController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Event $event)
     {
-        // return Inertia::render('rsvp/FormRsvp');
+        $rsvps = $event->rsvps()
+            ->select('id', 'name', 'no_of_pax', 'attendence', 'notes', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return inertia('rsvp/Index', [
+            'data' => $rsvps,
+            'event' => $event,
+        ]);
     }
 
     /**
@@ -74,6 +83,20 @@ class RsvpController extends Controller
      */
     public function destroy(Rsvp $rsvp)
     {
-        //
+        try {
+            \DB::beginTransaction();
+
+            $rsvp->delete();
+
+            \DB::commit();
+
+            session()->flash('message', 'Rsvp successfully deleted.');
+            return redirect()->route('rsvps.index');
+        } catch (\Exception $e) {
+            \DB::rollBack();
+
+            session()->flash('message', $e->getMessage());
+            return redirect()->back();
+        }
     }
 }

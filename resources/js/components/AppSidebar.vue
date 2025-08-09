@@ -5,7 +5,7 @@ import NavUser from '@/components/NavUserNew.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { LayoutDashboard, PenLine } from 'lucide-vue-next';
+import { CalendarHeartIcon, CoffeeIcon, LayoutDashboardIcon } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 import ToggleTheme from './ToggleTheme.vue';
 
@@ -13,26 +13,21 @@ const mainNavItems: NavItem[] = [
   {
     title: 'Dashboard',
     href: '/dashboard',
-    icon: LayoutDashboard,
+    icon: LayoutDashboardIcon,
   },
   {
-    title: 'Setup RSVP',
+    title: 'Events',
     href: '/events',
-    icon: PenLine,
+    icon: CalendarHeartIcon,
   }
 ];
 
 const footerNavItems: NavItem[] = [
-  // {
-  //     title: 'Github Repo',
-  //     href: 'https://github.com/laravel/vue-starter-kit',
-  //     icon: Folder,
-  // },
-  // {
-  //   title: 'Documentation',
-  //   href: 'https://laravel.com/docs/starter-kits#vue',
-  //   icon: BookOpen,
-  // },
+  {
+    title: 'Buy me a coffee!',
+    href: 'https://buymeacoffee.com/hashaqirul',
+    icon: CoffeeIcon,
+  },
 ];
 </script>
 
