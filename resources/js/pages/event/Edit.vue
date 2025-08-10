@@ -96,7 +96,7 @@ function handleSubmit() {
                                 </div>
                             </div>
                             <div class="flex justify-start space-x-2">
-                                <Button type="submit">Submit</button>
+                                <Button type="submit">Save</button>
                             </div>
                         </form>
                     </CardContent>

@@ -68,7 +68,7 @@ const columns: ColumnDef<typeof props.data[0]>[] = [
     {
         accessorKey: 'notes',
         header: 'Notes',
-        meta: { class: 'w-[100px]' }
+        meta: { class: 'max-w-[200px] whitespace-pre-wrap break-words' }
     },
     {
         accessorKey: 'created_at',

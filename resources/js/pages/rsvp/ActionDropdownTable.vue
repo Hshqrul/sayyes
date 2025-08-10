@@ -94,14 +94,19 @@ function confirmDelete(eventId: number) {
                         </AlertDialogContent>
                     </AlertDialog>
                 </DropdownMenuItem>
-
-                <DropdownMenuItem :as-child="true">
+                <!-- <DropdownMenuItem :as-child="true">
+                    <Link :href="route('events.edit', { event: event.slug })" class="block w-full" prefetch as="button">
+                    <PencilIcon class="size-4" />
+                    <span>Edit</span>
+                    </Link>
+                </DropdownMenuItem> -->
+                <!-- <DropdownMenuItem :as-child="true">
                     <Link :href="route('rsvps.destroy', { rsvp: id })" @click="confirmDelete()"
                         class="block w-full hover:text-red-500" method="delete" as="button">
                     <Trash2 class="size-4" />
                     <span>Delete</span>
                     </Link>
-                </DropdownMenuItem>
+                </DropdownMenuItem> -->
             </DropdownMenuGroup>
         </DropdownMenuContent>
     </DropdownMenu>

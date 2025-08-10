@@ -91,12 +91,12 @@ const countdown = computed(() => {
                         Hi There!
                     </h1>
                     <p class="mt-2 text-muted-foreground font-semibold tracking-tight">
-                        Welcome to the rsvp page!
+                        Please fill out your RSVP!
                     </p>
                     <div class="mt-4">
                         <Button variant="default" as-child class="w-full sm:w-auto">
                             <a href="#rsvp-form">
-                                Fill out your RSVP
+                                Rsvp Form
                                 <MoveRight class="size-4" />
                             </a>
                         </Button>
