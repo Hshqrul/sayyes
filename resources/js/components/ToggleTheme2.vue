@@ -23,6 +23,7 @@ function handleAppearanceChange(val: string | string[] | null) {
     v-model="appearance"
     @update:modelValue="handleAppearanceChange"
     type="single"
+    size="sm"
     class="w-full"
   >
     <ToggleGroupItem
