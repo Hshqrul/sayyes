@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
 use App\Models\Rsvp;
 use Inertia\Inertia;
+use App\Models\Event;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class RsvpController extends Controller
@@ -41,9 +42,14 @@ class RsvpController extends Controller
         $data = $request->validate([
             'name' => 'required|string|unique:rsvps,name',
             'attendence' => 'required|boolean',
-            'no_of_pax' => 'nullable|integer',
+            'no_of_pax' => 'required_if:attendence,true|integer',
             'notes' => 'required|string|max:500',
             'event_id' => 'required|exists:events,id',
+        ], [
+            'name.required' => 'Please enter your name.',
+            'name.unique' => 'This name has already been filled, please use a different name.',
+            'attendence.required' => 'Please specify your attendance.',
+            'notes.required' => 'Please provide some wishes.',
         ]);
 
         Rsvp::create($data);
@@ -67,7 +73,13 @@ class RsvpController extends Controller
      */
     public function edit(Rsvp $rsvp)
     {
-        //
+        $event = Event::where('id', $rsvp->event_id)->first();
+        $eventList = Event::where('user_id', auth()->user()->id)->select('id', 'event_name')->get();
+        return Inertia::render('rsvp/Edit', [
+            'rsvp' => $rsvp,
+            'event' => $event,
+            'eventList' => $eventList
+        ]);
     }
 
     /**
@@ -75,7 +87,46 @@ class RsvpController extends Controller
      */
     public function update(Request $request, Rsvp $rsvp)
     {
-        //
+        try {
+            \DB::beginTransaction();
+
+            $request->validate([
+                'name' => 'required|string|unique:rsvps,name,' . $rsvp->id,
+                'attendence' => 'required|boolean',
+                'no_of_pax' => 'required_if:attendence,true|integer',
+                'notes' => 'required|string|max:500',
+                'event_id' => 'required|exists:events,id',
+            ], [
+                'name.required' => 'Please enter your name.',
+                'name.unique' => 'This name has already been filled, please use a different name.',
+                'attendence.required' => 'Please specify your attendance.',
+                'notes.required' => 'Please provide some wishes.',
+            ]);
+
+            $update = [
+                'name' => $request->input('name'),
+                'attendence' => $request->input('attendence'),
+                'no_of_pax' => $request->input('no_of_pax'),
+                'notes' => $request->input('notes'),
+                'event_id' => $request->input('event_id'),
+            ];
+
+            $rsvp->update($update);
+
+            \DB::commit();
+
+            session()->flash('message', 'Rsvp successfully updated.');
+
+            return redirect()->route('rsvps.index', [
+                'event' => $rsvp->event()->first(),
+            ]);
+        } catch (\Exception $e) {
+            \DB::rollBack();
+
+            session()->flash('error', 'Update failed. Please try again.');
+
+            return back();
+        }
     }
 
     /**

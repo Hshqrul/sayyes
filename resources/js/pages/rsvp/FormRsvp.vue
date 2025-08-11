@@ -17,12 +17,10 @@ import { NumberFieldIncrement } from '@/components/ui/number-field'
 import NumberFieldInput from '@/components/ui/number-field/NumberFieldInput.vue'
 
 const page = usePage()
-
 const event_id = page.props.event?.id
-
 const form = useForm({
     name: '',
-    attendence: 0,
+    attendence: '',
     no_of_pax: 0,
     notes: 'Sorry I can\'t make it, but wishing you both ....',
     event_id: event_id
@@ -34,6 +32,9 @@ const handleSubmit = () => {
 
 watch(() => form.attendence, (newValue) => {
     if (newValue === 0) {
+        form.no_of_pax = 0
+        form.notes = 'Sorry I can\'t make it, but wishing you both ....'
+    } else if (!newValue) {
         form.no_of_pax = 0
         form.notes = 'Sorry I can\'t make it, but wishing you both ....'
     } else {
@@ -72,7 +73,7 @@ watch(() => form.attendence, (newValue) => {
 
                 <div class="space-y-2">
                     <Label for="no_of_pax">Number of Guests</Label>
-                    <NumberField id="no_of_pax" :default-value="1" :min="form.attendence === 1 ? 1 : 0" :max="2" :disabled="form.attendence === 0"
+                    <NumberField id="no_of_pax" :default-value="1" :min="form.attendence === 1 ? 1 : 0" :max="page.props.event?.allowed_pax" :disabled="!form.attendence"
                         v-model="form.no_of_pax">
                         <NumberFieldContent>
                             <NumberFieldDecrement />

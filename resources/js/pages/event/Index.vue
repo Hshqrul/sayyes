@@ -52,7 +52,6 @@ function confirmDelete(eventId: number) {
         // window.location.href = route('events.destroy', { event: eventId });
     }
 }
-console.log(page.props);
 </script>
 
 <template>

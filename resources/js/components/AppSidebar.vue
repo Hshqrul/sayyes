@@ -7,7 +7,6 @@ import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { CalendarHeartIcon, CoffeeIcon, LayoutDashboardIcon } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
-import ToggleTheme from './ToggleTheme.vue';
 
 const mainNavItems: NavItem[] = [
   {
@@ -19,7 +18,7 @@ const mainNavItems: NavItem[] = [
     title: 'Events',
     href: '/events',
     icon: CalendarHeartIcon,
-  }
+  },
 ];
 
 const footerNavItems: NavItem[] = [
@@ -37,7 +36,7 @@ const footerNavItems: NavItem[] = [
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton size="lg" as-child>
-            <Link :href="route('dashboard')">
+            <Link :href="route('user_dashboard')">
             <AppLogo />
             </Link>
           </SidebarMenuButton>
@@ -51,7 +50,6 @@ const footerNavItems: NavItem[] = [
 
     <SidebarFooter>
       <NavFooter :items="footerNavItems" />
-      <ToggleTheme />
       <NavUser />
     </SidebarFooter>
   </Sidebar>

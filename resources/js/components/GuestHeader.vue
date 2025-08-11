@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppLogo from '@/components/AppLogo.vue';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -12,11 +11,12 @@ import UserMenuContent from '@/components/UserMenuContent.vue';
 import { getInitials } from '@/composables/useInitials';
 import type { BreadcrumbItem, NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, Menu, PencilLine, Search } from 'lucide-vue-next';
+import { Menu } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
 import GuestMenuContent from './GuestMenuContent.vue';
 import SwitchTheme from './SwitchTheme.vue';
 import Separator from './ui/separator/Separator.vue';
+import GuestLogo from './GuestLogo.vue';
 
 interface Props {
     breadcrumbs?: BreadcrumbItem[];
@@ -82,7 +82,7 @@ const rightNavItems: NavItem[] = [
                 <div class="lg:hidden">
                     <Sheet>
                         <SheetTrigger :as-child="true">
-                            <Button variant="ghost" size="icon" class="mr-2 h-9 w-9">
+                            <Button variant="ghost" size="icon" class="mr-2 h-9 w-9" :class="page.props.event ? 'hidden' : ''">
                                 <Menu class="h-5 w-5" />
                             </Button>
                         </SheetTrigger>
@@ -116,8 +116,8 @@ const rightNavItems: NavItem[] = [
                     </Sheet>
                 </div>
 
-                <Link :href="route('dashboard')" class="flex items-center gap-x-2">
-                <AppLogo />
+                <Link :href="route('event_rsvp', { event: page.props.event?.slug })" class="flex items-center gap-x-2">
+                <GuestLogo />
                 </Link>
 
                 <!-- Desktop Menu -->
@@ -183,9 +183,9 @@ const rightNavItems: NavItem[] = [
                                 </Avatar>
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" class="w-56">
+                        <!-- <DropdownMenuContent align="end" class="w-56">
                             <GuestMenuContent />
-                        </DropdownMenuContent>
+                        </DropdownMenuContent> -->
                     </DropdownMenu>
 
                     <!-- If user is logged in -->

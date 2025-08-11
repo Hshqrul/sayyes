@@ -106,7 +106,7 @@ const currentForm = useForm({
         </div>
         <div class="text-center text-sm text-muted-foreground">
             See more guest book
-            <TextLink :href="route('home', { event: props.event.slug }) + '#guestbook'" :tabindex="5">
+            <TextLink :href="route('event_rsvp', { event: props.event.slug }) + '#guestbook'" :tabindex="5">
                 here
             </TextLink>
         </div>

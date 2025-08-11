@@ -3,7 +3,8 @@ import UserInfo from '@/components/UserInfo.vue';
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import type { User } from '@/types';
 import { Link, router } from '@inertiajs/vue3';
-import { LayoutDashboardIcon, LogOut, UserCircle, UserCircle2 } from 'lucide-vue-next';
+import { LayoutDashboardIcon, LogOut, UserCircle } from 'lucide-vue-next';
+import ToggleTheme2 from './ToggleTheme2.vue';
 
 interface Props {
     user: User;
@@ -24,18 +25,24 @@ defineProps<Props>();
     </DropdownMenuLabel>
     <DropdownMenuSeparator />
     <DropdownMenuGroup>
+        <DropdownMenuItem>
+            <ToggleTheme2 />
+        </DropdownMenuItem>
+    </DropdownMenuGroup>
+    <DropdownMenuSeparator />
+    <DropdownMenuGroup>
         <DropdownMenuItem :as-child="true">
             <Link class="block w-full hover:bg-muted" :href="route('profile.edit')" prefetch as="button">
                 <UserCircle class="mr-2 h-4 w-4" />
                 Account
             </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem :as-child="true">
+        <!-- <DropdownMenuItem :as-child="true">
             <Link class="block w-full hover:bg-muted" :href="route('user_dashboard')" prefetch as="button">
                 <LayoutDashboardIcon class="mr-2 h-4 w-4" />
                 Dashboard
             </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> -->
     </DropdownMenuGroup>
     <DropdownMenuSeparator />
     <DropdownMenuItem :as-child="true">

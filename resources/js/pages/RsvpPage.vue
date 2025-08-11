@@ -42,7 +42,7 @@ const page = usePage<Props>()
 const rsvps = page.props.rsvps
 const event = page.props.event
 const user = page.props.user
-console.log(page.props)
+// console.log(page.props)
 function dateValueToDate(dateValue: DateValue): Date {
     return new Date(dateValue.year, dateValue.month - 1, dateValue.day)
 }

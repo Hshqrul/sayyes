@@ -46,51 +46,67 @@ const props = defineProps<{
 const columns: ColumnDef<typeof props.data[0]>[] = [
     {
         id: 'index',
-        header: 'No.',
-        cell: ({ row }) => row.index + 1,
+        header: () => h('div', { class: 'text-center' }, '#'),
+        cell: ({ row }) => `${row.index + 1}.`,
         enableGlobalFilter: false,
+        meta: { class: 'text-center' },
     },
     {
         accessorKey: 'name',
         header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Guest Name' }),
         enableSorting: true,
-    },
-    {
-        accessorKey: 'no_of_pax',
-        header: 'No. of Pax'
+        cell: ({ getValue }) => getValue() || '-',
     },
     {
         accessorKey: 'attendence',
-        header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Attendence' }),
-        cell: ({ getValue }) => (getValue() ? 'Yes' : 'No'),
+        header: () => h('div', { class: 'text-center' }, 'Attendence'),
+        cell: ({ getValue }) => {
+            const val = getValue();
+            return h(Badge, {
+                class: 'capitalize',
+                variant: val === true ? 'default' : val === false ? 'destructive' : 'outline',
+            }, val === true ? 'Attended' : val === false ? 'Absent' : '-');
+        },
         enableSorting: true,
+        meta: { class: 'text-center' },
+    },
+    {
+        accessorKey: 'no_of_pax',
+        header: () => h('div', { class: 'text-center' }, 'No. of Pax'),
+        cell: ({ getValue }) => getValue() || '-',
+        meta: { class: 'text-center' },
     },
     {
         accessorKey: 'notes',
         header: 'Notes',
-        meta: { class: 'max-w-[200px] whitespace-pre-wrap break-words' }
+        meta: { class: 'max-w-[300px] whitespace-pre-wrap break-words' },
+        cell: ({ getValue }) => getValue() || '-',
     },
     {
         accessorKey: 'created_at',
-        header: 'Created At',
-        cell: ({ getValue }) => moment(getValue()).format('MMM DD, yyyy, h:mm a'),
+        header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Created At' }),
+        cell: ({ getValue }) => {
+            const val = getValue();
+            return val ? moment(val).format('MMM DD, yyyy, h:mm a') : '-';
+        },
     },
     {
         id: 'actions',
-        header: 'Actions',
+        header: () => h('div', { class: 'text-center' }, 'Actions'),
         enableHiding: false,
         cell: ({ row }) => {
             return h(ActionDropdownTable, {
                 id: row.original.id,
-                name: row.original.name,
+                name: row.original.name || '-',
                 attendence: row.original.attendence,
-                no_of_pax: row.original.no_of_pax,
-                notes: row.original.notes,
-                created_at: row.original.created_at
-            })
+                no_of_pax: row.original.no_of_pax || '-',
+                notes: row.original.notes || '-',
+                created_at: row.original.created_at || '-'
+            });
         },
+        meta: { class: 'text-center' },
     },
-]
+];
 
 const sorting = ref<SortingState>([])
 const columnFilters = ref<ColumnFiltersState>([])
@@ -106,11 +122,12 @@ const table = useVueTable({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    onSortingChange: updaterOrValue => valueUpdater(updaterOrValue, sorting),
     onGlobalFilterChange: updaterOrValue => valueUpdater(updaterOrValue, globalFilter),
     state: {
-        get sorting() { return sorting.value },
         get columnFilters() { return columnFilters.value },
         get globalFilter() { return globalFilter.value },
+        get sorting() { return sorting.value },
     },
     globalFilterFn: fuzzyFilter,
 })

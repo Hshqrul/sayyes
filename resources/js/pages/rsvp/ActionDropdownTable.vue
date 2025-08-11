@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Eye, MoreHorizontal, Trash2 } from 'lucide-vue-next'
+import { EditIcon, Eye, MoreHorizontal, Trash2 } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import {
     DropdownMenu,
@@ -20,6 +20,7 @@ import {
     AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
 import { Link } from '@inertiajs/vue3';
+import DropdownMenuSeparator from '@/components/ui/dropdown-menu/DropdownMenuSeparator.vue';
 
 const props = defineProps<{
     id: number
@@ -29,14 +30,6 @@ const props = defineProps<{
     notes: string
     created_at: string
 }>()
-
-function onEdit() {
-    console.log('Edit', props.name)
-}
-
-function onDelete() {
-    console.log('Delete', props.name)
-}
 
 function copy(id: string) {
     navigator.clipboard.writeText(id)
@@ -62,9 +55,10 @@ function confirmDelete(eventId: number) {
             <DropdownMenuGroup>
                 <DropdownMenuItem as-child>
                     <AlertDialog>
-                        <AlertDialogTrigger class="flex w-full items-center justify-center p-2 text-sm hover:bg-muted">
-                            <Eye class="size-4 mr-2" />
-                            Show Dialog
+                        <AlertDialogTrigger
+                            class="flex w-full items-center justify-start py-2 px-2 rounded-sm text-sm hover:bg-muted">
+                            <Eye class="size-4 mr-1.5" />
+                            View
                         </AlertDialogTrigger>
 
                         <AlertDialogContent :class="{
@@ -94,19 +88,20 @@ function confirmDelete(eventId: number) {
                         </AlertDialogContent>
                     </AlertDialog>
                 </DropdownMenuItem>
-                <!-- <DropdownMenuItem :as-child="true">
-                    <Link :href="route('events.edit', { event: event.slug })" class="block w-full" prefetch as="button">
-                    <PencilIcon class="size-4" />
+                <DropdownMenuItem :as-child="true">
+                    <Link :href="route('rsvps.edit', { rsvp: props.id })" class="block w-full" prefetch as="button">
+                    <EditIcon class="size-4 text-dark" />
                     <span>Edit</span>
                     </Link>
-                </DropdownMenuItem> -->
-                <!-- <DropdownMenuItem :as-child="true">
-                    <Link :href="route('rsvps.destroy', { rsvp: id })" @click="confirmDelete()"
-                        class="block w-full hover:text-red-500" method="delete" as="button">
-                    <Trash2 class="size-4" />
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                    <!-- <Link :href="route('rsvps.destroy', { rsvp: id })" @click="confirmDelete()"
+                        class="block w-full hover:text-red-500" method="delete" as="button"> -->
+                    <Trash2 class="size-4 text-dark" />
                     <span>Delete</span>
-                    </Link>
-                </DropdownMenuItem> -->
+                    <!-- </Link> -->
+                </DropdownMenuItem>
             </DropdownMenuGroup>
         </DropdownMenuContent>
     </DropdownMenu>

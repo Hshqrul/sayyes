@@ -35,7 +35,7 @@ const columns = computed(() => props.table.getAllColumns()
             </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" class="w-[150px]">
-            <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+            <DropdownMenuLabel>Columns</DropdownMenuLabel>
             <DropdownMenuSeparator />
 
             <DropdownMenuCheckboxItem v-for="column in columns" :key="column.id" class="capitalize"
