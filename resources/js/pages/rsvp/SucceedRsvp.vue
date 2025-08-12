@@ -2,22 +2,38 @@
 import { onMounted } from 'vue'
 import { Head, useForm, usePage } from '@inertiajs/vue3'
 import AppLayout from '@/layouts/widget/FormCardLayout.vue'
-import { Toaster, toast } from 'vue-sonner'
-import 'vue-sonner/style.css'
 import Alert from '@/components/ui/alert/Alert.vue'
 import AlertTitle from '@/components/ui/alert/AlertTitle.vue'
 import AlertDescription from '@/components/ui/alert/AlertDescription.vue'
 import { BadgeCheck, Moon, Sparkles } from 'lucide-vue-next'
 import moment from 'moment';
 import TextLink from '@/components/TextLink.vue'
+import { Toaster, toast } from 'vue-sonner'
+import 'vue-sonner/style.css'
+import { useAppearance } from '@/composables/useAppearance'
 
 const page = usePage()
 
+const toastMethods = {
+    success: toast.success,
+    error: toast.error,
+    warning: toast.warning,
+    info: toast.info,
+    message: toast.message
+} as const
+
 onMounted(() => {
-    if (page.props.flash?.message) {
-        toast(page.props.flash?.message)
+    const toastData = page.props.flash?.toast
+    console.log(page.props)
+    if (toastData?.title && toastData.type in toastMethods) {
+        toastMethods[toastData.type as keyof typeof toastMethods](
+            toastData.title,
+            { description: toastData.description ?? '' }
+        )
     }
 })
+
+const { appearance } = useAppearance()
 
 interface Rsvp {
     name: string;
@@ -50,7 +66,7 @@ const currentForm = useForm({
 </script>
 
 <template>
-    <Toaster />
+    <Toaster closeButton :theme="appearance"/>
 
     <Head title="Success Response" />
     <AppLayout>

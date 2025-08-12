@@ -54,10 +54,16 @@ class RsvpController extends Controller
 
         Rsvp::create($data);
 
+        session()->flash('toast', [
+            'type' => 'success',
+            'title' => 'Form submitted successfully.',
+            'description' => 'Your response has been submitted successfully.'
+        ]);
+
         return redirect()->route('rsvp.success', [
             'name' => $data['name'],
             'event' => $data['event_id'],
-        ])->with('message', 'Your response has been successfully created');
+        ]);
     }
 
     /**
@@ -115,7 +121,10 @@ class RsvpController extends Controller
 
             \DB::commit();
 
-            session()->flash('message', 'Rsvp successfully updated.');
+            session()->flash('toast', [
+                'type' => 'success',
+                'title' => 'Rsvp updated successfully.',
+            ]);
 
             return redirect()->route('rsvps.index', [
                 'event' => $rsvp->event()->first(),
@@ -123,7 +132,10 @@ class RsvpController extends Controller
         } catch (\Exception $e) {
             \DB::rollBack();
 
-            session()->flash('error', 'Update failed. Please try again.');
+            session()->flash('toast', [
+                'type' => 'error',
+                'title' => $e->getMessage(),
+            ]);
 
             return back();
         }
@@ -141,12 +153,19 @@ class RsvpController extends Controller
 
             \DB::commit();
 
-            session()->flash('message', 'Rsvp successfully deleted.');
+            session()->flash('toast', [
+                'type' => 'success',
+                'title' => 'Rsvp deleted successfully.',
+            ]);
             return redirect()->route('rsvps.index');
         } catch (\Exception $e) {
             \DB::rollBack();
 
-            session()->flash('message', $e->getMessage());
+            session()->flash('toast', [
+                'type' => 'error',
+                'title' => 'Failed to delete rsvp.',
+                'description' => $e->getMessage()
+            ]);
             return redirect()->back();
         }
     }

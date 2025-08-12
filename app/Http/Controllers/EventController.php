@@ -12,16 +12,16 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::with('rsvps')->where('user_id', Auth::id())->latest()->get();
+        $events = Event::with('rsvps')->where('user_id', auth()->user()->id)->latest()->get();
 
-        return Inertia::render('event/Index', [
+        return inertia('event/Index', [
             'events' => $events
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('event/Create');
+        return inertia('event/Create');
     }
 
     public function store(Request $request)
@@ -42,12 +42,19 @@ class EventController extends Controller
 
             \DB::commit();
 
-            session()->flash('message', 'Event created successfully.');
+            session()->flash('toast', [
+                'type' => 'success',
+                'title' => 'Event created successfully.',
+                // 'description' => 'Yore event ' . $validated['event_name'] . ' has been created.'
+            ]);
             return redirect()->route('events.index');
         } catch (\Exception $e) {
             \DB::rollBack();
 
-            session()->flash('error', 'Failed to create event.');
+            session()->flash('toast', [
+                'type' => 'error',
+                'title' => 'Failed to create event.'
+            ]);
             return redirect()->back();
         }
     }
@@ -84,19 +91,25 @@ class EventController extends Controller
 
             \DB::commit();
 
-            session()->flash('message', 'Event updated successfully.');
+            session()->flash('toast', [
+                'type' => 'success',
+                'title' => 'Event updated successfully.'
+            ]);
             return redirect()->route('events.index');
         } catch (\Exception $e) {
             \DB::rollBack();
 
-            session()->flash('error', 'Update failed. Please try again.');
+            session()->flash('toast', [
+                'type' => 'error',
+                'title' => 'Failed to update event.',
+            ]);
             return back();
         }
     }
 
     public function show(Event $event)
     {
-        return Inertia::render('event/Show', compact('event'));
+        // return Inertia::render('event/Show', compact('event'));
     }
 
     public function destroy(Event $event)
@@ -105,6 +118,11 @@ class EventController extends Controller
             \DB::beginTransaction();
 
             if ($event->rsvps()->exists()) {
+                session()->flash('toast', [
+                    'type' => 'error',
+                    'title' => 'Unable to delete the event. This event has RSVPs.',
+                    'description' => 'This event has RSVPs.'
+                ]);
                 return redirect()->route('events.index');
             }
 
@@ -112,17 +130,50 @@ class EventController extends Controller
 
             \DB::commit();
 
-            session()->flash('message', 'Event deleted.');
+            session()->flash('toast', [
+                'type' => 'success',
+                'title' => 'Event deleted successfully.',
+                'description' => ''
+            ]);
             return redirect()->route('events.index');
         } catch (\Exception $e) {
             \DB::rollBack();
 
             if ($event->rsvps()->exists()) {
-                session()->flash('message', 'Cannot delete event with RSVPs.');
+                session()->flash('toast', [
+                    'type' => 'error',
+                    'title' => 'Unable to delete the event. This event has RSVPs.'
+                ]);
             } else {
-                session()->flash('message', $e->getMessage());
+                session()->flash('toast', [
+                    'type' => 'error',
+                    'title' => $e->getMessage()
+                ]);
             }
             return redirect()->back();
         }
+    }
+
+    public function toast()
+    {
+        // session()->flash('toast', [
+        //     'type' => 'success',
+        //     'text' => 'Test Toast'
+        // ]);
+        // session()->flash('toast', [
+        //     'type' => 'error',
+        //     'text' => 'Test Toast'
+        // ]);
+        // session()->flash('toast', [
+        //     'type' => 'warning',
+        //     'text' => 'Test Toast'
+        // ]);
+        session()->flash('toast', [
+            'type' => 'message',  // success | error | warning | info
+            'title' => 'Test Toast',
+            'description' => 'Hello world'
+        ]);
+
+        return redirect()->route('events.index');
     }
 }

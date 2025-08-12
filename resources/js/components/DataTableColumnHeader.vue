@@ -16,6 +16,7 @@ import {
 interface DataTableColumnHeaderProps {
     column: Column<Task, any>
     title: string
+    class?: string
 }
 
 defineProps<DataTableColumnHeaderProps>()

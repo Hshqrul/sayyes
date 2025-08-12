@@ -176,7 +176,6 @@ setTimeout(() => {
                             </TableHeader>
 
                             <TableBody>
-                                <!-- Skeleton Loader -->
                                 <template v-if="loading">
                                     <TableRow v-for="i in 10" :key="i">
                                         <TableCell v-for="j in columns.length" :key="j" class="h-12">
@@ -185,7 +184,6 @@ setTimeout(() => {
                                     </TableRow>
                                 </template>
 
-                                <!-- Real Data -->
                                 <template v-else-if="table.getRowModel().rows?.length">
                                     <TableRow v-for="row in table.getRowModel().rows" :key="row.id">
                                         <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id"
@@ -196,7 +194,6 @@ setTimeout(() => {
                                     </TableRow>
                                 </template>
 
-                                <!-- Empty State -->
                                 <template v-else>
                                     <TableRow>
                                         <TableCell :colspan="columns.length" class="h-24 text-center">
@@ -213,73 +210,3 @@ setTimeout(() => {
         </div>
     </AppLayout>
 </template>
-
-<!-- <template>
-
-    <Head :title="`Guest List - ${event.event_name}`" />
-    <AppLayout :breadcrumbs="[
-        { title: 'Event List', href: '/event' },
-        { title: 'Guest List', href: `/events/${event.id}/rsvps` }
-    ]">
-        <div class="flex h-full flex-1 flex-col gap-4 p-2 overflow-x-auto md:p-6">
-            <div class="flex flex-row items-center justify-between p-2">
-                <h1 class="text-2xl font-bold leading-tight tracking-tight">GuestList</h1>
-                <p class="text-sm text-muted-foreground">{{ event.event_name }}</p>
-            </div>
-            <Card class="md:w-full shadow-xs">
-                <CardContent>
-                    <div class="flex items-center justify-end py-4">
-                        <Input class="max-w-sm" placeholder="Filter name..."
-                            :model-value="table.getColumn('name')?.getFilterValue() as string"
-                            @update:model-value=" table.getColumn('name')?.setFilterValue($event)" />
-                    </div>
-                    <div class="border rounded-md">
-                        <Table>
-                            <TableHeader>
-                                <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-                                    <TableHead v-for="header in headerGroup.headers" :key="header.id">
-                                        <FlexRender v-if="!header.isPlaceholder"
-                                            :render="header.column.columnDef.header" :props="header.getContext()" />
-                                    </TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                <template v-if="table.getRowModel().rows?.length">
-                                    <TableRow v-for="row in table.getRowModel().rows" :key="row.id">
-                                        <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
-                                            <FlexRender :render="cell.column.columnDef.cell"
-                                                :props="cell.getContext()" />
-                                        </TableCell>
-                                    </TableRow>
-                                </template>
-                                <template v-else>
-                                    <TableRow>
-                                        <TableCell :colspan="columns.length" class="h-24 text-center">
-                                            No results.
-                                        </TableCell>
-                                    </TableRow>
-                                </template>
-                            </TableBody>
-                        </Table>
-                    </div>
-                    <div class="flex items-center justify-end space-x-2 py-4">
-                        <div class="flex-1 text-sm text-muted-foreground">
-                            {{ table.getFilteredSelectedRowModel().rows.length }} of
-                            {{ table.getFilteredRowModel().rows.length }} row(s) selected.
-                        </div>
-                        <div class="space-x-2">
-                            <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()"
-                                @click="table.previousPage()">
-                                Previous
-                            </Button>
-                            <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()"
-                                @click="table.nextPage()">
-                                Next
-                            </Button>
-                        </div>
-                    </div>
-                </CardContent>
-            </Card>
-        </div>
-    </AppLayout>
-</template> -->
