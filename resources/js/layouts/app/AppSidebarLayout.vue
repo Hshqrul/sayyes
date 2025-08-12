@@ -22,7 +22,6 @@ const toastMethods = {
 
 onMounted(() => {
     const toastData = page.props.flash?.toast
-    console.log(page.props)
     if (toastData?.title && toastData.type in toastMethods) {
         toastMethods[toastData.type as keyof typeof toastMethods](
             toastData.title,

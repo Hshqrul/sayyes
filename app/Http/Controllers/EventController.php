@@ -156,18 +156,6 @@ class EventController extends Controller
 
     public function toast()
     {
-        // session()->flash('toast', [
-        //     'type' => 'success',
-        //     'text' => 'Test Toast'
-        // ]);
-        // session()->flash('toast', [
-        //     'type' => 'error',
-        //     'text' => 'Test Toast'
-        // ]);
-        // session()->flash('toast', [
-        //     'type' => 'warning',
-        //     'text' => 'Test Toast'
-        // ]);
         session()->flash('toast', [
             'type' => 'message',  // success | error | warning | info
             'title' => 'Test Toast',

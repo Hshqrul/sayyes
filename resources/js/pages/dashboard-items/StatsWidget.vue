@@ -37,13 +37,13 @@ onMounted(() => {
 <template>
     <div class="space-y-6">
         <template v-if="loading">
-            <div class="flex flex-col">
-                <div class="flex flex-row justify-end pb-2">
+            <div v-for="n in eventStats.length" :key="n" class="flex flex-col">
+                <div class="flex flex-row justify-end p-2 pt-0">
                     <Badge>
                         <Skeleton class="w-16 h-4 rounded" />
                     </Badge>
                 </div>
-                <div v-for="n in 1" :key="n" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                     <Card class="shadow-none">
                         <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
                             <Skeleton class="w-[80px] h-4 rounded-full" />
@@ -81,8 +81,6 @@ onMounted(() => {
         </template>
 
         <template v-else>
-            <!-- <div class="flex flex-col"> -->
-
             <div v-for="(event, index) in eventStats" :key="index" class="flex flex-col">
                 <div class="flex flex-row justify-end p-2 pt-0">
                     <Link :href="route('event_rsvp', { event: event.event_slug })">
@@ -126,7 +124,6 @@ onMounted(() => {
                     </Card>
                 </div>
             </div>
-            <!-- </div> -->
         </template>
     </div>
 </template>

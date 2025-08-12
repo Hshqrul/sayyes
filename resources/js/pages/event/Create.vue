@@ -17,6 +17,7 @@ import CardContent from "@/components/ui/card/CardContent.vue"
 import Textarea from "@/components/ui/textarea/Textarea.vue"
 import { useForm as useVeeForm } from "vee-validate"
 import { router } from "@inertiajs/vue3"
+import DatePicker from "../../components/DatePickerField.vue"
 
 const formSchema = [
     z.object({
@@ -142,41 +143,8 @@ function onSubmit(values: any) {
                                     <template v-if="stepIndex === 2">
                                         <FormField v-slot="{ componentField }" name="event_date">
                                             <FormItem>
-                                                <FormLabel>Event Date</FormLabel>
-                                                <FormControl>
-                                                    <Input type="date" v-bind="componentField" />
-                                                    <!-- <Popover>
-                                                        <PopoverTrigger as-child>
-                                                            <FormControl>
-                                                                <Button variant="outline" :class="cn(
-                                                                    'w-[240px] ps-3 text-start font-normal w-full',
-                                                                    !calendarValue && 'text-muted-foreground'
-                                                                )">
-                                                                    <span>
-                                                                        {{ calendarValue ?
-                                                                            df.format(toDate(calendarValue)) : "Pick a date"
-                                                                        }}
-                                                                    </span>
-                                                                    <CalendarIcon class="ms-auto h-4 w-4 opacity-50" />
-                                                                </Button>
-                                                                <Input type="date" v-bind="componentField" />
-                                                            </FormControl>
-                                                        </PopoverTrigger>
-                                                        <PopoverContent class="w-auto p-0">
-                                                            <Calendar :model-value="calendarValue"
-                                                                calendar-label="Date of Event" initial-focus
-                                                                @update:model-value="(v) => {
-                                                                    if (v) {
-                                                                        calendarValue = v
-                                                                        const iso = v.toString()
-                                                                        componentField.value = iso
-                                                                        setFieldValue('event_date', iso)
-                                                                    }
-                                                                }" />
-                                                        </PopoverContent>
-                                                    </Popover> -->
-                                                </FormControl>
-                                                <FormMessage />
+                                                <DatePicker name="event_date" v-bind="componentField" label=""
+                                                    class="w-full" />
                                             </FormItem>
                                         </FormField>
 

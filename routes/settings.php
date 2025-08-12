@@ -19,4 +19,8 @@ Route::middleware('auth')->group(function () {
     Route::get('settings/appearance', function () {
         return Inertia::render('settings/Appearance');
     })->name('appearance');
+
+    Route::get('settings/date/picker', function () {
+        return Inertia::render('DatePicker');
+    })->name('datepicker');
 });

@@ -15,6 +15,8 @@ import NumberFieldIncrement from '@/components/ui/number-field/NumberFieldIncrem
 import NumberFieldInput from '@/components/ui/number-field/NumberFieldInput.vue'
 import Layout from '@/layouts/settings/EditLayout.vue'
 import HeadingSmall from '@/components/HeadingSmall.vue'
+import DatePicker from '../../components/DatePickerField.vue'
+import DatePickerRangeField from '@/components/DatePickerRangeField.vue'
 
 interface Event {
     id: number
@@ -70,8 +72,13 @@ function handleSubmit() {
                             </div>
                             <div class="grid gap-6">
                                 <div class="space-y-2">
-                                    <Label for="event_date">Event Date</Label>
-                                    <Input type="date" id="event_date" v-model="form.event_date" />
+                                    <!-- <Label for="event_date">Event Date</Label> -->
+                                    <!-- <Input type="date" id="event_date" v-model="form.event_date" /> -->
+                                    <DatePicker name="event_date" v-model="form.event_date" label="Event Date" class="w-full" :isSelectMY="true"/>
+                                    <!-- <DatePickerRangeField startName="start_date" endName="end_date"
+                                        v-model="form.event_date"
+                                        label="" description=""
+                                        /> -->
                                     <InputError :message="form.errors.event_date" />
                                 </div>
                             </div>

@@ -10,6 +10,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { type BreadcrumbItem } from '@/types';
+import Card from '@/components/ui/card/Card.vue';
+import CardHeader from '@/components/ui/card/CardHeader.vue';
+import CardContent from '@/components/ui/card/CardContent.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 
 const breadcrumbItems: BreadcrumbItem[] = [
@@ -53,71 +56,79 @@ const updatePassword = () => {
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbItems">
+
         <Head title="Password settings" />
 
         <SettingsLayout>
-            <div class="space-y-6">
-                <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" />
-
-                <form @submit.prevent="updatePassword" class="space-y-6">
-                    <div class="grid gap-2">
-                        <Label for="current_password">Current password</Label>
-                        <!-- <Input
-                            id="current_password"
-                            ref="currentPasswordInput"
-                            v-model="form.current_password"
-                            type="password"
-                            class="mt-1 block w-full"
-                            autocomplete="current-password"
-                            placeholder="Current password"
-                        /> -->
-                        <PasswordInput class="mt-1 block w-full" id="current_password" ref="currentPasswordInput" v-model="form.current_password" placeholder="Current password" autocomplete="current-password"/>
-                        <InputError :message="form.errors.current_password" />
-                    </div>
-
-                    <div class="grid gap-2">
-                        <Label for="password">New password</Label>
-                        <!-- <Input
-                            id="password"
-                            ref="passwordInput"
-                            v-model="form.password"
-                            type="password"
-                            class="mt-1 block w-full"
-                            autocomplete="new-password"
-                            placeholder="New password"
-                        /> -->
-                        <PasswordInput class="mt-1 block w-full" id="password" ref="passwordInput" v-model="form.password" placeholder="New password" autocomplete="new-password"/>
-                        <InputError :message="form.errors.password" />
-                    </div>
-
-                    <div class="grid gap-2">
-                        <Label for="password_confirmation">Confirm password</Label>
-                        <!-- <Input
-                            id="password_confirmation"
-                            v-model="form.password_confirmation"
-                            type="password"
-                            class="mt-1 block w-full"
-                            autocomplete="new-password"
-                            placeholder="Confirm password"
-                        /> -->
-                        <PasswordInput class="mt-1 block w-full" id="password_confirmation" ref="passwordInput" v-model="form.password_confirmation" placeholder="Confirm password" autocomplete="new-password"/>
-                        <InputError :message="form.errors.password_confirmation" />
-                    </div>
-
-                    <div class="flex items-center gap-4">
-                        <Button :disabled="form.processing">Save password</Button>
-
-                        <Transition
-                            enter-active-class="transition ease-in-out"
-                            enter-from-class="opacity-0"
-                            leave-active-class="transition ease-in-out"
-                            leave-to-class="opacity-0"
-                        >
-                            <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
-                        </Transition>
-                    </div>
-                </form>
-            </div>
+            <!-- <div class="space-y-6"> -->
+            <!-- <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" /> -->
+            <Card class="flex flex-col space-y-6 shadow-xs">
+                <CardHeader>
+                    <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" />
+                </CardHeader>
+                <CardContent>
+                    <form @submit.prevent="updatePassword" class="space-y-6">
+                        <div class="grid gap-2">
+                            <Label for="current_password">Current password</Label>
+                            <!-- <Input
+                                    id="current_password"
+                                    ref="currentPasswordInput"
+                                    v-model="form.current_password"
+                                    type="password"
+                                    class="mt-1 block w-full"
+                                    autocomplete="current-password"
+                                    placeholder="Current password"
+                                /> -->
+                            <PasswordInput class="mt-1 block w-full" id="current_password" ref="currentPasswordInput"
+                                v-model="form.current_password" placeholder="Current password"
+                                autocomplete="current-password" />
+                            <InputError :message="form.errors.current_password" />
+                        </div>
+        
+                        <div class="grid gap-2">
+                            <Label for="password">New password</Label>
+                            <!-- <Input
+                                    id="password"
+                                    ref="passwordInput"
+                                    v-model="form.password"
+                                    type="password"
+                                    class="mt-1 block w-full"
+                                    autocomplete="new-password"
+                                    placeholder="New password"
+                                /> -->
+                            <PasswordInput class="mt-1 block w-full" id="password" ref="passwordInput" v-model="form.password"
+                                placeholder="New password" autocomplete="new-password" />
+                            <InputError :message="form.errors.password" />
+                        </div>
+        
+                        <div class="grid gap-2">
+                            <Label for="password_confirmation">Confirm password</Label>
+                            <!-- <Input
+                                    id="password_confirmation"
+                                    v-model="form.password_confirmation"
+                                    type="password"
+                                    class="mt-1 block w-full"
+                                    autocomplete="new-password"
+                                    placeholder="Confirm password"
+                                /> -->
+                            <PasswordInput class="mt-1 block w-full" id="password_confirmation" ref="passwordInput"
+                                v-model="form.password_confirmation" placeholder="Confirm password"
+                                autocomplete="new-password" />
+                            <InputError :message="form.errors.password_confirmation" />
+                        </div>
+        
+                        <div class="flex items-center gap-4">
+                            <Button :disabled="form.processing">Save password</Button>
+        
+                            <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
+                                leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
+                                <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
+                            </Transition>
+                        </div>
+                    </form>
+                </CardContent>
+            </Card>
+            <!-- </div> -->
         </SettingsLayout>
     </AppLayout>
 </template>
