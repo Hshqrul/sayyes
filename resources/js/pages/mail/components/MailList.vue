@@ -32,7 +32,7 @@ function openMail(mail: Mail) {
 
 <template>
     <Drawer v-model:open="drawerOpen">
-        <ScrollArea class="h-screen flex">
+        <ScrollArea class="flex h-screen md:h-[calc(100vh-4rem)]">
             <div class="flex-1 flex flex-col gap-2 p-4 pt-0">
                 <TransitionGroup name="list" appear>
                     <button v-for="item of items" :key="item.id" :class="cn(
