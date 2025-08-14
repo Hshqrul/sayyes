@@ -70,12 +70,12 @@ const submit = () => {
                 </div>
 
                 <div class="grid gap-2">
-                    <div class="flex items-center justify-between">
+                    <!-- <div class="flex items-center justify-between">
                         <Label for="password">Password</Label>
                         <TextLink v-if="canResetPassword" :href="route('password.request')" class="text-sm" :tabindex="5">
                             Forgot password?
                         </TextLink>
-                    </div>
+                    </div> -->
                     <!-- <Input
                         id="password"
                         type="password"
@@ -85,6 +85,7 @@ const submit = () => {
                         v-model="form.password"
                         placeholder="Password"
                     /> -->
+                    <Label for="password">Password</Label>
                     <PasswordInput id="password" v-model="form.password" :tabindex="2" placeholder="Password"/>
                     <InputError :message="form.errors.password" />
                 </div>

@@ -185,8 +185,8 @@ export type Mail = (typeof mails)[number]
 
 export const accounts = [
   {
-    label: 'Alicia Koch',
-    email: 'alicia@example.com',
+    label: 'Default',
+    email: 'user@example.com',
     icon: 'ion:logo-vercel',
   },
   {

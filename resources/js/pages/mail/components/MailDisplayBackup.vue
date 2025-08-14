@@ -32,7 +32,7 @@ const today = new Date()
 
 <template>
     <div class="flex h-full flex-col">
-        <!-- <div class="flex items-center p-2">
+        <div class="flex items-center p-2">
             <div class="flex items-center gap-2">
                 <Tooltip>
                     <TooltipTrigger as-child>
@@ -157,7 +157,7 @@ const today = new Date()
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
-        <Separator /> -->
+        <Separator />
         <div v-if="mail" class="flex flex-1 flex-col">
             <div class="flex items-start p-4">
                 <div class="flex items-start gap-4 text-sm">
@@ -187,7 +187,7 @@ const today = new Date()
                 {{ mail.text }}
             </div>
             <Separator class="mt-auto" />
-            <!-- <div class="p-4">
+            <div class="p-4">
                 <form>
                     <div class="grid gap-4">
                         <Textarea class="p-4" :placeholder="`Reply ${mail.name}...`" />
@@ -202,7 +202,7 @@ const today = new Date()
                         </div>
                     </div>
                 </form>
-            </div> -->
+            </div>
         </div>
         <div v-else class="p-8 text-center text-muted-foreground">
             No message selected

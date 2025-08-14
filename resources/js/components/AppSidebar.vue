@@ -5,7 +5,7 @@ import NavUser from '@/components/NavUserNew.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { CalendarHeartIcon, CoffeeIcon, LayoutDashboardIcon } from 'lucide-vue-next';
+import { CalendarHeartIcon, CoffeeIcon, LayoutDashboardIcon, Mail } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
@@ -18,6 +18,11 @@ const mainNavItems: NavItem[] = [
     title: 'Events',
     href: '/events',
     icon: CalendarHeartIcon,
+  },
+  {
+    title: 'Mail',
+    href: '/mail',
+    icon: Mail,
   },
 ];
 

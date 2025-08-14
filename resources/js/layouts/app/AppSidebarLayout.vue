@@ -46,7 +46,7 @@ const { appearance } = useAppearance()
     <Toaster closeButton :theme="appearance" /> 
     <AppShell variant="sidebar">
         <AppSidebar />
-        <AppContent variant="sidebar" class="overflow-x-hidden bg-sidebar">
+        <AppContent variant="sidebar" class="overflow-x-hidden bg-sidebar dark:border">
             <AppSidebarHeader :breadcrumbs="breadcrumbs" />
             <slot />
         </AppContent>
