@@ -14,14 +14,19 @@ const page = usePage()
   <BaseLayout :breadcrumbs="[{ title: 'Inbox', href: '/mail' }]">
     <div class="flex h-full flex-1 flex-col gap-4 p-4 overflow-x-auto md:p-6">
       <div class="flex flex-row items-center justify-between px-2 md:p-2">
-        <h1 class="text-2xl font-bold leading-tight tracking-tight">Hello, {{ page.props.auth.user.username }}</h1>
+        <div class="flex flex-col gap-2">
+          <h1 class="text-2xl font-bold leading-tight tracking-tight">Hello, {{ page.props.auth.user.username }}</h1>
+          <p class="text-muted-foreground text-sm leading-tight tracking-tight">
+            What's happening today?
+          </p>
+        </div>
         <div class="flex flex-row-reverse gap-2">
           <!-- <AccountSwitcher :is-collapsed="false" :accounts="accounts" /> -->
           <ComposeButton />
         </div>
       </div>
       <Card class="md:w-full shadow-none">
-        <Mail :accounts="accounts" :mails="mails" :nav-collapsed-size="4" />
+        <Mail :accounts="accounts" :mails="mails" />
       </Card>
     </div>
   </BaseLayout>

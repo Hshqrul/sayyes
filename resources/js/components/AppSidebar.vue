@@ -21,7 +21,7 @@ const mainNavItems: NavItem[] = [
   },
   {
     title: 'Inbox',
-    href: '/inbox',
+    href: '/mail',
     icon: Mail,
   },
 ];

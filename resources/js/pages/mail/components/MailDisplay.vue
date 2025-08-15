@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Mail } from '../data/mail'
+// import { Mail } from '../data/mail'
 import { addDays, addHours, format, nextSaturday } from 'date-fns'
 import { Archive, ArchiveX, Clock, Forward, MoreVertical, Reply, ReplyAll, Trash2 } from 'lucide-vue-next'
 import { computed } from 'vue'
@@ -14,6 +14,16 @@ import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
+interface Mail {
+    id: string | null
+    user: string | null
+    subject: string | null
+    text: string | null
+    read: boolean
+    labels: string | null // using text in DB
+    created_at: string | null
+}
+
 interface MailDisplayProps {
     mail: Mail | undefined
 }
@@ -21,7 +31,7 @@ interface MailDisplayProps {
 const props = defineProps<MailDisplayProps>()
 
 const mailFallbackName = computed(() => {
-    return props.mail?.name
+    return props.mail?.user.name
         .split(' ')
         .map(chunk => chunk[0])
         .join('')
@@ -168,18 +178,18 @@ const today = new Date()
                     </Avatar>
                     <div class="grid gap-1">
                         <div class="font-semibold">
-                            {{ mail.name }}
+                            {{ mail.user.name }}
                         </div>
                         <div class="line-clamp-1 text-xs">
                             {{ mail.subject }}
                         </div>
                         <div class="line-clamp-1 text-xs">
-                            <span class="font-medium">Reply-To:</span> {{ mail.email }}
+                            <span class="font-medium">Reply-To:</span> {{ mail.user.email }}
                         </div>
                     </div>
                 </div>
-                <div v-if="mail.date" class="ml-auto text-xs text-muted-foreground">
-                    {{ format(new Date(mail.date), "PPpp") }}
+                <div v-if="mail.created_at" class="ml-auto text-xs text-muted-foreground">
+                    {{ format(new Date(mail.created_at), "PPpp") }}
                 </div>
             </div>
             <Separator />
