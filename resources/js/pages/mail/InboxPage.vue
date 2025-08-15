@@ -47,7 +47,7 @@ console.log(page.props.mails)
           <Mail :mails="mails" />
         </template>
         <template v-else>
-          <div class="flex flex-1 flex-col items-center justify-center gap-4 p-4">
+          <div class="flex flex-1 flex-col items-center justify-center gap-4 px-6">
             <Alert>
               <Icon name="Rocket" class="h-4 w-4" />
               <AlertTitle>
