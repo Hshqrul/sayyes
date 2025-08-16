@@ -28,7 +28,7 @@ console.log(page.props.mails)
 </script>
 
 <template>
-  <BaseLayout :breadcrumbs="[{ title: 'Inbox', href: '/mail' }]">
+  <BaseLayout :breadcrumbs="[{ title: 'Notes', href: '/note' }]">
     <div class="flex flex-1 flex-col gap-4 p-4 overflow-x-auto md:p-6">
       <div class="flex flex-row items-center justify-between px-2 md:p-2">
         <div class="flex flex-col gap-2">
@@ -42,7 +42,7 @@ console.log(page.props.mails)
           <ComposeButton />
         </div>
       </div>
-      <Card class="md:w-full shadow-none">
+      <Card class="md:w-full h-full shadow-none">
         <template v-if="page.props.mails.length > 0">
           <Mail :mails="mails" />
         </template>

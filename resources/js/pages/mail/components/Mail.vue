@@ -124,19 +124,19 @@ document.addEventListener('keydown', (event) => {
                 <Separator />
                 <TabsContent value="all" class="m-0">
                     <MailListDisplay v-model:selectedMail="selectedMail" :items="filteredMailList" />
-                    <div class="ml-1 flex items-center justify-center rounded-full py-1 text-xs text-muted-foreground">
+                    <div class="flex items-center justify-center rounded-full py-2 text-xs text-muted-foreground">
                         {{ filteredMailList.length }} of {{ props.mails.length }}
                     </div>
                 </TabsContent>
                 <TabsContent value="unread" class="m-0">
                     <MailListDisplay v-model:selectedMail="selectedMail" :items="unreadMailList" />
-                    <div class="ml-1 flex items-center justify-center rounded-full py-1 text-xs text-muted-foreground">
-                        {{ unreadMailList.length }} ( Missed ) of {{ props.mails.length }}
+                    <div class="flex items-center justify-center rounded-full py-2 text-xs text-muted-foreground">
+                        {{ unreadMailList.length }} ( Unread ) of {{ props.mails.length }}
                     </div>
                 </TabsContent>
                 <TabsContent value="read" class="m-0">
                     <MailListDisplay v-model:selectedMail="selectedMail" :items="readMailList" />
-                    <div class="ml-1 flex items-center justify-center rounded-full py-1 text-xs text-muted-foreground">
+                    <div class="flex items-center justify-center rounded-full py-2 text-xs text-muted-foreground">
                         {{ readMailList.length }} ( Read ) of {{ props.mails.length }}
                     </div>
                 </TabsContent>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { createReusableTemplate, useMediaQuery } from "@vueuse/core"
-import { ref } from "vue"
+import { computed, ref } from "vue"
 import { Button } from "@/components/ui/button"
 import { toast } from "vue-sonner"
 import * as yup from "yup"
@@ -30,11 +30,9 @@ import {
 import Label from "@/components/ui/label/Label.vue"
 import Input from "@/components/ui/input/Input.vue"
 import Textarea from "@/components/ui/textarea/Textarea.vue"
-import TagsInput from "@/components/ui/tags-input/TagsInput.vue"
-import TagsInputItem from "@/components/ui/tags-input/TagsInputItem.vue"
-import TagsInputItemText from "@/components/ui/tags-input/TagsInputItemText.vue"
-import TagsInputItemDelete from "@/components/ui/tags-input/TagsInputItemDelete.vue"
-import TagsInputInput from "@/components/ui/tags-input/TagsInputInput.vue"
+import { TagsInput, TagsInputInput, TagsInputItem, TagsInputItemDelete, TagsInputItemText } from "@/components/ui/tags-input"
+import { Combobox, ComboboxAnchor, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxList } from "@/components/ui/combobox"
+import { useFilter } from "reka-ui"
 
 const page = usePage<AppPageProps>()
 
@@ -50,7 +48,7 @@ const form = useForm({
 })
 
 const submitCompose = () => {
-    form.post(route('mail.store'), {
+    form.post(route('note.store'), {
         preserveScroll: true,
         preserveState: true,
         onSuccess: () => {
@@ -67,28 +65,28 @@ const submitCompose = () => {
         },
     })
 }
+
+const modalTitle = 'Compose'
+const modalDescription = 'Start a new notes'
 </script>
 
 <template>
     <UseTemplate>
-        <form @submit.prevent="submitCompose" class="p-6 space-y-4">
-            <!-- Subject -->
+        <form @submit.prevent="submitCompose" class="space-y-4 px-4 pt-4 pb-6 md:p-0">
             <div class="space-y-2">
-                <Label class="block text-sm font-medium mb-1">Subject (optional)</Label>
+                <Label class="block text-sm font-medium mb-1">Subject</Label>
                 <Input type="text" v-model="form.subject" class="w-full border rounded p-2" />
                 <InputError name="subject" :message="form.errors.subject" />
             </div>
 
-            <!-- Text -->
             <div class="space-y-2">
-                <Label class="block text-sm font-medium mb-1">Message *</Label>
+                <Label class="block text-sm font-medium mb-1">Notes</Label>
                 <Textarea v-model="form.text" class="w-full border rounded p-2" rows="5" />
                 <InputError name="text" :message="form.errors.text" />
             </div>
 
-            <!-- Labels -->
             <div class="space-y-2">
-                <Label class="block text-sm font-medium mb-1">Labels (comma separated)</Label>
+                <Label class="block text-sm font-medium mb-1">Labels</Label>
                 <TagsInput v-model="form.labels">
                     <TagsInputItem v-for="item in form.labels" :key="item" :value="item">
                         <TagsInputItemText />
@@ -100,10 +98,9 @@ const submitCompose = () => {
                 <InputError name="labels" :message="form.errors.labels" />
             </div>
 
-            <!-- Hidden user_id -->
             <input type="hidden" :value="form.user_id" />
 
-            <div class="flex gap-2 mt-4">
+            <div class="flex flex-col md:flex-row-reverse gap-2 mt-4">
                 <Button type="submit">Send</Button>
                 <Button type="button" variant="outline" @click="form.reset()">Reset</Button>
             </div>
@@ -111,7 +108,6 @@ const submitCompose = () => {
     </UseTemplate>
 
 
-    <!-- Desktop Dialog -->
     <Dialog v-if="isDesktop" v-model:open="isOpen">
         <DialogTrigger as-child>
             <Button>
@@ -121,16 +117,15 @@ const submitCompose = () => {
         </DialogTrigger>
         <DialogContent class="sm:max-w-2xl">
             <DialogHeader>
-                <DialogTitle>Create Compose</DialogTitle>
+                <DialogTitle>{{ modalTitle }}</DialogTitle>
                 <DialogDescription>
-                    Start a new mail
+                    {{ modalDescription }}
                 </DialogDescription>
             </DialogHeader>
             <ComposeForm />
         </DialogContent>
     </Dialog>
 
-    <!-- Mobile Drawer -->
     <Drawer v-else v-model:open="isOpen">
         <DrawerTrigger as-child>
             <Button>
@@ -142,9 +137,9 @@ const submitCompose = () => {
         </DrawerTrigger>
         <DrawerContent>
             <DrawerHeader>
-                <DrawerTitle>Move Goal</DrawerTitle>
+                <DrawerTitle>{{ modalTitle }}</DrawerTitle>
                 <DrawerDescription>
-                    Set your daily activity goal.
+                    {{ modalDescription }}
                 </DrawerDescription>
             </DrawerHeader>
             <ComposeForm />

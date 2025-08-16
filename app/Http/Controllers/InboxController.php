@@ -80,14 +80,33 @@ class InboxController extends Controller
 
         $message->update($validated);
 
-        return response()->json($message);
+        return redirect()->back();
     }
 
     public function destroy(Inbox $message)
     {
-        $message->delete();
+        try {
+            \DB::beginTransaction();
 
-        return response()->noContent();
+            $message->delete();
+
+            \DB::commit();
+
+            session()->flash('toast', [
+                'type' => 'success',
+                'title' => 'Note deleted successfully.',
+            ]);
+            return redirect()->route('mail.index');
+        } catch (\Exception $e) {
+            \DB::rollBack();
+
+            session()->flash('toast', [
+                'type' => 'error',
+                'title' => 'Failed to delete note.',
+                'description' => $e->getMessage()
+            ]);
+            return redirect()->route('mail.index');
+        }
     }
 
     public function markAsRead($id)
@@ -99,6 +118,20 @@ class InboxController extends Controller
             'type' => 'success',
             'title' => 'Message marked as read.',
             'description' => 'The message has been marked as read.'
+        ]);
+
+        return back();
+    }
+
+    public function markAsUnread($id)
+    {
+        $inboxMessage = Inbox::findOrFail($id);
+        $inboxMessage->update(['read' => false]);
+
+        session()->flash('toast', [
+            'type' => 'success',
+            'title' => 'Message marked as unread.',
+            'description' => 'The message has been marked as unread.'
         ]);
 
         return back();

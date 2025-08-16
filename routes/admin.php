@@ -9,9 +9,10 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('mail/Example');
     });
 
-    Route::get('/mail', [InboxController::class, 'index'])
+    Route::get('/note', [InboxController::class, 'index'])
         ->name('mail.index');
-    Route::post('/mail/store', [InboxController::class, 'store'])->name('mail.store');
-    Route::delete('/mail/{message}', [InboxController::class, 'destroy'])->name('mail.destroy');
-    Route::patch('/mail/{id}/read', [InboxController::class, 'markAsRead'])->name('mail.read');
+    Route::post('/mail/store', [InboxController::class, 'store'])->name('note.store');
+    Route::delete('/mail/{message}', [InboxController::class, 'destroy'])->name('note.destroy');
+    Route::patch('/mail/{id}/read', [InboxController::class, 'markAsRead'])->name('note.read');
+    Route::patch('/mail/{id}/unread', [InboxController::class, 'markAsUnread'])->name('note.unread');
 });

@@ -20,8 +20,8 @@ const mainNavItems: NavItem[] = [
     icon: CalendarHeartIcon,
   },
   {
-    title: 'Inbox',
-    href: '/mail',
+    title: 'Notes',
+    href: '/note',
     icon: Mail,
   },
 ];

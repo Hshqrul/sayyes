@@ -63,26 +63,70 @@ function getBadgeVariantFromLabel(label: string) {
 }
 
 function openMail(mail: Mail) {
-    console.log('openMail', mail)
     selectedMail.value = mail
     localSelectedMail.value = mail.id
     emit('update:selectedMail', mail.id) // notify parent
     isOpen.value = true
 
-    mail.read = true
+    if (!mail.read) {
+        mail.read = true
 
-    router.patch(route('mail.read', mail.id), {}, {
-        preserveState: true,
+        router.patch(route('note.unread', mail.id), {}, {
+            preserveState: true,
+            preserveScroll: true,
+            onError: (errors) => {
+                toast.error(errors.message)
+            },
+        })
+    }
+}
+
+function onDeleteMail(id: string | null) {
+    if (!id) return
+
+    if (selectedMail.value?.id === id) {
+        selectedMail.value = null
+        isOpen.value = false
+    }
+
+    router.delete(route('note.destroy', id), {
         preserveScroll: true,
-        onError: (errors) => {
-            toast.error(errors.message)
+        onSuccess: () => {
+            selectedMail.value = null;
+            isOpen.value = false;
+            router.visit(route('mail.index'), {
+                only: ['mails'],
+            })
+            toast.success('Note deleted successfully.');
         },
+        onError: () => toast.error('Failed to delete mail'),
+    });
+}
+
+function onMarkUnread(id: string | null) {
+    if (!id) return
+
+    const mail = props.items.find(m => m.id === id)
+    if (mail) mail.read = false
+
+    router.patch(route('note.unread', id), {}, {
+        preserveScroll: true,
+        onSuccess: () => {
+            selectedMail.value = null;
+            isOpen.value = false;
+            toast.success('Note marked as read.',
+                {
+                    description: 'The note has been marked as read.'
+                }
+            );
+        },
+        onError: () => toast.error('Failed to mark unread')
     })
 }
 </script>
 
 <template>
-    <ScrollArea class="flex h-screen md:h-[calc(100vh-4rem)]">
+    <ScrollArea class="h-110 flex">
         <!-- <div v-if="items && items.length > 0" class="flex-1 flex flex-col gap-2 p-4 pt-0"> -->
         <div class="flex-1 flex flex-col gap-2 p-4 pt-0">
             <TransitionGroup name="list" appear>
@@ -122,25 +166,24 @@ function openMail(mail: Mail) {
             </TransitionGroup>
         </div>
         <!-- <div v-else class="flex-1 flex flex-col gap-2 p-4 pt-0">
-            <div
-                class="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent">
-                <p class="text-sm text-muted-foreground">
-                    No mails found.
-                </p>
-                <p class="text-sm text-muted-foreground">
-                    Please create a mail to get started.
-                </p>
-            </div>
-        </div> -->
+                <div
+                    class="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent">
+                    <p class="text-sm text-muted-foreground">
+                        No mails found.
+                    </p>
+                    <p class="text-sm text-muted-foreground">
+                        Please create a mail to get started.
+                    </p>
+                </div>
+            </div> -->
     </ScrollArea>
 
-    <!-- Desktop: Dialog -->
     <Dialog v-if="isDesktop" v-model:open="isOpen">
-        <DialogContent class="max-w-7xl">
+        <DialogContent v-if="isOpen && selectedMail" class="max-w-7xl">
             <DialogHeader>
-                <DialogTitle>{{ selectedMail?.subject }}</DialogTitle>
+                <DialogTitle>{{ selectedMail.subject }}</DialogTitle>
             </DialogHeader>
-            <MailDisplay :mail="selectedMail" />
+            <MailDisplay :mail="selectedMail" @markUnread="onMarkUnread" @delete="onDeleteMail" />
             <DialogFooter>
                 <DialogClose>
                     <Button variant="secondary">Close</Button>
@@ -149,14 +192,13 @@ function openMail(mail: Mail) {
         </DialogContent>
     </Dialog>
 
-    <!-- Mobile: Drawer -->
     <Drawer v-else v-model:open="isOpen">
-        <DrawerContent class="max-w-full h-screen">
+        <DrawerContent v-if="isOpen && selectedMail" class="max-w-full h-screen">
             <DrawerHeader>
-                <DrawerTitle>{{ selectedMail?.subject }}</DrawerTitle>
+                <DrawerTitle>{{ selectedMail.subject }}</DrawerTitle>
             </DrawerHeader>
             <div class="overflow-y-auto">
-                <MailDisplay :mail="selectedMail" />
+                <MailDisplay :mail="selectedMail" @markUnread="onMarkUnread" @delete="onDeleteMail" />
             </div>
             <div class="p-4 flex justify-end">
                 <DrawerClose>
