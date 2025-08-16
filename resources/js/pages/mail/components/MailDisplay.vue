@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { toast } from 'vue-sonner'
+import DeleteConfirmDialog from '@/components/DeleteConfirmDialog.vue'
 
 interface MailUser {
     name: string
@@ -48,9 +49,14 @@ function markAsUnread() {
 
 function deleteMail() {
     if (!props.mail?.id) return
-    if (confirm('Are you sure you want to delete this email?')) {
-        emit('delete', props.mail.id)
-    }
+    // if (confirm('Are you sure you want to delete this email?')) {
+    emit('delete', props.mail.id)
+    // }
+}
+
+function handleDelete() {
+    // Call API or action to delete
+    console.log('User deleted!')
 }
 </script>
 
@@ -68,11 +74,19 @@ function deleteMail() {
                     <TooltipContent>Mark as unread</TooltipContent>
                 </Tooltip>
                 <Tooltip>
-                    <TooltipTrigger as-child>
-                        <Button variant="ghost" size="icon" :disabled="!mail" @click="deleteMail">
+                    <TooltipTrigger>
+                        <!-- <Button variant="ghost" size="icon" :disabled="!mail" @click="deleteMail">
                             <Trash2 class="size-4" />
                             <span class="sr-only">Move to trash</span>
-                        </Button>
+                        </Button> -->
+                        <DeleteConfirmDialog :itemName="mail?.subject" @confirm="deleteMail">
+                            <template #trigger>
+                                <Button variant="ghost" size="icon" :disabled="!mail">
+                                    <Trash2 class="size-4" />
+                                    <span class="sr-only">Move to trash</span>
+                                </Button>
+                            </template>
+                        </DeleteConfirmDialog>
                     </TooltipTrigger>
                     <TooltipContent>Move to trash</TooltipContent>
                 </Tooltip>

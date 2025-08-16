@@ -23,6 +23,7 @@ const mainNavItems: NavItem[] = [
     title: 'Notes',
     href: '/note',
     icon: Mail,
+    badge: '23',
   },
 ];
 

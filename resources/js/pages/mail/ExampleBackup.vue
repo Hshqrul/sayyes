@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import Mail from './components/Mail.vue'
+import Mail from './components/MailBackup.vue'
 import { accounts, mails } from './data/mail';
 </script>
 

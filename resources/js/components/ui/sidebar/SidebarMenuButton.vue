@@ -11,6 +11,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<SidebarMenuButtonProps & {
   tooltip?: string | Component
+  tooltipClass?: string
 }>(), {
   as: 'button',
   variant: 'default',
@@ -37,6 +38,7 @@ const delegatedProps = reactiveOmit(props, 'tooltip')
       side="right"
       align="center"
       :hidden="state !== 'collapsed' || isMobile"
+      :class="tooltipClass"
     >
       <template v-if="typeof tooltip === 'string'">
         {{ tooltip }}
