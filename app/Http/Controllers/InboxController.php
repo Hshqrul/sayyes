@@ -112,7 +112,7 @@ class InboxController extends Controller
     public function markAsRead($id)
     {
         $mail = Inbox::findOrFail($id);
-        $mail->update(['read' => 1]);
+        $mail->update(['read' => true]);
 
         session()->flash('toast', [
             'type' => 'success',
@@ -126,7 +126,7 @@ class InboxController extends Controller
     public function markAsUnread($id)
     {
         $inboxMessage = Inbox::findOrFail($id);
-        $inboxMessage->update(['read' => 0]);
+        $inboxMessage->update(['read' => false]);
 
         session()->flash('toast', [
             'type' => 'success',

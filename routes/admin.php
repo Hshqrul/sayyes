@@ -13,6 +13,6 @@ Route::middleware('auth')->group(function () {
         ->name('mail.index');
     Route::post('/mail/store', [InboxController::class, 'store'])->name('note.store');
     Route::delete('/mail/{message}', [InboxController::class, 'destroy'])->name('note.destroy');
-    Route::patch('/mail/{id}/read', [InboxController::class, 'markAsRead'])->name('note.read');
-    Route::patch('/mail/{id}/unread', [InboxController::class, 'markAsUnread'])->name('note.unread');
+    Route::post('/mail/{id}/read', [InboxController::class, 'markAsRead'])->name('note.read');
+    Route::post('/mail/{id}/unread', [InboxController::class, 'markAsUnread'])->name('note.unread');
 });

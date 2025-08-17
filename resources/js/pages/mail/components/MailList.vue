@@ -71,7 +71,7 @@ function openMail(mail: Mail) {
     if (!mail.read) {
         mail.read = true
 
-        router.patch(route('note.unread', mail.id), {}, {
+        router.post(route('note.read', mail.id), {}, {
             preserveState: true,
             preserveScroll: true,
             onError: (errors) => {
@@ -109,7 +109,7 @@ function onMarkUnread(id: string | null) {
     const mail = props.items.find(m => m.id === id)
     if (mail) mail.read = false
 
-    router.patch(route('note.unread', id), {}, {
+    router.post(route('note.unread', id), {}, {
         preserveScroll: true,
         onSuccess: () => {
             selectedMail.value = null;
@@ -126,8 +126,7 @@ function onMarkUnread(id: string | null) {
 </script>
 
 <template>
-    <ScrollArea class="h-110 flex">
-        <!-- <div v-if="items && items.length > 0" class="flex-1 flex flex-col gap-2 p-4 pt-0"> -->
+    <ScrollArea class="h-screen flex">
         <div class="flex-1 flex flex-col gap-2 p-4 pt-0">
             <TransitionGroup name="list" appear>
                 <button v-for="item of items" :key="item.id" :class="cn(
@@ -165,17 +164,6 @@ function onMarkUnread(id: string | null) {
                 </button>
             </TransitionGroup>
         </div>
-        <!-- <div v-else class="flex-1 flex flex-col gap-2 p-4 pt-0">
-                <div
-                    class="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent">
-                    <p class="text-sm text-muted-foreground">
-                        No mails found.
-                    </p>
-                    <p class="text-sm text-muted-foreground">
-                        Please create a mail to get started.
-                    </p>
-                </div>
-            </div> -->
     </ScrollArea>
 
     <Dialog v-if="isDesktop" v-model:open="isOpen">
