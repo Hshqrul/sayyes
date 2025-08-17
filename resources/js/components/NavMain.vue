@@ -15,11 +15,11 @@ const page = usePage();
         <SidebarGroupLabel>Menu</SidebarGroupLabel>
         <SidebarMenu>
             <SidebarMenuItem v-for="item in items" :key="item.title">
-                <SidebarMenuButton as-child :is-active="item.href === page.url" :tooltip="item.title && item.badge ? `${item.title} ${item.badge}` : item.title" :tooltipClass="'flex items-center gap-4'">
+                <SidebarMenuButton as-child :is-active="item.href === page.url" :tooltip="item.title" :tooltipBadge="item.badge">
                     <Link :href="item.href">
                         <component :is="item.icon" />
                         {{ item.title }}
-                        <span v-if="item.badge" class="ml-6 text-muted-foreground">{{ item.badge }}</span>
+                        <span v-if="item.badge" class="ml-auto text-muted-foreground">{{ item.badge }}</span>
                     </Link>
                 </SidebarMenuButton>
             </SidebarMenuItem>

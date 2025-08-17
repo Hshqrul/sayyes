@@ -11,7 +11,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<SidebarMenuButtonProps & {
   tooltip?: string | Component
-  tooltipClass?: string
+  tooltipBadge?: string | Component
 }>(), {
   as: 'button',
   variant: 'default',
@@ -34,14 +34,13 @@ const delegatedProps = reactiveOmit(props, 'tooltip')
         <slot />
       </SidebarMenuButtonChild>
     </TooltipTrigger>
-    <TooltipContent
-      side="right"
-      align="center"
-      :hidden="state !== 'collapsed' || isMobile"
-      :class="tooltipClass"
-    >
+    <TooltipContent side="right" align="center" :hidden="state !== 'collapsed' || isMobile"
+      class="flex items-center gap-4">
       <template v-if="typeof tooltip === 'string'">
         {{ tooltip }}
+        <span v-if="typeof tooltipBadge === 'string'" class="ml-auto text-muted-foreground">
+          {{ tooltipBadge }}
+        </span>
       </template>
       <component :is="tooltip" v-else />
     </TooltipContent>
