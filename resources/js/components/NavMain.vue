@@ -2,6 +2,7 @@
 import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
+import SidebarMenuBadge from './ui/sidebar/SidebarMenuBadge.vue';
 
 defineProps<{
     items: NavItem[];
@@ -19,9 +20,13 @@ const page = usePage();
                     <Link :href="item.href">
                         <component :is="item.icon" />
                         {{ item.title }}
-                        <span v-if="item.badge" class="ml-auto text-muted-foreground">{{ item.badge }}</span>
                     </Link>
                 </SidebarMenuButton>
+                <SidebarMenuBadge>
+                    <span class="ml-auto text-muted-foreground">
+                        {{ item.badge }}
+                    </span>
+                </SidebarMenuBadge>
             </SidebarMenuItem>
         </SidebarMenu>
     </SidebarGroup>

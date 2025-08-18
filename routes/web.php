@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\InboxController;
 use App\Models\Rsvp;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
@@ -9,7 +10,7 @@ use App\Http\Controllers\UserDashboardController;
 use App\Models\Event;
 
 Route::get('/', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('MockupDashboard');
 })->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
@@ -20,11 +21,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
     Route::put('/events/{event}/update', [EventController::class, 'update'])->name('events.update');
     Route::delete('/events/{event}/destroy', [EventController::class, 'destroy'])->name('events.destroy');
-    Route::get('/event/toast', [EventController::class, 'toast'])->name('events.toast');
     Route::get('/events/{event}/rsvps', [RsvpController::class, 'index'])->name('rsvps.index');
     Route::get('/rsvps/{rsvp}/edit', [RsvpController::class, 'edit'])->name('rsvps.edit');
     Route::put('/rsvps/{rsvp}', [RsvpController::class, 'update'])->name('rsvps.update');
     Route::delete('/rsvp/{rsvp}/destroy', [RsvpController::class, 'destroy'])->name('rsvps.destroy');
+
+    Route::get('/note', [InboxController::class, 'index'])->name('mail.index');
+    Route::post('/mail/store', [InboxController::class, 'store'])->name('note.store');
+    Route::delete('/mail/{message}', [InboxController::class, 'destroy'])->name('note.destroy');
+    Route::post('/mail/{id}/read', [InboxController::class, 'markAsRead'])->name('note.read');
+    Route::post('/mail/{id}/unread', [InboxController::class, 'markAsUnread'])->name('note.unread');
 });
 
 Route::get('/event/{event}', function (Event $event) {
@@ -50,4 +56,4 @@ Route::get('/rsvp/success/{name}/{event}', function ($name, $event) {
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
-require __DIR__ . '/admin.php';
+// require __DIR__ . '/admin.php';

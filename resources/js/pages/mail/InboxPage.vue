@@ -54,7 +54,7 @@ console.log(page.props.mails)
                 Heads up!
               </AlertTitle>
               <AlertDescription>
-                You can add components to your app using the cli.
+                You can add note to your account by clicking the button below.
                 <div class="flex mt-2 gap-2">
                   <ComposeButton />
                 </div>

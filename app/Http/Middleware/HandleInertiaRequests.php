@@ -52,8 +52,11 @@ class HandleInertiaRequests extends Middleware
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'flash' => [
-                'toast' => fn () => $request->session()->get('toast'),
+                'toast' => fn() => $request->session()->get('toast'),
             ],
+            'unreadMailCount' => fn() => $request->user()
+                ? $request->user()->notes()->where('read', false)->count()
+                : 0,
         ];
     }
 }

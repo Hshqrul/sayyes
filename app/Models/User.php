@@ -50,4 +50,9 @@ class User extends Authenticatable // implements MustVerifyEmail, CanResetPasswo
             'password' => 'hashed',
         ];
     }
+
+    public function notes()
+    {
+        return $this->hasMany(Inbox::class);
+    }
 }

@@ -2,7 +2,7 @@
 import { ref } from "vue"
 import { useMediaQuery } from "@vueuse/core"
 // import { Mail } from "../data/mail"
-import { router } from '@inertiajs/vue3'
+import { router, usePage } from '@inertiajs/vue3'
 import { formatDistanceToNow } from "date-fns"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -43,6 +43,8 @@ interface MailListProps {
     selectedMail?: string | null
 }
 
+const page = usePage()
+
 const props = defineProps<MailListProps>()
 const emit = defineEmits<{
     (e: 'update:selectedMail', value: string | null): void
@@ -56,11 +58,12 @@ const isOpen = ref(false)
 // Detect desktop vs mobile
 const isDesktop = useMediaQuery("(min-width: 768px)")
 
-function getBadgeVariantFromLabel(label: string) {
-    const variants = ["default", "outline", "secondary"]
-    const randomIndex = Math.floor(Math.random() * variants.length)
-    return variants[randomIndex]
+function getBadgeVariantFromLabel(label: string, index: number) {
+  const variants = ["default", "outline", "secondary"] // no "default" here
+  const randomIndex = Math.floor(Math.random() * variants.length)
+  return variants[randomIndex]
 }
+
 
 function openMail(mail: Mail) {
     selectedMail.value = mail
@@ -136,8 +139,9 @@ function onMarkUnread(id: string | null) {
                     <div class="flex w-full flex-col gap-1">
                         <div class="flex items-center">
                             <div class="flex items-center gap-2">
-                                <div class="font-semibold">{{ item.user.name }}</div>
-                                <span v-if="!item.read" class="flex h-2 w-2 rounded-full bg-blue-600" />
+                                <div class="font-semibold">{{ page.props.auth.user.id === item.user.id ? 'Me' :
+                                    item.user.name }}</div>
+                                <span v-if="!item.read" class="flex h-2 w-2 rounded-full bg-blue-600 animate-pulse" />
                             </div>
                             <div :class="cn(
                                 'ml-auto text-xs',

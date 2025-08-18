@@ -12,8 +12,6 @@ import { Toaster, toast } from 'vue-sonner'
 import 'vue-sonner/style.css'
 import { useAppearance } from '@/composables/useAppearance'
 
-const page = usePage()
-
 const toastMethods = {
     success: toast.success,
     error: toast.error,
@@ -24,7 +22,6 @@ const toastMethods = {
 
 onMounted(() => {
     const toastData = page.props.flash?.toast
-    console.log(page.props)
     if (toastData?.title && toastData.type in toastMethods) {
         toastMethods[toastData.type as keyof typeof toastMethods](
             toastData.title,

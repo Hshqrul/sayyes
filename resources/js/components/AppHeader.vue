@@ -40,12 +40,12 @@ const mainNavItems = ref<NavItem[]>([])
 if (auth.value.user) {
     mainNavItems.value = [
         {
-            title: 'Dashboard',
+            title: 'Landing Page',
             href: '/',
             icon: LayoutGrid,
         },
         {
-            title: 'My Dashboard',
+            title: 'Dashboard',
             href: '/dashboard',
             icon: UserCircleIcon,
         },

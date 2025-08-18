@@ -24,6 +24,7 @@ class InboxController extends Controller
                     'labels' => $mail->labels,
                     'created_at' => $mail->created_at->toISOString(), // ISO for JS
                     'user' => [
+                        'id' => $mail->user->id ?? null,
                         'name' => $mail->user->name ?? null,
                         'email' => $mail->user->email ?? null,
                     ],
