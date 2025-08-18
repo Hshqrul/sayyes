@@ -93,7 +93,7 @@ function revealItems() {
                     'bg-yellow-200/20 border-amber-200 text-yellow-600 dark:bg-yellow-700/20 dark:border-yellow-600 dark:text-yellow-400': item.attendence == false,
                   }">
                     <AlertDescription class="pt-2 pb-2 relative overflow-hidden text-ellipsis">
-                      <p class="italic text-md break-words" :class="{
+                      <blockquote class="italic text-md break-words" :class="{
                         'text-indigo-600 dark:text-indigo-400': item.attendence == true,
                         'text-yellow-600 dark:text-yellow-400': item.attendence == false,
                       }">
@@ -102,7 +102,7 @@ function revealItems() {
                             d="M7.17 3.1C4.57 5.08 3 8.03 3 11v7a3 3 0 0 0 3 3h3v-7H7v-2c0-1.61.79-3.09 2.11-4.03l-1.94-1.87zm9 0C13.57 5.08 12 8.03 12 11v7a3 3 0 0 0 3 3h3v-7h-2v-2c0-1.61.79-3.09 2.11-4.03l-1.94-1.87z" />
                         </svg>
                         "{{ item.notes }}"
-                      </p>
+                      </blockquote>
                     </AlertDescription>
                     <AlertTitle>
                       <div class="flex items-center text-gray-800 dark:text-gray-200 gap-1">

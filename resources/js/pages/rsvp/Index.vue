@@ -185,13 +185,15 @@ setTimeout(() => {
                                 </template>
 
                                 <template v-else-if="table.getRowModel().rows?.length">
-                                    <TableRow v-for="row in table.getRowModel().rows" :key="row.id">
-                                        <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id"
-                                            :class="cell.column.columnDef.meta?.class">
-                                            <FlexRender :render="cell.column.columnDef.cell"
-                                                :props="cell.getContext()" />
-                                        </TableCell>
-                                    </TableRow>
+                                    <TransitionGroup name="list" appear>
+                                        <TableRow v-for="row in table.getRowModel().rows" :key="row.id">
+                                            <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id"
+                                                :class="cell.column.columnDef.meta?.class">
+                                                <FlexRender :render="cell.column.columnDef.cell"
+                                                    :props="cell.getContext()" />
+                                            </TableCell>
+                                        </TableRow>
+                                    </TransitionGroup>
                                 </template>
 
                                 <template v-else>
@@ -210,3 +212,21 @@ setTimeout(() => {
         </div>
     </AppLayout>
 </template>
+
+<style scoped>
+.list-move,
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+.list-leave-active {
+    position: absolute;
+}
+</style>
