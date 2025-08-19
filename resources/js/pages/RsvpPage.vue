@@ -11,6 +11,8 @@ import CardContent from '@/components/ui/card/CardContent.vue'
 import GuestBook from './rsvp/GuestBook.vue'
 import { Head, Link, usePage } from '@inertiajs/vue3'
 import TextLink from '@/components/TextLink.vue'
+import GuestBookMarquee from './rsvp/GuestBookMarquee.vue'
+import GuestBookMarquee2 from './rsvp/GuestBookMarquee2.vue'
 interface Rsvp {
     name: string
     attendance: boolean
@@ -42,7 +44,6 @@ const page = usePage<Props>()
 const rsvps = page.props.rsvps
 const event = page.props.event
 const user = page.props.user
-// console.log(page.props)
 function dateValueToDate(dateValue: DateValue): Date {
     return new Date(dateValue.year, dateValue.month - 1, dateValue.day)
 }
@@ -148,14 +149,14 @@ const countdown = computed(() => {
                 </Card>
             </div>
 
-            <div id="rsvp-form"
-                class="relative min-h-[200px] col-span-full rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
+            <div id="rsvp-form" class="pt-6 col-span-full rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
                 <FormRsvp />
             </div>
 
-            <div id="guestbook"
-                class="relative min-h-[200px] col-span-full rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
-                <GuestBook :rsvps="rsvps" :event="event" />
+            <div id="guestbook" class="relative min-h-[200px] col-span-full rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
+                <!-- <GuestBook :rsvps="rsvps" :event="event" /> -->
+                 <GuestBookMarquee :rsvps="rsvps" :event="event" />
+                 <!-- <GuestBookMarquee2 /> -->
             </div>
         </div>
     </AppLayout>

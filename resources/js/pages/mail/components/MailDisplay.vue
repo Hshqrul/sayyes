@@ -98,7 +98,7 @@ function handleDelete() {
         <div v-if="mail" class="flex flex-1 flex-col">
             <div class="flex items-start p-4">
                 <div class="flex items-start gap-4 text-sm">
-                    <Avatar>
+                    <Avatar class="border border-muted-foreground">
                         <AvatarFallback>{{ mailFallbackName }}</AvatarFallback>
                     </Avatar>
                     <div class="grid gap-1">
@@ -114,7 +114,7 @@ function handleDelete() {
                 </div>
             </div>
             <Separator />
-            <div class="flex-1 whitespace-pre-wrap p-4 text-sm">
+            <div class="flex-1 whitespace-pre-wrap p-4 text-sm h-[calc(100%-100px)]">
                 {{ mail.text }}
             </div>
             <Separator class="mt-auto" />

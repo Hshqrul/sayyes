@@ -27,6 +27,7 @@ import {
 import DialogFooter from "@/components/ui/dialog/DialogFooter.vue"
 import DialogClose from "@/components/ui/dialog/DialogClose.vue"
 import { toast } from "vue-sonner"
+import DrawerFooter from "@/components/ui/drawer/DrawerFooter.vue"
 
 interface Mail {
     id: string | null
@@ -59,9 +60,9 @@ const isOpen = ref(false)
 const isDesktop = useMediaQuery("(min-width: 768px)")
 
 function getBadgeVariantFromLabel(label: string, index: number) {
-  const variants = ["default", "outline", "secondary"] // no "default" here
-  const randomIndex = Math.floor(Math.random() * variants.length)
-  return variants[randomIndex]
+    const variants = ["default", "outline", "secondary"] // no "default" here
+    const randomIndex = Math.floor(Math.random() * variants.length)
+    return variants[randomIndex]
 }
 
 
@@ -192,11 +193,11 @@ function onMarkUnread(id: string | null) {
             <div class="overflow-y-auto">
                 <MailDisplay :mail="selectedMail" @markUnread="onMarkUnread" @delete="onDeleteMail" />
             </div>
-            <div class="p-4 flex justify-end">
+            <DrawerFooter>
                 <DrawerClose>
-                    <Button variant="secondary">Close</Button>
+                    <Button variant="secondary" class="w-full">Close</Button>
                 </DrawerClose>
-            </div>
+            </DrawerFooter>
         </DrawerContent>
     </Drawer>
 </template>

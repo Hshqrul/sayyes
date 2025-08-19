@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { Head, useForm, usePage } from '@inertiajs/vue3'
 import AppLayout from '@/layouts/widget/FormCardLayout.vue'
 import Alert from '@/components/ui/alert/Alert.vue'
@@ -11,7 +11,10 @@ import TextLink from '@/components/TextLink.vue'
 import { Toaster, toast } from 'vue-sonner'
 import 'vue-sonner/style.css'
 import { useAppearance } from '@/composables/useAppearance'
+import ListParticipants from './ListParticipants.vue'
 
+const page = usePage()
+console.log(page.props)
 const toastMethods = {
     success: toast.success,
     error: toast.error,
@@ -51,6 +54,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const limitedRsvps = computed(() => props.rsvps.slice(0, 5))
 
 const currentForm = useForm({
     name: props.rsvp.name,
@@ -63,7 +67,7 @@ const currentForm = useForm({
 </script>
 
 <template>
-    <Toaster closeButton :theme="appearance"/>
+    <Toaster closeButton :theme="appearance" />
 
     <Head title="Success Response" />
     <AppLayout>
@@ -82,10 +86,13 @@ const currentForm = useForm({
         </Alert>
         <div class="flex flex-col gap-4 mb-4">
             <div class="border-b border-sidebar-border/70"></div>
-            <h1 class="text-xl font-extrabold tracking-tight lg:text-2xl">Guests Book</h1>
+            <div class="flex flex-row items-center justify-between">
+                <h1 class="text-xl font-extrabold tracking-tight lg:text-2xl">Guests Book</h1>
+                <ListParticipants :rsvps="props.rsvps" />
+            </div>
             <div class="border-b border-sidebar-border/70"></div>
             <div class="flex flex-col gap-4 overflow-y-auto max-h-[150px] pr-2">
-                <template v-for="(rsvps, index) in props.rsvps" :key="index">
+                <template v-for="(rsvps, index) in limitedRsvps" :key="index">
                     <Alert :class="{
                         'bg-indigo-300/20 border-indigo-700 text-indigo-600 dark:bg-indigo-700/20 dark:border-indigo-600 dark:text-indigo-400':
                             rsvps.attendence == true,
@@ -93,7 +100,7 @@ const currentForm = useForm({
                             rsvps.attendence == false,
                     }">
                         <AlertDescription class="pt-2 pb-2">
-                            <p class="italic text-lg" :class="{
+                            <p class="italic text-md" :class="{
                                 'text-indigo-600 dark:text-indigo-400':
                                     rsvps.attendence == true,
                                 'text-yellow-600 dark:text-yellow-400':
@@ -103,14 +110,14 @@ const currentForm = useForm({
                             </p>
                         </AlertDescription>
                         <AlertTitle>
-                            <div class="flex items-center text-gray-800 dark:text-gray-200 gap-1">
+                            <div class="flex items-center text-xs text-gray-800 dark:text-gray-200 gap-1">
                                 {{ rsvps.name }}
                                 <component :is="rsvps.attendence == true ? BadgeCheck : Moon"
                                     :class="rsvps.attendence == true ? 'text-green-500' : 'text-gray-500'"
                                     class="h-3 w-3 flex shrink-0" aria-hidden="true" />
                             </div>
                         </AlertTitle>
-                        <AlertTitle class="text-muted-foreground dark:text-muted-foreground/80">
+                        <AlertTitle class="text-muted-foreground dark:text-muted-foreground/80 text-xs">
                             {{ moment(rsvps?.created_at).startOf('hour').fromNow() }}
                         </AlertTitle>
                     </Alert>

@@ -13,8 +13,27 @@ defineProps<{
 </script>
 
 <template>
-    <div
+    <!-- <div
         class="relative grid h-dvh flex-col items-center justify-center px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0">
+        <div class="lg:p-8">
+            <div class="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+                <div class="flex justify-center gap-2 md:justify-start">
+                    <a :href="route('user_dashboard')" class="flex items-center gap-2 font-medium">
+                        <div
+                            class="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
+                            <GalleryVerticalEnd class-name="size-4" />
+                            <AppLogoIcon class="size-6 fill-current" />
+                        </div>
+                        {{ name }}
+                    </a>
+                </div>
+                <div class="flex flex-col space-y-2 text-center">
+                    <h1 class="text-xl font-medium tracking-tight" v-if="title">{{ title }}</h1>
+                    <p class="text-sm text-muted-foreground" v-if="description">{{ description }}</p>
+                </div>
+                <slot />
+            </div>
+        </div>
         <div class="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
             <div class="absolute inset-0 bg-zinc-900" />
             <Link :href="route('dashboard')" class="relative z-20 flex items-center text-lg font-medium">
@@ -28,23 +47,35 @@ defineProps<{
                 </blockquote>
             </div>
         </div>
-        <div class="lg:p-8">
-            <div class="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-                <div class="flex justify-center gap-2 md:justify-start block md:hidden">
-                    <a :href="route('user_dashboard')" class="flex items-center gap-2 font-medium">
-                        <div
-                            class="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-                            <!-- <GalleryVerticalEnd class-name="size-4" /> -->
-                            <AppLogoIcon class="size-6 fill-current" />
-                        </div>
-                         {{ name }}
-                    </a>
+    </div> -->
+    <div class="grid min-h-svh lg:grid-cols-2">
+        <div class="flex flex-col gap-4 p-6 md:p-10">
+            <div class="flex justify-center gap-2 md:justify-start">
+                <a :href="route('user_dashboard')" class="flex items-center gap-2 font-medium">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
+                        <GalleryVerticalEnd class-name="size-4" />
+                        <AppLogoIcon class="size-5 fill-current stroke-current" />
+                    </div>
+                    {{ name }}
+                </a>
+            </div>
+            <div class="flex flex-1 items-center justify-center">
+                <div class="flex w-full max-w-sm flex-col gap-8">
+                    <div class="flex flex-col space-y-2 text-center">
+                        <h1 class="text-xl font-medium tracking-tight" v-if="title">{{ title }}</h1>
+                        <p class="text-sm text-muted-foreground" v-if="description">{{ description }}</p>
+                    </div>
+                    <slot />
                 </div>
-                <div class="flex flex-col space-y-2 text-center">
-                    <h1 class="text-xl font-medium tracking-tight" v-if="title">{{ title }}</h1>
-                    <p class="text-sm text-muted-foreground" v-if="description">{{ description }}</p>
-                </div>
-                <slot />
+            </div>
+        </div>
+        <div class="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
+            <div class="absolute inset-0 bg-zinc-900" />
+            <div v-if="quote" class="relative z-20 mt-auto text-right">
+                <blockquote class="space-y-2">
+                    <p class="text-lg">&ldquo;{{ quote.message }}&rdquo;</p>
+                    <footer class="text-sm text-neutral-300">{{ quote.author }}</footer>
+                </blockquote>
             </div>
         </div>
     </div>

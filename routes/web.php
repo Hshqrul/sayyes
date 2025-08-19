@@ -44,7 +44,7 @@ Route::get('/rsvp', [RsvpController::class, 'create'])->name('rsvp.create');
 Route::post('/rsvp', [RsvpController::class, 'store'])->name('rsvp.store');
 Route::get('/rsvp/success/{name}/{event}', function ($name, $event) {
     $event = Event::where('id', $event)->first();
-    $rsvps = Rsvp::where('name', '!=', null)->orderBy('created_at', 'desc')->limit(4)->get();
+    $rsvps = $event->rsvps()->where('name', '!=', null)->orderBy('created_at', 'desc')->get();
     $rsvp = Rsvp::where('name', $name)->first();
     return Inertia::render('rsvp/SucceedRsvp', [
         'event' => $event,
