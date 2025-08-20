@@ -10,9 +10,7 @@ import Card from '@/components/ui/card/Card.vue'
 import CardContent from '@/components/ui/card/CardContent.vue'
 import GuestBook from './rsvp/GuestBook.vue'
 import { Head, Link, usePage } from '@inertiajs/vue3'
-import TextLink from '@/components/TextLink.vue'
 import GuestBookMarquee from './rsvp/GuestBookMarquee.vue'
-import GuestBookMarquee2 from './rsvp/GuestBookMarquee2.vue'
 interface Rsvp {
     name: string
     attendance: boolean
@@ -156,7 +154,6 @@ const countdown = computed(() => {
             <div id="guestbook" class="relative min-h-[200px] col-span-full rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
                 <!-- <GuestBook :rsvps="rsvps" :event="event" /> -->
                  <GuestBookMarquee :rsvps="rsvps" :event="event" />
-                 <!-- <GuestBookMarquee2 /> -->
             </div>
         </div>
     </AppLayout>
