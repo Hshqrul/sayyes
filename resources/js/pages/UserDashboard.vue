@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import AppSidebarLayout from '@/layouts/app/AppSidebarLayout.vue';
 import StatsWidget from './dashboard-items/StatsWidget.vue';
-import { usePage } from '@inertiajs/vue3';
-import { MessageCircleDashedIcon, PlusIcon, UserCircle } from 'lucide-vue-next';
+import { Link, router, usePage } from '@inertiajs/vue3';
+import { LogOut, MessageCircleDashedIcon, PlusIcon, UserCircle } from 'lucide-vue-next';
 import Card from '@/components/ui/card/Card.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
 import Avatar from '@/components/ui/avatar/Avatar.vue';
@@ -27,6 +27,10 @@ interface EventStat {
 // const stats = computed(() => page.props.stats as EventStat[]);
 const stats = page.props.stats as EventStat[];
 const showAvatar = computed(() => user.avatar && user.avatar !== '');
+
+const handleLogout = () => {
+    router.flushAll();
+};
 </script>
 
 <template>
@@ -52,12 +56,24 @@ const showAvatar = computed(() => user.avatar && user.avatar !== '');
             </p>
           </div>
           <div class="flex items-end gap-2">
-            <Button variant="outline" class="w-full" as-child>
-              <a :href="route('profile.edit')">
-                <UserCircle class="size-4" />
-                Profile
-              </a>
-            </Button>
+            <div class="flex flex-row gap-2">
+              <Button variant="secondary" as-child>
+                <a :href="route('profile.edit')">
+                  <UserCircle class="size-4" />
+                  <p class="hidden md:block">
+                    Profile
+                  </p>
+                </a>
+              </Button>
+              <Button variant="outline" as-child>
+                <Link method="post" :href="route('logout')" @click="handleLogout" as="button" class="cursor-pointer">
+                  <LogOut class="size-4" />
+                  <p class="hidden md:block">
+                    Logout
+                  </p>
+                </Link>
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>

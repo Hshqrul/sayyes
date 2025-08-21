@@ -11,6 +11,7 @@ import CardContent from '@/components/ui/card/CardContent.vue'
 import GuestBook from './rsvp/GuestBook.vue'
 import { Head, Link, usePage } from '@inertiajs/vue3'
 import GuestBookMarquee from './rsvp/GuestBookMarquee.vue'
+import TextLink from '@/components/TextLink.vue'
 interface Rsvp {
     name: string
     attendance: boolean
@@ -162,7 +163,7 @@ const countdown = computed(() => {
         <div class="flex items-center gap-2 ">
             <div class="flex items-center gap-1">
                 <span>
-                    &copy; {{ new Date().getFullYear() }} <span class="font-semibold">{{ page.props.name }}</span>
+                    &copy; {{ new Date().getFullYear() }} <TextLink :href="route('dashboard')" class="font-semibold">{{ page.props.name }}</TextLink>
                 </span>
             </div>
             <span> · </span>

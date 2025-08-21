@@ -87,89 +87,91 @@ function confirmDelete(eventSlug: string) {
                     </Button>
                 </div>
             </div>
-            <div v-if="loading" class="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
-                <Card v-for="n in props.events.length" :key="n" class="md:w-full shadow-xs">
-                    <CardHeader class="flex flex-row items-center justify-between">
-                        <Skeleton class="w-[200px] h-6 rounded-full" />
-                        <Skeleton class="w-5 h-5 rounded" />
-                    </CardHeader>
-                    <CardContent>
-                        <Skeleton class="w-full h-4 rounded mb-2" />
-                        <Skeleton class="w-3/4 h-4 rounded" />
-                    </CardContent>
-                    <CardFooter>
-                        <Skeleton class="w-[120px] h-4 rounded" />
-                    </CardFooter>
-                </Card>
-            </div>
-
-            <div v-else-if="hasEvents" class="w-full">
-                <div class="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
-                    <Card v-for="event in props.events" :key="event.event_name" class="md:w-full shadow-xs">
-                        <CardHeader class="flex flex-row items-center justify-between space-y-0">
-                            <CardTitle>
-                                <h1 class="text-2xl font-bold leading-none tracking-tight">
-                                    {{ event.event_name }}
-                                </h1>
-                            </CardTitle>
-                            <CardAction>
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger :as-child="true">
-                                        <Button variant="ghost">
-                                            <EllipsisIcon class="size-4" />
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent class="w-50" align="start">
-                                        <DropdownMenuGroup>
-                                            <DropdownMenuItem :as-child="true">
-                                                <Link :href="route('event_rsvp', { event: event.slug })"
-                                                    class="block w-full" prefetch as="button">
-                                                <SquareArrowOutUpRightIcon class="size-4" />
-                                                <span>Open Rsvp</span>
-                                                </Link>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem :as-child="true">
-                                                <Link :href="route('events.edit', { event: event.slug })"
-                                                    class="block w-full" prefetch as="button">
-                                                <PencilIcon class="size-4" />
-                                                <span>Edit</span>
-                                                </Link>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem :as-child="true">
-                                                <Link :href="route('rsvps.index', { event: event.slug })"
-                                                    class="block w-full" prefetch as="button">
-                                                <UserGroupIcon class="size-4" />
-                                                <span>Guest List</span>
-                                                </Link>
-                                            </DropdownMenuItem>
-                                        </DropdownMenuGroup>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuGroup>
-                                            <DropdownMenuItem :as-child="true">
-                                                <!-- <Link :href="route('events.destroy', { event: event.slug })" -->
-                                                <button @click="confirmDelete(event.slug)"
-                                                    class="block w-full hover:text-red-500" method="delete" as="button">
-                                                    <Trash2Icon class="size-4" />
-                                                    <span>Delete</span>
-
-                                                </button>
-                                                <!-- </Link> -->
-                                            </DropdownMenuItem>
-                                        </DropdownMenuGroup>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </CardAction>
+            <div v-if="hasEvents">
+                <div v-if="loading" class="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
+                    <Card v-for="n in props.events.length" :key="n" class="md:w-full shadow-xs">
+                        <CardHeader class="flex flex-row items-center justify-between">
+                            <Skeleton class="w-[200px] h-6 rounded-full" />
+                            <Skeleton class="w-5 h-5 rounded" />
                         </CardHeader>
                         <CardContent>
-                            <p class="text-md text-base">{{ event.description }}</p>
+                            <Skeleton class="w-full h-4 rounded mb-2" />
+                            <Skeleton class="w-3/4 h-4 rounded" />
                         </CardContent>
-                        <CardFooter class="flex flex-row items-center justify-end space-x-2 space-y-0">
-                            <TimerIcon class="size-4" />
-                            <p class="text-sm text-muted-foreground">
-                                {{ moment(event.event_date).format('MMMM D, YYYY') }}
-                            </p>
+                        <CardFooter>
+                            <Skeleton class="w-[120px] h-4 rounded" />
                         </CardFooter>
                     </Card>
+                </div>
+    
+                <div v-else-if="hasEvents" class="w-full">
+                    <div class="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
+                        <Card v-for="event in props.events" :key="event.event_name" class="md:w-full shadow-xs">
+                            <CardHeader class="flex flex-row items-center justify-between space-y-0">
+                                <CardTitle>
+                                    <h1 class="text-2xl font-bold leading-none tracking-tight">
+                                        {{ event.event_name }}
+                                    </h1>
+                                </CardTitle>
+                                <CardAction>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger :as-child="true">
+                                            <Button variant="ghost">
+                                                <EllipsisIcon class="size-4" />
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent class="w-50" align="start">
+                                            <DropdownMenuGroup>
+                                                <DropdownMenuItem :as-child="true">
+                                                    <Link :href="route('event_rsvp', { event: event.slug })"
+                                                        class="block w-full" prefetch as="button">
+                                                    <SquareArrowOutUpRightIcon class="size-4" />
+                                                    <span>Open Rsvp</span>
+                                                    </Link>
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem :as-child="true">
+                                                    <Link :href="route('events.edit', { event: event.slug })"
+                                                        class="block w-full" prefetch as="button">
+                                                    <PencilIcon class="size-4" />
+                                                    <span>Edit</span>
+                                                    </Link>
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem :as-child="true">
+                                                    <Link :href="route('rsvps.index', { event: event.slug })"
+                                                        class="block w-full" prefetch as="button">
+                                                    <UserGroupIcon class="size-4" />
+                                                    <span>Guest List</span>
+                                                    </Link>
+                                                </DropdownMenuItem>
+                                            </DropdownMenuGroup>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuGroup>
+                                                <DropdownMenuItem :as-child="true">
+                                                    <!-- <Link :href="route('events.destroy', { event: event.slug })" -->
+                                                    <button @click="confirmDelete(event.slug)"
+                                                        class="block w-full hover:text-red-500" method="delete" as="button">
+                                                        <Trash2Icon class="size-4" />
+                                                        <span>Delete</span>
+    
+                                                    </button>
+                                                    <!-- </Link> -->
+                                                </DropdownMenuItem>
+                                            </DropdownMenuGroup>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </CardAction>
+                            </CardHeader>
+                            <CardContent>
+                                <p class="text-md text-base">{{ event.description }}</p>
+                            </CardContent>
+                            <CardFooter class="flex flex-row items-center justify-end space-x-2 space-y-0">
+                                <TimerIcon class="size-4" />
+                                <p class="text-sm text-muted-foreground">
+                                    {{ moment(event.event_date).format('MMMM D, YYYY') }}
+                                </p>
+                            </CardFooter>
+                        </Card>
+                    </div>
                 </div>
             </div>
 
