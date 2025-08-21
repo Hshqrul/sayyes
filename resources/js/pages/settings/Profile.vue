@@ -13,6 +13,7 @@ import { type BreadcrumbItem, type User } from '@/types';
 import Card from '@/components/ui/card/Card.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
+import { toast } from 'vue-sonner';
 
 interface Props {
     mustVerifyEmail: boolean;
@@ -40,6 +41,9 @@ const form = useForm({
 const submit = () => {
     form.patch(route('profile.update'), {
         preserveScroll: true,
+        onSuccess: () => toast.success('Profile successfully updated!', {
+            description: 'Your profile has been updated successfully.'
+        }),
     });
 };
 </script>

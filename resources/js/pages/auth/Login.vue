@@ -22,9 +22,6 @@ const form = useForm({
     remember: false,
 });
 
-form.username = 'usermycloud';
-form.password = 'user@example.com';
-
 const submit = () => {
     form.post(route('login'), {
         onFinish: () => form.reset('password'),
@@ -64,7 +61,7 @@ const submit = () => {
                         :tabindex="1"
                         autocomplete="username"
                         v-model="form.username"
-                        placeholder="joegoldberg"
+                        placeholder="Enter your username"
                     />
                     <InputError :message="form.errors.username" />
                 </div>
@@ -86,7 +83,7 @@ const submit = () => {
                         placeholder="Password"
                     /> -->
                     <Label for="password">Password</Label>
-                    <PasswordInput id="password" v-model="form.password" :tabindex="2" placeholder="Password"/>
+                    <PasswordInput id="password" v-model="form.password" :tabindex="2" placeholder="Enter your password"/>
                     <InputError :message="form.errors.password" />
                 </div>
 

@@ -13,7 +13,7 @@ class InboxController extends Controller
 {
     public function index()
     {
-        $inboxes = Inbox::with('user:id,name,email')->orderby('created_at', 'desc')
+        $inboxes = Inbox::where('user_id', auth()->user()->id)->with('user:id,name,email')->orderby('created_at', 'desc')
             ->get()
             ->map(function ($mail) {
                 return [

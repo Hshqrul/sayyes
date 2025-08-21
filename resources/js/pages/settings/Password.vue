@@ -14,6 +14,7 @@ import Card from '@/components/ui/card/Card.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
+import { toast } from 'vue-sonner';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -34,7 +35,12 @@ const form = useForm({
 const updatePassword = () => {
     form.put(route('password.update'), {
         preserveScroll: true,
-        onSuccess: () => form.reset(),
+        onSuccess: () => {
+            form.reset(),
+                toast.success('Password successfully updated!', {
+                    description: 'Your password has been updated successfully.'
+                })
+        },
         onError: (errors: any) => {
             if (errors.password) {
                 form.reset('password', 'password_confirmation');
@@ -64,7 +70,8 @@ const updatePassword = () => {
             <!-- <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" /> -->
             <Card class="flex flex-col space-y-6 shadow-xs">
                 <CardHeader>
-                    <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" />
+                    <HeadingSmall title="Update password"
+                        description="Ensure your account is using a long, random password to stay secure" />
                 </CardHeader>
                 <CardContent>
                     <form @submit.prevent="updatePassword" class="space-y-6">
@@ -84,7 +91,7 @@ const updatePassword = () => {
                                 autocomplete="current-password" />
                             <InputError :message="form.errors.current_password" />
                         </div>
-        
+
                         <div class="grid gap-2">
                             <Label for="password">New password</Label>
                             <!-- <Input
@@ -96,11 +103,11 @@ const updatePassword = () => {
                                     autocomplete="new-password"
                                     placeholder="New password"
                                 /> -->
-                            <PasswordInput class="mt-1 block w-full" id="password" ref="passwordInput" v-model="form.password"
-                                placeholder="New password" autocomplete="new-password" />
+                            <PasswordInput class="mt-1 block w-full" id="password" ref="passwordInput"
+                                v-model="form.password" placeholder="New password" autocomplete="new-password" />
                             <InputError :message="form.errors.password" />
                         </div>
-        
+
                         <div class="grid gap-2">
                             <Label for="password_confirmation">Confirm password</Label>
                             <!-- <Input
@@ -116,10 +123,10 @@ const updatePassword = () => {
                                 autocomplete="new-password" />
                             <InputError :message="form.errors.password_confirmation" />
                         </div>
-        
+
                         <div class="flex items-center gap-4">
                             <Button :disabled="form.processing">Save password</Button>
-        
+
                             <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                                 leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
                                 <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
