@@ -12,6 +12,9 @@ import GuestBook from './rsvp/GuestBook.vue'
 import { Head, Link, usePage } from '@inertiajs/vue3'
 import GuestBookMarquee from './rsvp/GuestBookMarquee.vue'
 import TextLink from '@/components/TextLink.vue'
+import NumberTicker from '@/components/ui/number-ticker/NumberTicker.vue'
+import { Motion } from 'motion-v'
+import CustomLogoIcon from '@/components/CustomLogoIcon.vue'
 interface Rsvp {
     name: string
     attendance: boolean
@@ -84,50 +87,77 @@ const countdown = computed(() => {
     <Head title="Répondez S'il Vous Plaît" />
     <AppLayout>
         <div class="grid gap-4 p-4 md:grid-cols-2">
-            <div
-                class="relative min-h-[200px] col-span-1 aspect-video rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
-                <div class="flex h-full flex-col justify-center px-6 py-6">
-                    <h1 class="text-4xl font-extrabold tracking-tight lg:text-5xl">
-                        Hi There!
-                    </h1>
-                    <p class="mt-2 text-muted-foreground font-semibold tracking-tight">
-                        Please fill out your RSVP!
-                    </p>
-                    <div class="mt-4">
-                        <Button variant="default" as-child class="w-full sm:w-auto">
-                            <a href="#rsvp-form">
-                                Rsvp Form
-                                <MoveRight class="size-4" />
-                            </a>
-                        </Button>
-                    </div>
-                </div>
-            </div>
+            <Card
+                class="relative min-h-[200px] rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
+                <CardContent class="flex h-full flex-col justify-center px-6 py-6">
+                    <Motion :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                        :while-in-view="{ opacity: 1, y: 0, filter: 'blur(0px)', }"
+                        :transition="{ delay: 0.3, duration: 0.8, ease: 'easeInOut', }">
+                        <h1 class="text-4xl font-extrabold tracking-tight lg:text-5xl">
+                            Hi There!
+                        </h1>
+                        <p class="mt-2 text-muted-foreground font-semibold tracking-tight">
+                            Please enter your name and let us know if you can attend
+                        </p>
+                        <div class="mt-4">
+                            <Button variant="default" as-child class="w-full sm:w-auto">
+                                <a href="#rsvp-form">
+                                    Here
+                                    <MoveRight class="size-4" />
+                                </a>
+                            </Button>
+                        </div>
+                    </Motion>
+                </CardContent>
+            </Card>
             <div>
                 <Card
                     class="min-h-[200px] rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border shadow-none">
-                    <CardContent>
-                        <div
-                            class="grid gap-4 sm:grid-cols-1 md:grid-cols-3 justify-items-center items-center text-center">
+                    <Motion :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                        :while-in-view="{ opacity: 1, y: 0, filter: 'blur(0px)', }"
+                        :transition="{ delay: 0.3, duration: 0.8, ease: 'easeInOut', }">
+                        <CardContent>
+                            <div
+                                class="grid gap-4 sm:grid-cols-1 md:grid-cols-3 justify-items-center items-center text-center">
 
-                            <div class="flex flex-grow lg:col-span-2">
-                                <CalendarWidget v-model="selectedDate" readonly />
+                                <div class="flex flex-grow lg:col-span-2">
+                                    <CalendarWidget v-model="selectedDate" readonly />
+                                </div>
+
+                                <div class="flex flex-col flex-none lg:text-left">
+                                    <h1 class="text-xl font-extrabold tracking-tight lg:text-3xl">
+                                        Save the Date!
+                                    </h1>
+                                    <h2 class="text-md text-muted-foreground font-semibold tracking-tight">
+                                        Our Event Date
+                                    </h2>
+                                </div>
+
                             </div>
-
-                            <div class="flex flex-col flex-none lg:text-left">
-                                <h1 class="text-xl font-extrabold tracking-tight lg:text-3xl">
-                                    Save the Date!
-                                </h1>
-                                <h2 class="text-md text-muted-foreground font-semibold tracking-tight">
-                                    Our Event Date
-                                </h2>
-                            </div>
-
-                        </div>
+                        </CardContent>
+                    </Motion>
+                </Card>
+            </div>
+            <div class="lg:col-span-2">
+                <Card
+                    class="relative min-h-[200px] rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
+                    <CardContent class="flex h-full flex-col justify-center px-6 py-6">
+                        <CustomLogoIcon class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-sm" />
+                        <Motion :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                            :while-in-view="{ opacity: 1, y: 0, filter: 'blur(0px)', }"
+                            :transition="{ delay: 0.3, duration: 0.8, ease: 'easeInOut', }">
+                            <h1 class="text-4xl font-extrabold tracking-tight lg:text-5xl">
+                                {{ event.event_name }}
+                            </h1>
+                            <p class="mt-2 text-muted-foreground font-semibold tracking-tight">
+                                With heartfelt gratitude and joy, we wish to share this special moment with you. It
+                                would be our greatest honor if you could kindly respond to our invitation, so that we
+                                may reserve your seat accordingly.
+                            </p>
+                        </Motion>
                     </CardContent>
                 </Card>
             </div>
-
             <div class="lg:col-span-2">
                 <Card class="rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border shadow-none">
                     <div class="flex flex-col items-center justify-center px-4 py-4">
@@ -136,7 +166,7 @@ const countdown = computed(() => {
                             <div class="flex flex-col items-center lg:col-span-1 flex-none"
                                 v-for="(value, label) in countdown" :key="label">
                                 <h1 class="text-6xl font-extrabold tracking-tight lg:text-8xl">
-                                    {{ value }}
+                                    <NumberTicker :value="value" :decimal-places="0" :duration="3000" />
                                 </h1>
                                 <span class="text-md text-muted-foreground tracking-tight lg:text-lg">{{ label }}</span>
                             </div>
@@ -148,13 +178,15 @@ const countdown = computed(() => {
                 </Card>
             </div>
 
-            <div id="rsvp-form" class="pt-6 col-span-full rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
+            <div id="rsvp-form"
+                class="pt-6 col-span-full rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
                 <FormRsvp />
             </div>
 
-            <div id="guestbook" class="relative min-h-[200px] col-span-full rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
+            <div id="guestbook"
+                class="relative min-h-[200px] col-span-full rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
                 <!-- <GuestBook :rsvps="rsvps" :event="event" /> -->
-                 <GuestBookMarquee :rsvps="rsvps" :event="event" />
+                <GuestBookMarquee :rsvps="rsvps" :event="event" />
             </div>
         </div>
     </AppLayout>
@@ -163,7 +195,8 @@ const countdown = computed(() => {
         <div class="flex items-center gap-2 ">
             <div class="flex items-center gap-1">
                 <span>
-                    &copy; {{ new Date().getFullYear() }} <TextLink :href="route('dashboard')" class="font-semibold">{{ page.props.name }}</TextLink>
+                    &copy; {{ new Date().getFullYear() }} <TextLink :href="route('dashboard')" class="font-semibold">{{
+                        page.props.name }}</TextLink>
                 </span>
             </div>
             <span> · </span>
@@ -177,7 +210,8 @@ const countdown = computed(() => {
                             clip-rule="evenodd" />
                     </svg>
                     by
-                    <a class="underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500 underline-offset-4" target="_blank" href="https://buymeacoffee.com/hashaqirul">Hashaqirul.</a>
+                    <a class="underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500 underline-offset-4"
+                        target="_blank" href="https://buymeacoffee.com/hashaqirul">Hashaqirul.</a>
                 </span>
             </div>
         </div>

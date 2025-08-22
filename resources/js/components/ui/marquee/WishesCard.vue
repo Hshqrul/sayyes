@@ -1,29 +1,21 @@
 <template>
-    <figure class="relative flex h-full w-68 md:w-80 cursor-pointer flex-col overflow-hidden rounded-xl border p-4 
+    <figure
+        class="relative flex h-full w-68 md:w-80 cursor-pointer flex-col overflow-hidden rounded-xl border p-4 
          border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05] 
-         dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15] hover:scale-105 transition-all">
+         dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15] hover:scale-105 transition-all select-none">
         <div class="flex items-center gap-2">
             <Avatar>
-                <AvatarFallback class="text-sm">
+                <AvatarFallback class="text-sm font-semibold bg-primary text-primary-foreground">
                     {{ getInitials(name) }}
                 </AvatarFallback>
             </Avatar>
 
-            <div class="flex flex-col">
-                <span class="text-xs font-medium">
+            <div class="flex flex-1 items-center justify-between">
+                <span class="text-sm font-medium">
                     {{ name }}
                 </span>
-                <p class="text-xs font-medium text-gray-500 dark:text-white/40">
-                    {{
-                        new Intl.DateTimeFormat("en-US", {
-                            year: "numeric",
-                            month: "short",
-                            day: "2-digit",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                        }).format(new Date(created_at))
-                    }}
-                </p>
+                <Badge v-if="attendence" variant="default" class="text-xs">Attend</Badge>
+                <Badge v-else variant="secondary" class="text-xs">Absent</Badge>
             </div>
         </div>
 
@@ -36,8 +28,17 @@
         </blockquote>
 
         <div class="mt-auto flex justify-end pt-2">
-            <Badge v-if="attendence" variant="default">Attend</Badge>
-            <Badge v-else variant="secondary">Absent</Badge>
+            <p class="text-xs font-medium text-gray-500 dark:text-white/40">
+                {{
+                    new Intl.DateTimeFormat("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                    }).format(new Date(created_at))
+                }}
+            </p>
         </div>
     </figure>
 </template>
