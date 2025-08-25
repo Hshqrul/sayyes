@@ -4,7 +4,7 @@ import { parseDate, type DateValue } from '@internationalized/date'
 import CalendarWidget from './dashboard-items/CalendarWidget.vue'
 import FormRsvp from './rsvp/FormRsvp.vue'
 import AppLayout from '@/layouts/GuestLayout.vue'
-import { MoveRight } from 'lucide-vue-next'
+import { ArrowRight } from 'lucide-vue-next'
 import Button from '@/components/ui/button/Button.vue'
 import Card from '@/components/ui/card/Card.vue'
 import CardContent from '@/components/ui/card/CardContent.vue'
@@ -88,7 +88,7 @@ const countdown = computed(() => {
     <AppLayout>
         <div class="grid gap-4 p-4 md:grid-cols-2">
             <Card
-                class="relative min-h-[200px] rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
+                class="min-h-[200px] rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border shadow-none">
                 <CardContent class="flex h-full flex-col justify-center px-6 py-6">
                     <Motion :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
                         :while-in-view="{ opacity: 1, y: 0, filter: 'blur(0px)', }"
@@ -102,47 +102,46 @@ const countdown = computed(() => {
                         <div class="mt-4">
                             <Button variant="default" as-child class="w-full sm:w-auto">
                                 <a href="#rsvp-form">
-                                    Here
-                                    <MoveRight class="size-4" />
+                                    Click Here
+                                    <ArrowRight class="size-4" />
                                 </a>
                             </Button>
                         </div>
                     </Motion>
                 </CardContent>
             </Card>
-            <div>
-                <Card
-                    class="min-h-[200px] rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border shadow-none">
-                    <Motion :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                        :while-in-view="{ opacity: 1, y: 0, filter: 'blur(0px)', }"
-                        :transition="{ delay: 0.3, duration: 0.8, ease: 'easeInOut', }">
-                        <CardContent>
-                            <div
-                                class="grid gap-4 sm:grid-cols-1 md:grid-cols-3 justify-items-center items-center text-center">
+            <Card
+                class="min-h-[200px] rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border shadow-none">
+                <Motion :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                    :while-in-view="{ opacity: 1, y: 0, filter: 'blur(0px)', }"
+                    :transition="{ delay: 0.3, duration: 0.8, ease: 'easeInOut', }">
+                    <CardContent>
+                        <div
+                            class="grid gap-4 sm:grid-cols-1 md:grid-cols-3 justify-items-center items-center text-center">
 
-                                <div class="flex flex-grow lg:col-span-2">
-                                    <CalendarWidget v-model="selectedDate" readonly />
-                                </div>
-
-                                <div class="flex flex-col flex-none lg:text-left">
-                                    <h1 class="text-xl font-extrabold tracking-tight lg:text-3xl">
-                                        Save the Date!
-                                    </h1>
-                                    <h2 class="text-md text-muted-foreground font-semibold tracking-tight">
-                                        Our Event Date
-                                    </h2>
-                                </div>
-
+                            <div class="flex flex-grow lg:col-span-2">
+                                <CalendarWidget v-model="selectedDate" readonly />
                             </div>
-                        </CardContent>
-                    </Motion>
-                </Card>
-            </div>
+
+                            <div class="flex flex-col flex-none lg:text-left">
+                                <h1 class="text-xl font-extrabold tracking-tight lg:text-3xl">
+                                    Save the Date!
+                                </h1>
+                                <h2 class="text-md text-muted-foreground font-semibold tracking-tight">
+                                    Our Event Date
+                                </h2>
+                            </div>
+
+                        </div>
+                    </CardContent>
+                </Motion>
+            </Card>
             <div class="lg:col-span-2">
                 <Card
-                    class="relative min-h-[200px] rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
+                    class="relative min-h-[200px] rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border shadow-none overflow-hidden">
                     <CardContent class="flex h-full flex-col justify-center px-6 py-6">
-                        <CustomLogoIcon class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-sm opacity-50" />
+                        <CustomLogoIcon
+                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-sm opacity-50" />
                         <Motion :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
                             :while-in-view="{ opacity: 1, y: 0, filter: 'blur(0px)', }"
                             :transition="{ delay: 0.3, duration: 0.8, ease: 'easeInOut', }">

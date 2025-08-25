@@ -14,6 +14,10 @@ const emit = defineEmits<{
 
 // Default to 27/12/2025 if modelValue is not provided
 const value = ref<DateValue>(props.modelValue ?? today(getLocalTimeZone()))
+// const value = ref<{ start: DateValue; end: DateValue }>({
+//   start: today(getLocalTimeZone()),
+//   end: props.modelValue ?? today(getLocalTimeZone()),
+// })
 
 // Emit updates to parent
 watch(value, (newVal) => {
@@ -28,4 +32,5 @@ watch(() => props.modelValue, (newVal) => {
 
 <template>
   <Calendar v-model="value" :weekday-format="'short'" class="rounded-md border" :readonly="readonly" />
+  <!-- <RangeCalendar v-model="value" :weekday-format="'short'" class="rounded-md border" :readonly="readonly" /> -->
 </template>
