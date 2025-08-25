@@ -142,7 +142,7 @@ const countdown = computed(() => {
                 <Card
                     class="relative min-h-[200px] rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
                     <CardContent class="flex h-full flex-col justify-center px-6 py-6">
-                        <CustomLogoIcon class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-sm" />
+                        <CustomLogoIcon class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-sm opacity-50" />
                         <Motion :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
                             :while-in-view="{ opacity: 1, y: 0, filter: 'blur(0px)', }"
                             :transition="{ delay: 0.3, duration: 0.8, ease: 'easeInOut', }">
