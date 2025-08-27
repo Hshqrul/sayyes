@@ -112,7 +112,7 @@ const modalDescription = 'Start a new notes'
         <DialogTrigger as-child>
             <Button>
                 <Icon name="Plus" />
-                Create Compose
+                Compose
             </Button>
         </DialogTrigger>
         <DialogContent class="sm:max-w-2xl">
@@ -131,7 +131,7 @@ const modalDescription = 'Start a new notes'
             <Button>
                 <Icon name="Plus" />
                 <p class="hidden md:block">
-                    Create Compose
+                    Compose
                 </p>
             </Button>
         </DrawerTrigger>

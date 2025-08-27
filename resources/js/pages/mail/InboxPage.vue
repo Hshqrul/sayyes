@@ -24,7 +24,6 @@ interface Mail {
 const page = usePage<AppPageProps & { mails: Mail[] }>()
 const mails = page.props.mails
 
-console.log(page.props.mails)
 </script>
 
 <template>

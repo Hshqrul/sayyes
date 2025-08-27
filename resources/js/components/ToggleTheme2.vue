@@ -32,7 +32,7 @@ function handleAppearanceChange(val: string | string[] | null) {
       :value="value"
       :aria-label="`Switch to ${value} mode`"
     >
-      <component :is="Icon" class="h-4 w-4" />
+      <component :is="Icon" class="h-4 w-4" :class="{ 'fill-primary': appearance === value }" />
     </ToggleGroupItem>
   </ToggleGroup>
 </template>

@@ -40,10 +40,10 @@ const handleLogout = () => {
   }]">
     <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">
       <Card class="shadow-none">
-        <CardContent class="flex items-center gap-x-3">
-          <Avatar class="h-10 w-10 overflow-hidden rounded-lg">
+        <CardContent class="flex items-center gap-x-2">
+          <Avatar class="h-10 w-10 overflow-hidden">
             <AvatarImage v-if="showAvatar" :src="user.avatar!" :alt="user.username" />
-            <AvatarFallback class="bg-black rounded-lg border text-white">
+            <AvatarFallback class="bg-black rounded-full border text-white font-semibold">
               {{ getInitials(user.username) }}
             </AvatarFallback>
           </Avatar>
@@ -51,13 +51,13 @@ const handleLogout = () => {
             <h1 class="grid flex-1 text-md font-semibold leading-6">
               Welcome
             </h1>
-            <p class="mt-1 text-muted-foreground text-sm">
+            <p class="mt-0 text-muted-foreground text-sm">
               {{ page.props.auth.user.username }}
             </p>
           </div>
           <div class="flex items-end gap-2">
             <div class="flex flex-row gap-2">
-              <Button variant="secondary" as-child>
+              <Button variant="outline" as-child>
                 <a :href="route('profile.edit')">
                   <UserCircle class="size-4" />
                   <p class="hidden md:block">
@@ -65,7 +65,7 @@ const handleLogout = () => {
                   </p>
                 </a>
               </Button>
-              <Button variant="outline" as-child>
+              <Button variant="secondary" as-child>
                 <Link method="post" :href="route('logout')" @click="handleLogout" as="button" class="cursor-pointer">
                   <LogOut class="size-4" />
                   <p class="hidden md:block">
