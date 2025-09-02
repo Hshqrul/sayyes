@@ -2,6 +2,7 @@
 import type { Column } from '@tanstack/vue-table'
 import { type Task } from '../data/schema'
 import { ArrowDown, ArrowUp, ArrowUpDown, EyeOff } from 'lucide-vue-next'
+import { CaretSortIcon } from '@radix-icons/vue'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -36,7 +37,7 @@ export default {
                     <span>{{ title }}</span>
                     <ArrowDown v-if="column.getIsSorted() === 'desc'" class="w-4 h-4 ml-2" />
                     <ArrowUp v-else-if="column.getIsSorted() === 'asc'" class="w-4 h-4 ml-2" />
-                    <ArrowUpDown v-else class="w-4 h-4 ml-2" />
+                    <CaretSortIcon v-else class="w-4 h-4 ml-2" />
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">

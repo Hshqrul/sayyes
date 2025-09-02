@@ -1,16 +1,18 @@
 <?php
 
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\InboxController;
 use App\Models\Rsvp;
 use Inertia\Inertia;
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RsvpController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\InboxController;
+use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\UserDashboardController;
-use App\Models\Event;
 
 Route::get('/', function () {
-    return Inertia::render('MockupDashboard');
+    // return Inertia::render('MockupDashboard');
+    return redirect('/dashboard');
 })->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
@@ -53,7 +55,8 @@ Route::get('/rsvp/success/{name}/{event}', function ($name, $event) {
     ]);
 })->name('rsvp.success');
 
+// Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
+// Route::resource('/portfolio', PortfolioController::class);
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
-// require __DIR__ . '/admin.php';

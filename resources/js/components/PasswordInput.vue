@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { EyeIcon, EyeOffIcon } from 'lucide-vue-next'
+import { EyeClosedIcon, EyeIcon, EyeOffIcon } from 'lucide-vue-next'
 import Input from './ui/input/Input.vue'
 
 const props = defineProps<{
@@ -22,7 +22,7 @@ const showPassword = ref(false)
 
 		<button type="button" class="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent transition"
 			@click="showPassword = !showPassword" :disabled="!modelValue || disabled">
-			<component :is="showPassword && modelValue && !disabled ? EyeIcon : EyeOffIcon"
+			<component :is="showPassword && modelValue && !disabled ? EyeClosedIcon : EyeIcon"
 				class="w-4 h-4 transition-transform duration-200" aria-hidden="true" />
 			<span class="sr-only">{{ showPassword ? 'Hide password' : 'Show password' }}</span>
 		</button>
