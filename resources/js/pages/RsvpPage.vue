@@ -45,7 +45,6 @@ interface Props {
 const page = usePage<Props>()
 const rsvps = page.props.rsvps
 const event = page.props.event
-const user = page.props.user
 function dateValueToDate(dateValue: DateValue): Date {
     return new Date(dateValue.year, dateValue.month - 1, dateValue.day)
 }

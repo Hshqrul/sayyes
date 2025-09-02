@@ -17,6 +17,8 @@ import Layout from '@/layouts/settings/EditLayout.vue'
 import HeadingSmall from '@/components/HeadingSmall.vue'
 import DatePicker from '../../components/DatePickerField.vue'
 import DatePickerRangeField from '@/components/DatePickerRangeField.vue'
+import { Slider } from '@/components/ui/slider'
+import { ref, watch } from 'vue'
 
 interface Event {
     id: number
@@ -25,9 +27,16 @@ interface Event {
     description: string
     event_date: string
     allowed_pax: number
+    marquee_duration: number
 }
 
 const props = defineProps<{ event: Event }>();
+
+const modelValue = ref([props.event.marquee_duration || 0]);
+
+watch(modelValue, (val) => {
+    form.marquee_duration = val[0];
+});
 
 const form = useForm({
     event_name: props.event.event_name,
@@ -36,6 +45,7 @@ const form = useForm({
     event_date: new Date(props.event.event_date)
         .toLocaleDateString("en-CA", { timeZone: "Asia/Kuala_Lumpur" }), // 'YYYY-MM-DD'
     allowed_pax: props.event.allowed_pax,
+    marquee_duration: props.event.marquee_duration
 });
 
 function handleSubmit() {
@@ -74,7 +84,8 @@ function handleSubmit() {
                                 <div class="space-y-2">
                                     <!-- <Label for="event_date">Event Date</Label> -->
                                     <!-- <Input type="date" id="event_date" v-model="form.event_date" /> -->
-                                    <DatePicker name="event_date" v-model="form.event_date" label="Event Date" class="w-full" :isSelectMY="true"/>
+                                    <DatePicker name="event_date" v-model="form.event_date" label="Event Date"
+                                        class="w-full" :isSelectMY="true" />
                                     <!-- <DatePickerRangeField startName="start_date" endName="end_date"
                                         v-model="form.event_date"
                                         label="" description=""
@@ -100,6 +111,15 @@ function handleSubmit() {
                                     <Label for="description">Description</Label>
                                     <Textarea type="text" id="description" v-model="form.description" />
                                     <InputError :message="form.errors.description" />
+                                </div>
+                            </div>
+                            <div class="grid gap-6">
+                                <div class="space-y-2">
+                                    <Label for="marquee_duration">Duration</Label>
+                                    <Slider v-model="modelValue" :max="100" :step="5" @update:model-value="val => form.marquee_duration = val?.[0] ?? 0"/>
+                                    <!-- <span>{{ modelValue[0] }} min</span> -->
+                                     <span>{{ form.marquee_duration || 0 }} seconds</span>
+                                    <InputError :message="form.errors.marquee_duration" />
                                 </div>
                             </div>
                             <div class="flex justify-start space-x-2">

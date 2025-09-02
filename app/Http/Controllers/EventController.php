@@ -74,6 +74,7 @@ class EventController extends Controller
                 'description' => 'nullable|string',
                 'event_date' => 'required|date',
                 'allowed_pax' => 'required|integer|min:1',
+                'marquee_duration' => 'nullable|integer'
             ]);
 
             $update = [
@@ -81,6 +82,7 @@ class EventController extends Controller
                 'description' => $request->input('description'),
                 'event_date' => $request->input('event_date'),
                 'allowed_pax' => $request->input('allowed_pax'),
+                'marquee_duration' => $request->input('marquee_duration'),
             ];
 
             if ($request->input('event_name') !== $event->event_name) {

@@ -12,14 +12,14 @@
         <div class="relative flex w-full flex-col items-center justify-center overflow-hidden">
             <!-- First Marquee -->
             <!-- @todo dynamic duration and paused when hover-->
-            <Marquee pause-on-hover pause-on-click class="[--duration:20s]">
+            <Marquee pause-on-hover pause-on-click :style="{ '--duration': `${dur}s` }">
                 <WishesCard v-for="(rsvp, index) in rsvps" :key="index" :name="rsvp.name"
                     :body="rsvp.notes || `No message left`" :attendence="rsvp.attendence"
                     :created_at="rsvp.created_at" />
             </Marquee>
 
             <!-- Second Marquee (reverse) -->
-            <Marquee reverse pause-on-hover pause-on-click class="[--duration:20s]">
+            <Marquee reverse pause-on-hover pause-on-click :style="{ '--duration': `${dur}s` }">
                 <WishesCard v-for="(rsvp, index) in rsvps" :key="index" :name="rsvp.name"
                     :body="rsvp.notes || `No message left`" :attendence="rsvp.attendence"
                     :created_at="rsvp.created_at" />
@@ -41,11 +41,13 @@
 <script setup lang="ts">
 import Marquee from '@/components/ui/marquee/Marquee.vue';
 import WishesCard from '@/components/ui/marquee/WishesCard.vue';
+import { computed } from 'vue';
 
 const props = defineProps<{
     event: {
         event_name: string
         description?: string
+        marquee_duration?: number
     }
     rsvps: {
         id: string
@@ -56,15 +58,15 @@ const props = defineProps<{
         created_at: string
     }[]
 }>()
-
+const dur = props.event.marquee_duration > 0 ? props.event.marquee_duration : 20
 </script>
 
 <style scoped>
 .marquee {
     --duration: 40s;
-    position: absolute;
+    /* position: absolute;
     left: -10%;
     width: 120%;
-    padding: 0.5rem 0;
+    padding: 0.5rem 0; */
 }
 </style>

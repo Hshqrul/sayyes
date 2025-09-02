@@ -14,6 +14,7 @@ class Event extends Model
         'event_date',
         'allowed_pax',
         'user_id',
+        'marquee_duration',
     ];
 
     protected $casts = [
