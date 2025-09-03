@@ -92,14 +92,14 @@ watch(() => form.attendence, (isAttending) => {
                     <CardContent class="space-y-6">
                         <form @submit.prevent="handleSubmit" class="space-y-6">
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="name">Guest Name</Label>
                                     <Input type="text" id="name" v-model="form.name" />
                                     <InputError :message="form.errors.name" />
                                 </div>
                             </div>
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="attendence">Guest Attendance</Label>
                                     <ToggleGroup id="attendence" variant="outline" type="single"
                                         v-model="form.attendence" class="w-full">
@@ -116,7 +116,7 @@ watch(() => form.attendence, (isAttending) => {
                                 </div>
                             </div>
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="no_of_pax">Number of Guests</Label>
                                     <NumberField id="no_of_pax" :default-value="1" :min="form.attendence ? 1 : 0"
                                         :max="event.allowed_pax" :disabled="!form.attendence" v-model="form.no_of_pax">
@@ -130,7 +130,7 @@ watch(() => form.attendence, (isAttending) => {
                                 </div>
                             </div>
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="notes">Guest Wish for bride & groom</Label>
                                     <Textarea id="notes" type="text" v-model="form.notes"
                                         placeholder="Your wish for bride & groom" />
@@ -138,7 +138,7 @@ watch(() => form.attendence, (isAttending) => {
                                 </div>
                             </div>
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="event_id">Event</Label>
                                     <Select v-model="form.event_id">
                                         <SelectTrigger class="w-full">
@@ -176,14 +176,14 @@ watch(() => form.attendence, (isAttending) => {
                     <CardContent class="space-y-6">
                         <form @submit.prevent="handleSubmit" class="space-y-6">
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="name">Name</Label>
                                     <Input type="text" id="name" v-model="form.name" />
                                     <InputError :message="form.errors.name" />
                                 </div>
                             </div>
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="attendence">Will you attend?</Label>
                                     <ToggleGroup id="attendence" variant="outline" type="single"
                                         v-model="form.attendence" class="w-full">
@@ -200,7 +200,7 @@ watch(() => form.attendence, (isAttending) => {
                                 </div>
                             </div>
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="no_of_pax">Number of Guests</Label>
                                     <NumberField id="no_of_pax" :default-value="1" :min="form.attendence ? 1 : 0"
                                         :max="event.allowed_pax" :disabled="!form.attendence" v-model="form.no_of_pax">
@@ -214,7 +214,7 @@ watch(() => form.attendence, (isAttending) => {
                                 </div>
                             </div>
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="notes">Wish for bride & groom</Label>
                                     <Textarea id="notes" type="text" v-model="form.notes"
                                         placeholder="Your wish for bride & groom" />
@@ -222,7 +222,7 @@ watch(() => form.attendence, (isAttending) => {
                                 </div>
                             </div>
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="event_id">Event ID</Label>
                                     <Input type="text" id="event_id" v-model="form.event_id" readonly
                                         class="text-gray-500" />

@@ -67,21 +67,21 @@ function handleSubmit() {
                     <CardContent class="space-y-6">
                         <form @submit.prevent="handleSubmit" class="space-y-6">
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="event_name">Event Name</Label>
                                     <Input type="text" id="event_name" v-model="form.event_name" />
                                     <InputError :message="form.errors.event_name" />
                                 </div>
                             </div>
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="slug">Slug Name</Label>
                                     <Input type="text" id="slug" v-model="form.slug" readonly class="text-gray-500" />
                                     <InputError :message="form.errors.slug" />
                                 </div>
                             </div>
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <!-- <Label for="event_date">Event Date</Label> -->
                                     <!-- <Input type="date" id="event_date" v-model="form.event_date" /> -->
                                     <DatePicker name="event_date" v-model="form.event_date" label="Event Date"
@@ -94,7 +94,7 @@ function handleSubmit() {
                                 </div>
                             </div>
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="allowed_pax">Allowed Pax</Label>
                                     <NumberField id="allowed_pax" :default-value="0" v-model="form.allowed_pax">
                                         <NumberFieldContent>
@@ -107,22 +107,22 @@ function handleSubmit() {
                                 </div>
                             </div>
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="description">Description</Label>
                                     <Textarea type="text" id="description" v-model="form.description" />
                                     <InputError :message="form.errors.description" />
                                 </div>
                             </div>
                             <div class="grid gap-6">
-                                <div class="space-y-2">
+                                <div class="space-y-4">
                                     <Label for="marquee_duration">Duration</Label>
-                                    <Slider v-model="modelValue" :max="100" :step="5" @update:model-value="val => form.marquee_duration = val?.[0] ?? 0"/>
-                                    <!-- <span>{{ modelValue[0] }} min</span> -->
-                                     <span>{{ form.marquee_duration || 0 }} seconds</span>
+                                    <Slider v-model="modelValue" :max="300" :step="5"
+                                        @update:model-value="val => form.marquee_duration = val?.[0] ?? 0" />
+                                    <span class="flex items-end justify-end text-sm">{{ form.marquee_duration || 0 }} seconds</span>
                                     <InputError :message="form.errors.marquee_duration" />
                                 </div>
                             </div>
-                            <div class="flex justify-start space-x-2">
+                            <div class="flex justify-start space-x-4">
                                 <Button type="submit">Save</button>
                             </div>
                         </form>
