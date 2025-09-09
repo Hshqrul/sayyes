@@ -15,6 +15,12 @@ import TextLink from '@/components/TextLink.vue'
 import NumberTicker from '@/components/ui/number-ticker/NumberTicker.vue'
 import { Motion } from 'motion-v'
 import CustomLogoIcon from '@/components/CustomLogoIcon.vue'
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from '@/components/ui/hover-card'
+
 interface Rsvp {
     name: string
     attendance: boolean
@@ -208,8 +214,15 @@ const countdown = computed(() => {
                             clip-rule="evenodd" />
                     </svg>
                     by
-                    <a class="underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500 underline-offset-4"
-                        target="_blank" href="https://buymeacoffee.com/hashaqirul">Hashaqirul.</a>
+                    <!-- <HoverCard>
+                        <HoverCardTrigger> -->
+                            <a class="underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500 underline-offset-4"
+                                target="_blank" href="https://buymeacoffee.com/hashaqirul">Hashaqirul.</a>
+                        <!-- </HoverCardTrigger>
+                        <HoverCardContent>
+                            The Vue Framework – created and maintained by @vuejs.
+                        </HoverCardContent>
+                    </HoverCard> -->
                 </span>
             </div>
         </div>
