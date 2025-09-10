@@ -17,6 +17,7 @@ import GuestMenuContent from './GuestMenuContent.vue';
 import SwitchTheme from './SwitchTheme.vue';
 import Separator from './ui/separator/Separator.vue';
 import GuestLogo from './GuestLogo.vue';
+import ToggleTheme from './ToggleTheme.vue';
 
 interface Props {
     breadcrumbs?: BreadcrumbItem[];
@@ -145,7 +146,8 @@ const rightNavItems: NavItem[] = [
                         <!-- <Button variant="ghost" size="icon" class="group h-9 w-9 cursor-pointer">
                             <Search class="size-5 opacity-80 group-hover:opacity-100" />
                         </Button> -->
-                        <SwitchTheme />
+                        <!-- <SwitchTheme /> -->
+                        <ToggleTheme />
 
                         <div class="hidden space-x-1 lg:flex">
                             <template v-for="item in rightNavItems" :key="item.title">

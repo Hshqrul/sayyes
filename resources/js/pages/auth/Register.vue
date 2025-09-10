@@ -42,21 +42,21 @@ function handleSubmit() {
                 <div class="grid gap-2">
                     <Label for="name">Name</Label>
                     <Input id="name" type="text" required autofocus :tabindex="1" autocomplete="name"
-                        v-model="form.name" placeholder="Full name" />
+                        v-model="form.name" placeholder="Enter your full name" />
                     <InputError :message="form.errors.name" />
                 </div>
 
                 <div class="grid gap-2">
                     <Label for="username">Username</Label>
                     <Input id="username" type="text" required :tabindex="1" autocomplete="username"
-                        v-model="form.username" placeholder="Username" />
+                        v-model="form.username" placeholder="Enter your username" />
                     <InputError :message="form.errors.username" />
                 </div>
 
                 <div class="grid gap-2">
                     <Label for="email">Email address</Label>
                     <Input id="email" type="email" required :tabindex="2" autocomplete="email" v-model="form.email"
-                        placeholder="email@example.com" />
+                        placeholder="Enter your email" />
                     <InputError :message="form.errors.email" />
                 </div>
 
@@ -72,7 +72,7 @@ function handleSubmit() {
                         placeholder="Password"
                     /> -->
                     <PasswordInput id="password" v-model="form.password" autocomplete="new-password" :tabindex="3"
-                        placeholder="Password" />
+                        placeholder="********" />
                     <InputError :message="form.errors.password" />
                 </div>
 
@@ -88,7 +88,7 @@ function handleSubmit() {
                         placeholder="Confirm password"
                     /> -->
                     <PasswordInput id="password_confirmation" :tabindex="4" v-model="form.password_confirmation"
-                        placeholder="Confirm password" autocomplete="new-password" />
+                        placeholder="********" autocomplete="new-password" />
                     <InputError :message="form.errors.password_confirmation" />
                 </div>
 
