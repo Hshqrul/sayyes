@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { useColorMode, useDark } from '@vueuse/core';
-import Switch from './ui/switch/Switch.vue';
-import Label from './ui/label/Label.vue';
 import Icon from './Icon.vue';
 import Toggle from './ui/toggle/Toggle.vue';
-import { useMagicKeys } from '@vueuse/core';
-import { watch } from 'vue';
 
 const isDark = useDark({
     selector: 'body',
