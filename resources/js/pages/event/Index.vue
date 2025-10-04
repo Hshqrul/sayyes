@@ -103,7 +103,7 @@ function confirmDelete(eventSlug: string) {
                         </CardFooter>
                     </Card>
                 </div>
-    
+
                 <div v-else-if="hasEvents" class="w-full">
                     <div class="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
                         <Card v-for="event in props.events" :key="event.event_name" class="md:w-full shadow-xs">
@@ -149,10 +149,10 @@ function confirmDelete(eventSlug: string) {
                                                 <DropdownMenuItem :as-child="true">
                                                     <!-- <Link :href="route('events.destroy', { event: event.slug })" -->
                                                     <button @click="confirmDelete(event.slug)"
-                                                        class="block w-full hover:text-red-500" method="delete" as="button">
+                                                        class="block w-full hover:text-red-500" method="delete"
+                                                        as="button">
                                                         <Trash2Icon class="size-4" />
                                                         <span>Delete</span>
-    
                                                     </button>
                                                     <!-- </Link> -->
                                                 </DropdownMenuItem>

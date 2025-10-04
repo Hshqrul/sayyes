@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
+// import StractiumBackground from '@/components/ui/bg-stractium/StractiumBackground.vue';
 import { usePage } from '@inertiajs/vue3';
 
 const page = usePage();
@@ -35,6 +36,12 @@ defineProps<{
         </div>
         <div class="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
             <div class="absolute inset-0 bg-zinc-900" />
+            <!-- <video autoplay muted loop class="absolute inset-0 h-full w-full object-cover">
+                <source src="/particals_box.mp4" type="video/mp4" />
+            </video> -->
+            <!-- <div class="relative min-h-96 w-full"> -->
+            <!-- <StractiumBackground /> -->
+            <!-- </div> -->
             <div v-if="quote" class="relative z-20 mt-auto text-right">
                 <blockquote class="space-y-2">
                     <p class="text-lg">&ldquo;{{ quote.message }}&rdquo;</p>

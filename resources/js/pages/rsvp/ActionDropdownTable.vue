@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { EditIcon, Eye, MoreHorizontal, Trash2 } from 'lucide-vue-next'
+import { EditIcon, Eye, MoreHorizontal, Trash2Icon } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import {
     DropdownMenu,
@@ -21,6 +21,8 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Link } from '@inertiajs/vue3';
 import DropdownMenuSeparator from '@/components/ui/dropdown-menu/DropdownMenuSeparator.vue';
+import DeleteConfirmDialog from '@/components/DeleteConfirmDialogDropdown.vue'
+import { toast } from 'vue-sonner';
 
 const props = defineProps<{
     id: number
@@ -35,11 +37,34 @@ function copy(id: string) {
     navigator.clipboard.writeText(id)
 }
 
-function confirmDelete(eventId: number) {
-    if (confirm("Are you sure you want to delete this rsvp?")) {
-        //
-    }
+const emit = defineEmits<{
+    (e: 'delete', id: string | null): void
+}>()
+
+function deleteRsvp() {
+    if (!props.id) return
+
+    emit('delete', props.id.toString())
 }
+
+function deleteButton() {
+    toast.error('Failed to delete the RSVP.')
+}
+
+// function confirmDelete(rsvpId: number) {
+//     // if (confirm("Are you sure you want to delete this rsvp?")) {
+//     router.delete(route('rsvps.destroy', { rsvp: rsvpId }), {
+//         preserveScroll: true,
+//         onSuccess: () => {
+//             toast.success('RSVP deleted successfully.');
+//             window.location.reload();
+//         },
+//         onError: () => {
+//             toast.error('Failed to delete the RSVP.');
+//         }
+//     });
+//     // }
+// }
 </script>
 
 <template>
@@ -95,12 +120,21 @@ function confirmDelete(eventId: number) {
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                    <!-- <Link :href="route('rsvps.destroy', { rsvp: id })" @click="confirmDelete()"
-                        class="block w-full hover:text-red-500" method="delete" as="button"> -->
-                    <Trash2 class="size-4 text-dark" />
-                    <span>Delete</span>
-                    <!-- </Link> -->
+                <DropdownMenuItem :as-child="true">
+                    <!-- @click="confirmDelete(props.id)" -->
+                    <button @click="deleteButton" class="block w-full hover:text-red-500" method="delete" as="button">
+                        <Trash2Icon class="size-4 text-dark" />
+                        <span>Delete</span>
+                    </button>
+                    <!-- <DeleteConfirmDialog :itemName="props?.name" @confirm="deleteRsvp"> -->
+                    <!-- <template #trigger> -->
+                    <!-- <button as="button" class="flex items-center justify-start w-full rounded-sm text-sm hover:bg-muted"
+                                :disabled="!props">
+                                <Trash2Icon class="size-4" />
+                                Delete
+                            </button> -->
+                    <!-- </template> -->
+                    <!-- </DeleteConfirmDialog> -->
                 </DropdownMenuItem>
             </DropdownMenuGroup>
         </DropdownMenuContent>
