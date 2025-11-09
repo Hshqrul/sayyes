@@ -193,7 +193,7 @@ const countdown = computed(() => {
                 <!-- <GuestBook :rsvps="rsvps" :event="event" /> -->
                 <GuestBookMarquee :rsvps="rsvps" :event="event" />
                 <!-- <GuestBookSkewedMarquee :rsvps="rsvps" :event="event" /> -->
-                <div class="flex flex-col items-center justify-center p-4">
+                <div class="flex flex-col items-center justify-center p-6">
                     <div class="text-center text-sm text-muted-foreground">
                         See more guest book
                         <TextLink :href="route('guest_wishes', { event: event })">
@@ -205,7 +205,7 @@ const countdown = computed(() => {
         </div>
     </AppLayout>
     <footer
-        class="bottom-0 w-full text-sm mx-auto flex items-center justify-between sm:px-16 py-6 md:flex-row flex flex-col gap-2 md:gap-0">
+        class="bottom-0 w-full text-sm mx-auto flex items-center justify-center sm:px-16 py-6 md:flex-row flex flex-col gap-2 md:gap-0">
         <div class="flex items-center gap-2 ">
             <div class="flex items-center gap-1">
                 <span>
