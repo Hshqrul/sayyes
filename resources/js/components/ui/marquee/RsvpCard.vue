@@ -16,7 +16,7 @@ defineProps<Props>()
 </script>
 
 <template>
-    <figure class="flex h-full flex-col overflow-hidden rounded-xl border p-4
+    <div class="flex h-full flex-col overflow-hidden rounded-xl border p-4
          border-gray-950/[.1] bg-white hover:bg-zinc-50
          dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15] select-none">
         <div class="flex items-center gap-4">
@@ -60,5 +60,5 @@ defineProps<Props>()
                 }}
             </p>
         </div>
-    </figure>
+    </div>
 </template>
