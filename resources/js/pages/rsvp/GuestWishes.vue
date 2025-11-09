@@ -3,6 +3,7 @@ import FormSimpleLayout from '@/layouts/widget/FormCardLayout.vue'
 import { Head, usePage } from '@inertiajs/vue3'
 import ListParticipants from './ListParticipants.vue'
 import RsvpCard from '@/components/ui/marquee/RsvpCard.vue'
+import ScrollArea from '@/components/ui/scroll-area/ScrollArea.vue'
 
 const page = usePage<Props>()
 const rsvps = page.props.rsvps
@@ -21,11 +22,13 @@ const event = page.props.event
                 <ListParticipants :rsvps="rsvps" />
             </div>
             <div class="border-b border-sidebar-border/70"></div>
-            <div class="grid grid-cols-1 gap-4 overflow-y-auto max-h-full lg:max-h-[300px]">
+            <!-- <div class="grid grid-cols-1 gap-4 overflow-y-auto max-h-full lg:max-h-[300px]"> -->
+            <ScrollArea class="h-screen flex">
                 <RsvpCard v-for="(rsvp, index) in rsvps" :key="index" :name="rsvp.name"
                     :body="rsvp.notes || `No message left`" :attendance="rsvp.attendence" :no_of_pax="rsvp.no_of_pax"
                     :created_at="rsvp.created_at" />
-            </div>
+            </ScrollArea>
+            <!-- </div> -->
         </div>
     </FormSimpleLayout>
 </template>
