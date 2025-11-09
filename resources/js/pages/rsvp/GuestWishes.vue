@@ -22,13 +22,13 @@ const event = page.props.event
                 <ListParticipants :rsvps="rsvps" />
             </div>
             <div class="border-b border-sidebar-border/70"></div>
-            <!-- <div class="grid grid-cols-1 gap-4 overflow-y-auto max-h-full lg:max-h-[300px]"> -->
-            <ScrollArea class="h-screen flex">
+            <div class="grid grid-cols-1 gap-4 overflow-y-auto max-h-full lg:max-h-[300px]">
+                <!-- <ScrollArea class="h-80 flex flex-col gap-6"> -->
                 <RsvpCard v-for="(rsvp, index) in rsvps" :key="index" :name="rsvp.name"
                     :body="rsvp.notes || `No message left`" :attendance="rsvp.attendence" :no_of_pax="rsvp.no_of_pax"
                     :created_at="rsvp.created_at" />
-            </ScrollArea>
-            <!-- </div> -->
+                <!-- </ScrollArea> -->
+            </div>
         </div>
     </FormSimpleLayout>
 </template>
