@@ -15,7 +15,7 @@ defineProps<{
 
 <template>
     <div class="flex min-h-svh flex-col items-center justify-center gap-6 bg-transparent p-6 md:p-10">
-        <div class="flex w-full max-w-5xl flex-col gap-6">
+        <div class="flex w-full max-w-5xl">
             <div class="flex flex-col gap-6">
                 <div class="isolate md:isolate-auto flex flex-col gap-4">
                     <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
