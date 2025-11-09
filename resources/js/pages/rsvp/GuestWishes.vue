@@ -21,7 +21,7 @@ const event = page.props.event
                 <ListParticipants :rsvps="rsvps" />
             </div>
             <div class="border-b border-sidebar-border/70"></div>
-            <div class="grid grid-cols-1 gap-4 overflow-y-auto max-h-[300px]">
+            <div class="grid grid-cols-1 gap-4 overflow-y-auto max-h-full lg:max-h-[300px]">
                 <RsvpCard v-for="(rsvp, index) in rsvps" :key="index" :name="rsvp.name"
                     :body="rsvp.notes || `No message left`" :attendance="rsvp.attendence" :no_of_pax="rsvp.no_of_pax"
                     :created_at="rsvp.created_at" />
