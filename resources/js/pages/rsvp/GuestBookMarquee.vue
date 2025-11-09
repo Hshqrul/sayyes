@@ -14,14 +14,14 @@
             <!-- @todo dynamic duration and paused when hover-->
             <Marquee pause-on-hover pause-on-click :style="{ '--duration': `${dur}s` }">
                 <WishesCard v-for="(rsvp, index) in rsvps" :key="index" :name="rsvp.name"
-                    :body="rsvp.notes || `No message left`" :attendence="rsvp.attendence"
+                    :body="rsvp.notes || `No message left`" :attendence="rsvp.attendence" :no_of_pax="rsvp.no_of_pax"
                     :created_at="rsvp.created_at" />
             </Marquee>
 
             <!-- Second Marquee (reverse) -->
             <Marquee reverse pause-on-hover pause-on-click :style="{ '--duration': `${dur}s` }">
                 <WishesCard v-for="(rsvp, index) in rsvps" :key="index" :name="rsvp.name"
-                    :body="rsvp.notes || `No message left`" :attendence="rsvp.attendence"
+                    :body="rsvp.notes || `No message left`" :attendence="rsvp.attendence" :no_of_pax="rsvp.no_of_pax"
                     :created_at="rsvp.created_at" />
             </Marquee>
 

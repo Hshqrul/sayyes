@@ -20,6 +20,7 @@ import {
     HoverCardContent,
     HoverCardTrigger,
 } from '@/components/ui/hover-card'
+import GuestBookSkewedMarquee from './rsvp/GuestBookSkewedMarquee.vue'
 
 interface Rsvp {
     name: string
@@ -191,6 +192,15 @@ const countdown = computed(() => {
                 class="relative min-h-[200px] col-span-full rounded-2xl border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
                 <!-- <GuestBook :rsvps="rsvps" :event="event" /> -->
                 <GuestBookMarquee :rsvps="rsvps" :event="event" />
+                <!-- <GuestBookSkewedMarquee :rsvps="rsvps" :event="event" /> -->
+                <div class="flex flex-col items-center justify-center p-4">
+                    <div class="text-center text-sm text-muted-foreground">
+                        See more guest book
+                        <TextLink :href="route('guest_wishes', { event: event })">
+                            here
+                        </TextLink>
+                    </div>
+                </div>
             </div>
         </div>
     </AppLayout>
@@ -216,9 +226,9 @@ const countdown = computed(() => {
                     by
                     <!-- <HoverCard>
                         <HoverCardTrigger> -->
-                            <a class="underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500 underline-offset-4"
-                                target="_blank" href="https://buymeacoffee.com/hashaqirul">Hashaqirul.</a>
-                        <!-- </HoverCardTrigger>
+                    <a class="underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500 underline-offset-4"
+                        target="_blank" href="https://buymeacoffee.com/hashaqirul">Hashaqirul.</a>
+                    <!-- </HoverCardTrigger>
                         <HoverCardContent>
                             The Vue Framework – created and maintained by @vuejs.
                         </HoverCardContent>

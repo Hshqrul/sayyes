@@ -55,7 +55,14 @@ Route::get('/rsvp/success/{name}/{event}', function ($name, $event) {
     ]);
 })->name('rsvp.success');
 
-// Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
+Route::get('/guest/wishes/{event}', function (Event $event) {
+    return Inertia::render('rsvp/GuestWishes', [
+        'event' => $event,
+        'rsvps' => $event->rsvps()->orderBy('created_at', 'desc')->get(),
+    ]);
+})->name('guest_wishes');
+
+Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
 // Route::resource('/portfolio', PortfolioController::class);
 
 require __DIR__ . '/settings.php';

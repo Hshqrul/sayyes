@@ -12,6 +12,7 @@ import { Toaster, toast } from 'vue-sonner'
 import 'vue-sonner/style.css'
 import { useAppearance } from '@/composables/useAppearance'
 import ListParticipants from './ListParticipants.vue'
+import RsvpCard from '@/components/ui/marquee/RsvpCard.vue'
 
 const page = usePage()
 console.log(page.props)
@@ -49,6 +50,8 @@ interface Props {
     rsvps: Rsvp[],
     event: {
         id: number;
+        event_name: string;
+        description: string;
         slug: string;
     };
 }
@@ -70,7 +73,7 @@ const currentForm = useForm({
     <Toaster closeButton :theme="appearance" />
 
     <Head title="Success Response" />
-    <AppLayout>
+    <AppLayout :title="event.event_name" :description="event.description">
         <Alert :class="{
             'bg-indigo-300/20 border-indigo-700 text-indigo-600 dark:bg-indigo-700/20 dark:border-indigo-600 dark:text-indigo-400':
                 currentForm.attendence == true,
@@ -91,8 +94,11 @@ const currentForm = useForm({
                 <ListParticipants :rsvps="props.rsvps" />
             </div>
             <div class="border-b border-sidebar-border/70"></div>
-            <div class="flex flex-col gap-4 overflow-y-auto max-h-[150px] pr-2">
-                <template v-for="(rsvps, index) in limitedRsvps" :key="index">
+            <div class="grid grid-cols-1 gap-4 overflow-y-auto max-h-[300px] pr-2">
+                <RsvpCard v-for="(rsvp, index) in limitedRsvps" :key="index" :name="rsvp.name"
+                    :body="rsvp.notes || `No message left`" :attendance="rsvp.attendence" :no_of_pax="rsvp.no_of_pax"
+                    :created_at="rsvp.created_at" />
+                <!-- <template v-for="(rsvps, index) in limitedRsvps" :key="index">
                     <Alert :class="{
                         'bg-indigo-300/20 border-indigo-700 text-indigo-600 dark:bg-indigo-700/20 dark:border-indigo-600 dark:text-indigo-400':
                             rsvps.attendence == true,
@@ -121,12 +127,12 @@ const currentForm = useForm({
                             {{ moment(rsvps?.created_at).startOf('hour').fromNow() }}
                         </AlertTitle>
                     </Alert>
-                </template>
+                </template> -->
             </div>
         </div>
         <div class="text-center text-sm text-muted-foreground">
             See more guest book
-            <TextLink :href="route('event_rsvp', { event: props.event.slug }) + '#guestbook'" :tabindex="5">
+            <TextLink :href="route('guest_wishes', { event: props.event })">
                 here
             </TextLink>
         </div>

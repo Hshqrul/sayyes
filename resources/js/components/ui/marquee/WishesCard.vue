@@ -27,7 +27,11 @@
             {{ body }}
         </blockquote>
 
-        <div class="mt-auto flex justify-end pt-2">
+        <div class="mt-auto flex justify-between pt-2">
+            <label v-if="no_of_pax > 1" class="text-xs font-medium text-gray-500 dark:text-white/40">
+                Single
+            </label>
+            <label v-else class="text-xs font-medium text-gray-500 dark:text-white/40">With Partner</label>
             <p class="text-xs font-medium text-gray-500 dark:text-white/40">
                 {{
                     new Intl.DateTimeFormat("en-US", {
@@ -82,6 +86,7 @@ interface Props {
     name: string
     body: string
     attendence: boolean
+    no_of_pax: number
     created_at: string
 }
 
