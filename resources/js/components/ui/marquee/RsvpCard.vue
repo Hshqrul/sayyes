@@ -8,7 +8,7 @@ interface Props {
     name: string
     body: string
     attendance: boolean
-    no_of_pax?: number
+    no_of_pax: number
     created_at: string
 }
 
@@ -44,7 +44,7 @@ defineProps<Props>()
         </blockquote>
 
         <div class="mt-auto flex justify-between pt-2">
-            <label v-if="no_of_pax > 1" class="text-xs font-medium text-gray-500 dark:text-white/40">
+            <label v-if="no_of_pax < 2" class="text-xs font-medium text-gray-500 dark:text-white/40">
                 Single
             </label>
             <label v-else class="text-xs font-medium text-gray-500 dark:text-white/40">With Partner</label>
@@ -54,8 +54,8 @@ defineProps<Props>()
                         year: "numeric",
                         month: "short",
                         day: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
+                        // hour: "2-digit",
+                        // minute: "2-digit",
                     }).format(new Date(created_at))
                 }}
             </p>

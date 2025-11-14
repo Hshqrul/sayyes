@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FormSimpleLayout from '@/layouts/widget/FormCardLayout.vue'
+import FormCardLayout from '@/layouts/widget/FormCardLayout.vue'
 import { Head, usePage } from '@inertiajs/vue3'
 import ListParticipants from './ListParticipants.vue'
 import RsvpCard from '@/components/ui/marquee/RsvpCard.vue'
@@ -14,7 +14,7 @@ const event = page.props.event
 
     <Head title="Guest Book" />
 
-    <FormSimpleLayout :title="event.event_name" :description="event.description">
+    <FormCardLayout :title="event.event_name" :description="event.description">
         <div class="flex flex-col gap-4 mb-4">
             <div class="border-b border-sidebar-border/70"></div>
             <div class="flex flex-row items-center justify-between">
@@ -30,5 +30,5 @@ const event = page.props.event
                 <!-- </ScrollArea> -->
             </div>
         </div>
-    </FormSimpleLayout>
+    </FormCardLayout>
 </template>

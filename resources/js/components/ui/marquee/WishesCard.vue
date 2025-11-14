@@ -1,7 +1,7 @@
 <template>
     <figure
-        class="relative flex h-full w-68 md:w-80 cursor-pointer flex-col overflow-hidden rounded-xl border p-4 
-         border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05] 
+        class="relative flex h-full w-68 md:w-80 cursor-pointer flex-col overflow-hidden rounded-xl border p-4
+         border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]
          dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15] hover:scale-105 transition-all select-none">
         <div class="flex items-center gap-2">
             <Avatar>
@@ -28,7 +28,7 @@
         </blockquote>
 
         <div class="mt-auto flex justify-between pt-2">
-            <label v-if="no_of_pax > 1" class="text-xs font-medium text-gray-500 dark:text-white/40">
+            <label v-if="no_of_pax < 2" class="text-xs font-medium text-gray-500 dark:text-white/40">
                 Single
             </label>
             <label v-else class="text-xs font-medium text-gray-500 dark:text-white/40">With Partner</label>
