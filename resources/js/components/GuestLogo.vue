@@ -12,7 +12,7 @@ const page = usePage();
     </div>
     <div class="ml-1 grid flex-1 text-left text-sm">
         <div v-if="page.props.event">
-            <span class="mb-0.5 truncate leading-tight font-semibold">{{ page.props.event?.event_name }}</span>
+            <span class="mb-0.5 truncate leading-tight font-semibold text-wrap">{{ page.props.event?.event_name }}</span>
         </div>
         <div v-else>
             <span class="mb-0.5 truncate leading-tight font-semibold">AECH</span>
