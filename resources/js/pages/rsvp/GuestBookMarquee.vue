@@ -1,3 +1,36 @@
+<script setup lang="ts">
+import Marquee from '@/components/ui/marquee/Marquee.vue';
+import WishesCard from '@/components/ui/marquee/WishesCard.vue';
+import { computed } from 'vue';
+import EmptyStatesRsvp from '../partials/EmptyStatesRsvp.vue';
+
+const props = defineProps<{
+    event: {
+        event_name: string
+        description?: string
+        marquee_duration?: number
+    }
+    rsvps: {
+        id: string
+        name: string
+        attendence: boolean
+        no_of_pax?: number
+        notes: string
+        created_at: string
+    }[]
+}>()
+const dur = props.event.marquee_duration > 0 ? props.event.marquee_duration : 20
+</script>
+
+<style scoped>
+.marquee {
+    --duration: 40s;
+    /* position: absolute;
+        left: -10%;
+        width: 120%;
+        padding: 0.5rem 0; */
+}
+</style>
 <template>
     <div class="flex w-full max-w-7xl flex-col items-center justify-center p-4">
         <div class="flex flex-col gap-4 py-12 text-center">
@@ -9,7 +42,7 @@
                 </span>
             </div>
         </div>
-        <div class="relative flex w-full flex-col items-center justify-center overflow-hidden">
+        <div v-if="rsvps.length > 0" class="relative flex w-full flex-col items-center justify-center overflow-hidden">
             <!-- First Marquee -->
             <!-- @todo dynamic duration and paused when hover-->
             <Marquee pause-on-hover pause-on-click :style="{ '--duration': `${dur}s` }">
@@ -35,38 +68,8 @@
                 class="pointer-events-none absolute inset-y-0 right-0 w-1/5 md:w-1/3 bg-gradient-to-l from-white dark:from-background">
             </div>
         </div>
+        <div v-else class="relative flex w-full flex-col items-center justify-center overflow-hidden">
+            <EmptyStatesRsvp />
+        </div>
     </div>
 </template>
-
-<script setup lang="ts">
-import Marquee from '@/components/ui/marquee/Marquee.vue';
-import WishesCard from '@/components/ui/marquee/WishesCard.vue';
-import { computed } from 'vue';
-
-const props = defineProps<{
-    event: {
-        event_name: string
-        description?: string
-        marquee_duration?: number
-    }
-    rsvps: {
-        id: string
-        name: string
-        attendence: boolean
-        no_of_pax?: number
-        notes: string
-        created_at: string
-    }[]
-}>()
-const dur = props.event.marquee_duration > 0 ? props.event.marquee_duration : 20
-</script>
-
-<style scoped>
-.marquee {
-    --duration: 40s;
-    /* position: absolute;
-    left: -10%;
-    width: 120%;
-    padding: 0.5rem 0; */
-}
-</style>

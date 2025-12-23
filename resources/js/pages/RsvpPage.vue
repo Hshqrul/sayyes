@@ -193,7 +193,7 @@ const countdown = computed(() => {
                 <!-- <GuestBook :rsvps="rsvps" :event="event" /> -->
                 <GuestBookMarquee :rsvps="rsvps" :event="event" />
                 <!-- <GuestBookSkewedMarquee :rsvps="rsvps" :event="event" /> -->
-                <div class="flex flex-col items-center justify-center p-6">
+                <div v-if="rsvps.length > 0" class="flex flex-col items-center justify-center p-6">
                     <div class="text-center text-sm text-muted-foreground">
                         See more guest book
                         <TextLink :href="route('guest_wishes', { event: event })">
